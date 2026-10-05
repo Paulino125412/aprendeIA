@@ -1,0 +1,6 @@
+{
+  "name": "Plataforma Educativa de Inteligencia Artificial",
+  "description": "Plataforma educativa con islas interactivas para aprender usos prácticos, beneficios y técnicas de prompting ético y efectivo con Inteligencia Artificial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
