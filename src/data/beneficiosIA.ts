@@ -39,11 +39,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
   Educación: {
     'Automatizar tareas repetitivas': {
       herramienta: {
-        nombre: 'Claude 3.5 Sonnet / ChatGPT Plus',
+        nombre: 'Asistente conversacional avanzado (ChatGPT, Claude o Gemini)',
         razon: 'Excelente procesamiento de lenguaje natural para estructurar rúbricas analíticas y generar retroalimentación formativa uniforme.',
       },
       beneficioDirecto:
-        'Ahorra hasta un 70% del tiempo de evaluación rutinaria manteniendo criterios pedagógicos consistentes para cada estudiante.',
+        'Reduce el tiempo dedicado a la evaluación inicial de borradores y asegura criterios pedagógicos homogéneos para cada estudiante.',
       promptEjemplo: `[ROL]: Actúa como un pedagogo especialista en evaluación formativa para nivel secundario y universitario.
 [CONTEXTO]: Cuento con 25 ensayos cortos redactados por estudiantes sobre el impacto socioeconómico del cambio climático.
 [TAREA]: Diseña una rúbrica analítica rigurosa con 4 criterios clave y genera una plantilla de retroalimentación constructiva personalizable con marcadores de posición.
@@ -51,11 +51,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Generar ideas creativas': {
       herramienta: {
-        nombre: 'NotebookLM / Gemini 1.5 Pro',
+        nombre: 'Herramientas de síntesis documental (NotebookLM o Gemini)',
         razon: 'Capacidad para sintetizar fuentes bibliográficas extensas y proponer dinámicas de clase gamificadas y debates basados en evidencia.',
       },
       beneficioDirecto:
-        'Crea experiencias de aprendizaje activo y proyectos interdisciplinarios motivantes en cuestión de minutos.',
+        'Facilita el diseño de dinámicas de aprendizaje activo y proyectos interdisciplinarios fundamentados en las fuentes de la materia.',
       promptEjemplo: `[ROL]: Actúa como un diseñador instruccional enfocado en metodologías activas y gamificación educativa.
 [CONTEXTO]: Los estudiantes muestran desinterés durante las clases teóricas de historia contemporánea (Revolución Industrial).
 [TAREA]: Propón 3 dinámicas de rol inmersivas y un reto colaborativo de toma de decisiones históricas para grupos de 4 personas.
@@ -63,11 +63,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Analizar datos complejos': {
       herramienta: {
-        nombre: 'ChatGPT Advanced Data Analysis',
-        razon: 'Permite subir hojas de cálculo de calificaciones y genera diagnósticos estadísticos con gráficos de tendencias de aprendizaje.',
+        nombre: 'Analizador de datos asistido por IA (ChatGPT o Claude)',
+        razon: 'Permite procesar hojas de cálculo de calificaciones y genera diagnósticos estadísticos con gráficos de tendencias de aprendizaje.',
       },
       beneficioDirecto:
-        'Identifica tempranamente brechas de aprendizaje y correlaciones entre asistencia y rendimiento sin requerir software estadístico avanzado.',
+        'Identifica con claridad brechas de aprendizaje y correlaciones entre asistencia y rendimiento sin requerir software estadístico avanzado.',
       promptEjemplo: `[ROL]: Actúa como un analista de datos institucionales enfocado en retención escolar y éxito académico.
 [CONTEXTO]: Dispongo de un archivo CSV con calificaciones bimestrales, tasas de asistencia y participación en foros de 120 alumnos.
 [TAREA]: Analiza la correlación entre inasistencias y notas bajas, segmenta a los estudiantes en tres perfiles de riesgo y sugiere dos intervenciones preventivas prioritarias.
@@ -77,11 +77,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
   Programación: {
     'Automatizar tareas repetitivas': {
       herramienta: {
-        nombre: 'GitHub Copilot / Cursor',
+        nombre: 'Asistente de código integrado (GitHub Copilot o Cursor)',
         razon: 'Generación predictiva de código repetitivo, pruebas unitarias automáticas y documentación de interfaces en tiempo real.',
       },
       beneficioDirecto:
-        'Elimina la fricción de escribir código repetitivo y cobertura de tests, permitiendo enfocarse en la arquitectura y lógica central del sistema.',
+        'Elimina la fricción de redactar código repetitivo y plantillas de pruebas, permitiendo enfocar el esfuerzo en la arquitectura y lógica central del sistema.',
       promptEjemplo: `[ROL]: Actúa como un ingeniero de software sénior especialista en TypeScript y testing con Vitest.
 [CONTEXTO]: Tengo un servicio de autenticación que valida tokens JWT, comprueba expiración y extrae roles de usuario.
 [TAREA]: Escribe una suite exhaustiva de pruebas unitarias que cubra casos de éxito, tokens vencidos, firmas alteradas y encabezados ausentes.
@@ -89,11 +89,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Generar ideas creativas': {
       herramienta: {
-        nombre: 'Claude 3.5 Sonnet',
-        razon: 'Lidera en razonamiento arquitectónico de software, proponiendo patrones de diseño limpios y alternativas de refactorización modular.',
+        nombre: 'Modelos avanzados de razonamiento técnico (Claude o ChatGPT)',
+        razon: 'Destacan en razonamiento arquitectónico de software, proponiendo patrones de diseño limpios y alternativas de refactorización modular.',
       },
       beneficioDirecto:
-        'Acelera la exploración de alternativas técnicas y trade-offs arquitectónicos antes de comprometer líneas de código.',
+        'Acelera la exploración de alternativas técnicas y la evaluación de ventajas y desventajas antes de comprometer líneas de código en producción.',
       promptEjemplo: `[ROL]: Actúa como un arquitecto de software de sistemas distribuidos y microservicios resilientes.
 [CONTEXTO]: Una plataforma de comercio electrónico colapsa durante picos de compras por consultas concurrentes al inventario en base de datos relacional.
 [TAREA]: Plantea 3 estrategias arquitectónicas desacopladas para gestionar reservas de inventario de alta concurrencia con consistencia eventual o transaccional.
@@ -101,11 +101,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Analizar datos complejos': {
       herramienta: {
-        nombre: 'Gemini 1.5 Pro / DeepSeek-V3',
-        razon: 'Enorme ventana de contexto capaz de ingerir y depurar volcados de logs masivos, trazas de errores y optimización de consultas SQL lentas.',
+        nombre: 'Modelos con ventana de contexto extendida (Gemini o DeepSeek)',
+        razon: 'Capacidad para ingerir y correlacionar volcados extensos de registros de depuración, trazas de errores y planes de ejecución de consultas de bases de datos.',
       },
       beneficioDirecto:
-        'Diagnostica cuellos de botella en producción y fugas de memoria en minutos a partir de volcados complejos de telemetría.',
+        'Facilita el diagnóstico de cuellos de botella y problemas de rendimiento a partir de volcados complejos de telemetría sin búsquedas manuales exhaustivas.',
       promptEjemplo: `[ROL]: Actúa como un especialista en optimización de rendimiento de bases de datos PostgreSQL y diagnóstico de sistemas.
 [CONTEXTO]: Se adjunta el resultado de un EXPLAIN ANALYZE de una consulta crítica de 12 segundos que involucra 4 tablas unidas y 2 millones de filas.
 [TAREA]: Identifica los escaneos secuenciales innecesarios, calcula el costo relativo de cada etapa y formula los índices y reescritura de consulta requeridos.
@@ -115,11 +115,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
   'Negocios/Ventas': {
     'Automatizar tareas repetitivas': {
       herramienta: {
-        nombre: 'Make.com con OpenAI / Zapier Central',
+        nombre: 'Plataformas de automatización con IA (Make o Zapier)',
         razon: 'Clasifica correos de clientes potenciales, extrae datos clave y los sincroniza en el CRM sin intervención manual.',
       },
       beneficioDirecto:
-        'Reduce el tiempo de respuesta a prospectos comerciales de horas a segundos, elevando la tasa de conversión en hasta un 40%.',
+        'Agiliza la respuesta inicial ante solicitudes de clientes potenciales y asegura un seguimiento comercial oportuno y estructurado.',
       promptEjemplo: `[ROL]: Actúa como un especialista en automatización de embudos de ventas y calificación de leads (SDR).
 [CONTEXTO]: Ingresan 80 solicitudes diarias de cotización por formulario web con datos heterogéneos y preguntas variadas.
 [TAREA]: Diseña el flujo lógico y los criterios de puntuación (lead scoring) de 1 a 100 para categorizar prospectos calificados, tibios y spam, redactando las respuestas automáticas iniciales.
@@ -127,11 +127,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Generar ideas creativas': {
       herramienta: {
-        nombre: 'ChatGPT con modo Search / Perplexity Pro',
-        razon: 'Investigación en tiempo real de competidores, detección de ángulos de posicionamiento no explotados y creación de ganchos de venta.',
+        nombre: 'Buscadores asistidos por IA (Perplexity o ChatGPT)',
+        razon: 'Investigación actualizada de competidores, detección de ángulos de posicionamiento de mercado y formulación de mensajes comerciales.',
       },
       beneficioDirecto:
-        'Descubre propuestas de valor diferenciadoras y ángulos de campaña comercial respaldados por tendencias del mercado.',
+        'Permite descubrir propuestas de valor diferenciadoras y ángulos de campaña comercial fundamentados en el panorama actual del sector.',
       promptEjemplo: `[ROL]: Actúa como un estratega de marketing de producto (PMM) y copywriter de respuesta directa.
 [CONTEXTO]: Lanzaremos una suscripción B2B de gestión de inventario para pequeñas cafeterías artesanales saturadas de hojas de cálculo.
 [TAREA]: Crea 4 propuestas de valor diferenciales y 5 ganchos de correo en frío orientados a resolver los mayores dolores operativos del propietario.
@@ -139,11 +139,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Analizar datos complejos': {
       herramienta: {
-        nombre: 'Julius AI / Power BI Copilot',
-        razon: 'Interpreta matrices de cohortes de clientes, calcula el valor de vida (LTV), costo de adquisición (CAC) y proyecta flujos de caja futuros.',
+        nombre: 'Herramientas de analítica empresarial con IA (Julius AI o Copilot)',
+        razon: 'Interpreta matrices de cohortes de clientes, métricas de retención y proyecciones de flujo de caja a partir de datos estructurados.',
       },
       beneficioDirecto:
-        'Transforma hojas de cálculo dispersas en decisiones financieras claras y proyecciones de rentabilidad confiables.',
+        'Transforma hojas de cálculo complejas en conclusiones financieras claras y proyecciones comprensibles para respaldar decisiones estratégicas.',
       promptEjemplo: `[ROL]: Actúa como un director financiero (CFO) interino especializado en métricas SaaS y modelos de suscripción.
 [CONTEXTO]: Contamos con datos de facturación mensual de los últimos 18 meses, con una tasa de cancelación (churn) del 4.2% y CAC de 280 USD.
 [TAREA]: Evalúa la sostenibilidad unitaria de la empresa, calcula el tiempo de recuperación de CAC y proyecta el impacto de reducir el churn al 2.5%.
@@ -153,11 +153,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
   'Vida Cotidiana': {
     'Automatizar tareas repetitivas': {
       herramienta: {
-        nombre: 'Google Gemini con Workspace / ChatGPT Voice',
-        razon: 'Integración nativa con calendario, correos familiares, listas de compras y resúmenes de recetas semanales a partir de ingredientes disponibles.',
+        nombre: 'Asistente de productividad diaria (Gemini o ChatGPT)',
+        razon: 'Integración fluida con calendario, correo electrónico, listas de compras y planificación de recetas según ingredientes disponibles.',
       },
       beneficioDirecto:
-        'Recupera entre 4 y 6 horas semanales en la gestión doméstica, planificación de menús saludables y organización de finanzas personales.',
+        'Simplifica la gestión de la rutina hogareña, la planificación de comidas familiares y la organización de compromisos cotidianos.',
       promptEjemplo: `[ROL]: Actúa como un asistente personal y nutricionista enfocado en optimización del tiempo hogareño.
 [CONTEXTO]: Somos una familia de 3 personas, disponemos de 45 minutos diarios para cocinar y deseamos evitar el desperdicio de comida fresca.
 [TAREA]: Elabora un plan de comidas balanceado de lunes a viernes con la técnica de batch cooking y su lista de compras categorizada por sección de supermercado.
@@ -165,11 +165,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Generar ideas creativas': {
       herramienta: {
-        nombre: 'Perplexity / ChatGPT',
-        razon: 'Generador versátil de itinerarios de viaje personalizados, planes de ocio no convencionales y resolución de problemas cotidianos.',
+        nombre: 'Asistente de exploración y viajes (ChatGPT o Perplexity)',
+        razon: 'Planificación flexible de itinerarios de viaje personalizados, actividades de ocio cultural y resolución de imprevistos cotidianos.',
       },
       beneficioDirecto:
-        'Diseña experiencias de ocio y viajes a medida adaptadas exactamente a gustos particulares, tiempos y presupuestos reales.',
+        'Permite diseñar experiencias de ocio y viajes a la medida, adaptadas a gustos individuales, tiempos disponibles y presupuestos definidos.',
       promptEjemplo: `[ROL]: Actúa como un guía turístico local experimentado y curador de experiencias culturales auténticas.
 [CONTEXTO]: Viajaré en pareja durante 4 días a Kioto con presupuesto moderado; queremos evitar multitudes turísticas y valorar la arquitectura y gastronomía local.
 [TAREA]: Diseña un itinerario día por día con recorridos a pie eficientes, paradas gastronómicas económicas recomendadas y consejos de transporte local.
@@ -177,11 +177,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Analizar datos complejos': {
       herramienta: {
-        nombre: 'Claude 3.5 Sonnet',
-        razon: 'Capacidad para desglosar contratos de alquiler, pólizas de seguros intrincadas y extractos bancarios en lenguaje claro y accesible.',
+        nombre: 'Modelos de análisis de texto denso (Claude o ChatGPT)',
+        razon: 'Capacidad para desglosar contratos de alquiler, condiciones de pólizas de seguros y términos de servicios bancarios en lenguaje claro y accesible.',
       },
       beneficioDirecto:
-        'Comprende cláusulas legales en letra chica y detecta cobros ocultos sin necesidad de asesoría legal preliminar.',
+        'Ayuda a comprender cláusulas complejas y condiciones relevantes en documentos extensos antes de tomar decisiones personales importantes.',
       promptEjemplo: `[ROL]: Actúa como un asesor financiero personal y especialista en derechos del consumidor.
 [CONTEXTO]: He recibido un contrato de préstamo hipotecario de 35 páginas con múltiples cláusulas sobre tasas variables y penalizaciones.
 [TAREA]: Identifica las 5 cláusulas con mayor riesgo económico potencial, explica su significado en español simple y enumera las preguntas clave que debo hacer al oficial de crédito.
@@ -191,11 +191,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
   'Diseño Visual': {
     'Automatizar tareas repetitivas': {
       herramienta: {
-        nombre: 'Photoshop Generative Fill / Figma AI',
-        razon: 'Eliminación y extensión de fondos automática, redimensionamiento adaptativo para múltiples redes sociales y generación de variantes.',
+        nombre: 'Herramientas de edición gráfica generativa (Photoshop o Figma)',
+        razon: 'Eliminación y extensión de fondos automática, redimensionamiento adaptativo para múltiples formatos y generación ágil de variantes.',
       },
       beneficioDirecto:
-        'Multiplica por cinco la entrega de piezas gráficas y formatos derivados para campañas publicitarias multicanal.',
+        'Facilita la producción rápida de derivaciones gráficas y formatos adaptados para diversos canales publicitarios a partir de una pieza base.',
       promptEjemplo: `[ROL]: Actúa como un director de arte digital y retocador fotográfico comercial.
 [CONTEXTO]: Tenemos una fotografía vertical de producto (botella de aceite de oliva) sobre fondo blanco de estudio.
 [TAREA]: Define las instrucciones exactas y el encuadre para extender el lienzo a formato horizontal panorámico (16:9) agregando una mesa de madera rústica, ramas de olivo desenfocadas y luz solar cálida de tarde.
@@ -203,11 +203,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Generar ideas creativas': {
       herramienta: {
-        nombre: 'Midjourney v6 / Recraft.ai',
-        razon: 'Generación líder en estética visual, moodboards conceptuales, coherencia cromática e ilustración vectorial de alta definición.',
+        nombre: 'Generadores de imágenes con IA (Midjourney o Recraft)',
+        razon: 'Exploración visual conceptual, composición de tableros de inspiración, coherencia cromática e ilustración digital de alta calidad.',
       },
       beneficioDirecto:
-        'Crea tableros de inspiración y conceptos visuales disruptivos en horas en lugar de semanas de bocetado manual.',
+        'Acelera la creación de conceptos visuales y referencias de estilo para presentar opciones a clientes antes de la fase de diseño final.',
       promptEjemplo: `[ROL]: Actúa como un diseñador de identidad de marca enfocado en packaging ecológico y minimalista.
 [CONTEXTO]: Una nueva línea de cosmética botánica necesita una dirección visual que evoque serenidad, pureza y sofisticación natural.
 [TAREA]: Diseña 3 direcciones de arte conceptuales con paletas de color hex, tratamientos tipográficos recomendados y descripción detallada de textura de empaques.
@@ -215,11 +215,11 @@ export const BENEFICIOS_DATA: BeneficiosMapa = {
     },
     'Analizar datos complejos': {
       herramienta: {
-        nombre: 'Attention Insight / Claude Vision',
-        razon: 'Mapas de calor predictivos con IA para evaluar la jerarquía visual, la legibilidad y el recorrido ocular antes del lanzamiento de un diseño.',
+        nombre: 'Analizadores de percepción visual (Attention Insight o modelos multimodales)',
+        razon: 'Evaluación algorítmica de la jerarquía visual, la legibilidad y la distribución del foco de atención antes de publicar un diseño.',
       },
       beneficioDirecto:
-        'Valida la eficacia de interfaces gráficas y portadas con métricas de atención visual antes de gastar presupuesto en pauta publicitaria.',
+        'Permite contrastar la claridad de interfaces gráficas y portadas con criterios objetivos de jerarquía visual antes de lanzar una campaña.',
       promptEjemplo: `[ROL]: Actúa como un experto en heurísticas de diseño UX/UI y psicología de la percepción visual.
 [CONTEXTO]: Se evaluará la captura de una página de destino (landing page) que busca maximizar el registro a un seminario web gratuito.
 [TAREA]: Evalúa la jerarquía visual de los elementos (titular, video, formulario y botón CTA), detecta puntos de fricción cognitiva y predice el recorrido del ojo del usuario.
