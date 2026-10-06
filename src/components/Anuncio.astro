@@ -15,9 +15,9 @@ const debeRenderizar = Boolean(adsenseClient || esDev);
 {debeRenderizar && (
   <aside
     aria-label="Publicidad"
-    class="anuncio-contenedor my-8 mx-auto w-full max-w-3xl min-h-[280px] flex flex-col items-center justify-center rounded-xl p-4 transition-all"
+    class="anuncio-contenedor my-8 mx-auto w-full max-w-3xl min-h-[280px] flex flex-col items-center justify-center p-4"
   >
-    <span class="text-[10px] font-semibold tracking-wider uppercase text-slate-400 dark:text-slate-500 mb-2 select-none">
+    <span class="text-[10px] font-semibold tracking-wider uppercase text-tinta-suave mb-2 select-none">
       Publicidad
     </span>
 
@@ -36,7 +36,7 @@ const debeRenderizar = Boolean(adsenseClient || esDev);
         </script>
       </div>
     ) : (
-      <div class="w-full h-full min-h-[240px] flex flex-col items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-800 rounded-lg p-6 text-center text-slate-400 dark:text-slate-600">
+      <div class="w-full h-full min-h-[240px] flex flex-col items-center justify-center border border-dashed border-linea p-6 text-center text-tinta-suave">
         <svg class="w-6 h-6 mb-2 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
           <polyline points="17 2 12 7 7 2" />
@@ -44,7 +44,7 @@ const debeRenderizar = Boolean(adsenseClient || esDev);
         <p class="text-xs font-medium">
           Espacio publicitario ({posicion})
         </p>
-        <span class="text-[10px] text-slate-400/80 mt-1">
+        <span class="text-[10px] text-tinta-suave mt-1">
           Solo visible en desarrollo (PUBLIC_ADSENSE_CLIENT no configurado)
         </span>
       </div>

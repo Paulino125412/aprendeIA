@@ -10,39 +10,39 @@ import ContactoCopiar from '../components/ContactoCopiar';
 >
   <div class="max-w-3xl mx-auto space-y-10">
     <!-- Migas de pan -->
-    <nav aria-label="Migas de pan" class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-      <a href="/" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <nav aria-label="Migas de pan" class="flex items-center gap-2 text-xs font-medium text-tinta-suave">
+      <a href="/" class="hover:text-indigo transition-colors">
         Inicio
       </a>
       <span>/</span>
-      <span class="text-slate-800 dark:text-slate-200 font-semibold truncate">
+      <span class="text-tinta font-semibold truncate">
         Contacto
       </span>
     </nav>
 
     <!-- Encabezado -->
-    <header class="space-y-4 border-b border-slate-200 pb-8 dark:border-slate-800">
-      <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 dark:text-indigo-300 dark:bg-indigo-950/60 rounded-full border border-indigo-200 dark:border-indigo-800">
+    <header class="space-y-3 border-b border-linea pb-8">
+      <p class="text-xs font-semibold text-tinta-suave">
         Canal directo
-      </div>
-      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-        Contacto y Sugerencias
+      </p>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-tinta">
+        Contacto y sugerencias
       </h1>
-      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+      <p class="text-base sm:text-lg text-tinta-suave leading-relaxed">
         ¿Tienes una propuesta formativa, encontraste un error en una guía o deseas sugerir un tema para futuros artículos? Nos encantará leerte.
       </p>
     </header>
 
     <!-- Tarjeta de contacto sin formularios -->
-    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900 shadow-xs space-y-6">
+    <section class="border border-linea bg-superficie p-6 sm:p-8 space-y-6">
       <div class="space-y-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        <span class="text-xs font-bold uppercase tracking-wider text-tinta-suave">
           Correo electrónico oficial
         </span>
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
           <a
             href={`mailto:${SITIO.emailContacto}`}
-            class="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 hover:underline break-all"
+            class="text-xl sm:text-2xl font-bold text-indigo hover:underline break-all"
           >
             {SITIO.emailContacto}
           </a>
@@ -52,49 +52,46 @@ import ContactoCopiar from '../components/ContactoCopiar';
         </div>
       </div>
 
-      <div class="border-t border-slate-100 pt-6 dark:border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-slate-600 dark:text-slate-300">
+      <div class="border-t border-linea pt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-tinta-suave">
         <div class="space-y-1">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-tinta">
             Tiempo de respuesta estimado
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+          <p class="text-xs text-tinta-suave leading-relaxed">
             Revisamos la bandeja de entrada continuamente y solemos responder en un plazo de <strong>24 a 48 horas hábiles</strong>.
           </p>
         </div>
 
         <div class="space-y-1">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-tinta">
             Privacidad de tu mensaje
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            No compartimos tu dirección con terceros ni la empleamos para listas de correo masivo. Consulta nuestra <a href="/privacidad" class="text-indigo-600 dark:text-indigo-400 hover:underline">Política de Privacidad</a>.
+          <p class="text-xs text-tinta-suave leading-relaxed">
+            No compartimos tu dirección con terceros ni la empleamos para listas de correo masivo. Consulta nuestra <a href="/privacidad" class="text-indigo hover:underline">Política de Privacidad</a>.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Motivos frecuentes de contacto -->
+    <!-- Motivos frecuentes de contacto (sin emojis) -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-      <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40 space-y-2">
-        <span class="text-2xl block">💡</span>
-        <h3 class="font-bold text-slate-900 dark:text-white">Ideas de contenido</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+      <div class="p-5 border border-linea bg-superficie space-y-2">
+        <h3 class="font-bold text-tinta">Ideas de contenido</h3>
+        <p class="text-xs text-tinta-suave leading-relaxed">
           Cuéntanos qué herramientas o desafíos de tu profesión te gustaría ver analizados con ejemplos de prompts.
         </p>
       </div>
 
-      <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40 space-y-2">
-        <span class="text-2xl block">🔍</span>
-        <h3 class="font-bold text-slate-900 dark:text-white">Correcciones técnicas</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+      <div class="p-5 border border-linea bg-superficie space-y-2">
+        <h3 class="font-bold text-tinta">Correcciones técnicas</h3>
+        <p class="text-xs text-tinta-suave leading-relaxed">
           Si detectas un enlace roto, un error de tipeo o un cambio reciente en un modelo, avísanos para corregirlo de inmediato.
         </p>
       </div>
 
-      <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/40 space-y-2">
-        <span class="text-2xl block">🤝</span>
-        <h3 class="font-bold text-slate-900 dark:text-white">Educación y alianzas</h3>
-        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+      <div class="p-5 border border-linea bg-superficie space-y-2">
+        <h3 class="font-bold text-tinta">Educación y alianzas</h3>
+        <p class="text-xs text-tinta-suave leading-relaxed">
           Abiertos a iniciativas pedagógicas, charlas y divulgación abierta sobre adopción responsable de la IA.
         </p>
       </div>

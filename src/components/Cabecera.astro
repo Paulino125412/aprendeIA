@@ -1,0 +1,434 @@
+---
+import { getCollection } from 'astro:content';
+import { CATEGORIAS } from '../data/categorias';
+import { SITIO } from '../config';
+
+const articulos = await getCollection('articulos');
+const conteoPorCategoria = new Map<string, number>();
+for (const art of articulos) {
+  const cat = art.data.categoria;
+  conteoPorCategoria.set(cat, (conteoPorCategoria.get(cat) || 0) + 1);
+}
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="w-full">
+  <!-- Fila principal sticky sin blur -->
+  <div class="sticky top-0 z-40 w-full bg-papel border-b border-linea">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <!-- Marca tipográfica: solo texto en font-display -->
+        <a href="/" class="font-display font-bold text-xl text-tinta tracking-tight hover:text-indigo transition-colors">
+          {SITIO.nombre}
+        </a>
+
+        <!-- Navegación escritorio (desde lg) -->
+        <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-6 text-sm font-semibold">
+          <a
+            href="/articulos"
+            class={`py-2 transition-colors ${pathname.startsWith('/articulos') ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'}`}
+          >
+            Artículos
+          </a>
+
+          <!-- Desplegable Categorías -->
+          <div class="relative" id="dropdown-cat-wrapper">
+            <button
+              type="button"
+              id="btn-dropdown-cat"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="flex items-center gap-1.5 py-2 text-tinta-suave hover:text-tinta transition-colors cursor-pointer rounded-[6px] px-1"
+            >
+              <span>Categorías</span>
+              <svg class="w-3.5 h-3.5 transition-transform duration-200" id="flecha-dropdown-cat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+
+            <div
+              id="panel-dropdown-cat"
+              hidden
+              class="absolute left-0 top-full mt-2 w-96 border border-linea bg-superficie p-3 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto"
+            >
+              <div class="grid grid-cols-1 gap-1">
+                {CATEGORIAS.map((cat) => {
+                  const cantidad = conteoPorCategoria.get(cat.slug) || 0;
+                  const etiqueta = cantidad > 0 ? (cantidad === 1 ? '1 artículo' : `${cantidad} artículos`) : 'Próximamente';
+                  return (
+                    <a
+                      href={`/categoria/${cat.slug}`}
+                      class={`p-2.5 border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors block`}
+                    >
+                      <div class="flex items-center justify-between gap-2">
+                        <span class={`text-xs font-bold ${cat.clases.texto}`}>
+                          {cat.nombre}
+                        </span>
+                        <span class="text-[11px] text-tinta-suave shrink-0 font-medium">
+                          {etiqueta}
+                        </span>
+                      </div>
+                      <p class="text-[11px] text-tinta-suave line-clamp-1 mt-0.5">
+                        {cat.descripcion}
+                      </p>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <!-- Desplegable Herramientas -->
+          <div class="relative" id="dropdown-herr-wrapper">
+            <button
+              type="button"
+              id="btn-dropdown-herr"
+              aria-expanded="false"
+              aria-haspopup="true"
+              class="flex items-center gap-1.5 py-2 text-tinta-suave hover:text-tinta transition-colors cursor-pointer rounded-[6px] px-1"
+            >
+              <span>Herramientas</span>
+              <svg class="w-3.5 h-3.5 transition-transform duration-200" id="flecha-dropdown-herr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+
+            <div
+              id="panel-dropdown-herr"
+              hidden
+              class="absolute left-0 top-full mt-2 w-72 border border-linea bg-superficie p-3 z-50"
+            >
+              <div class="space-y-1">
+                <a
+                  href="/articulos/hablar-con-la-ia"
+                  class="p-2.5 hover:bg-papel transition-colors block"
+                >
+                  <span class="text-xs font-bold text-tinta block">
+                    Constructor de prompts
+                  </span>
+                  <span class="text-[11px] text-tinta-suave block mt-0.5">
+                    Taller de formulación en 4 pasos
+                  </span>
+                </a>
+                <a
+                  href="/articulos/beneficios-ia"
+                  class="p-2.5 hover:bg-papel transition-colors block"
+                >
+                  <span class="text-xs font-bold text-tinta block">
+                    Explorador por profesión
+                  </span>
+                  <span class="text-[11px] text-tinta-suave block mt-0.5">
+                    Casos aplicados a disciplinas reales
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="/sobre-nosotros"
+            class={`py-2 transition-colors ${pathname === '/sobre-nosotros' ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'}`}
+          >
+            Sobre nosotros
+          </a>
+        </nav>
+      </div>
+
+      <!-- Acciones a la derecha -->
+      <div class="flex items-center gap-2">
+        <!-- Botón de Búsqueda -->
+        <a
+          href="/buscar"
+          aria-label="Buscar"
+          class="p-2 rounded-[6px] text-tinta-suave hover:text-tinta hover:bg-superficie border border-transparent hover:border-linea transition-colors"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </a>
+
+        <!-- Botón de Modo Oscuro -->
+        <button
+          id="btn-tema"
+          type="button"
+          aria-label="Cambiar a modo oscuro"
+          class="p-2 rounded-[6px] text-tinta-suave hover:text-tinta hover:bg-superficie border border-transparent hover:border-linea transition-colors cursor-pointer"
+        >
+          <!-- Luna para modo claro -->
+          <svg class="w-5 h-5 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <!-- Sol para modo oscuro -->
+          <svg class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+
+        <!-- Botón Menú Móvil -->
+        <button
+          type="button"
+          id="btn-movil-menu"
+          aria-expanded="false"
+          aria-controls="panel-movil-menu"
+          aria-label="Abrir menú de navegación"
+          class="lg:hidden p-2 rounded-[6px] text-tinta-suave hover:text-tinta hover:bg-superficie border border-transparent hover:border-linea cursor-pointer"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Franja secundaria (solo desde lg), no sticky: 9 categorías -->
+  <nav
+    aria-label="Categorías temáticas"
+    class="hidden lg:block border-b border-linea bg-papel"
+  >
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-6 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-2.5 text-xs font-semibold">
+        {CATEGORIAS.map((cat) => {
+          const esActiva = pathname === `/categoria/${cat.slug}` || pathname.startsWith(`/categoria/${cat.slug}/`);
+          return (
+            <a
+              href={`/categoria/${cat.slug}`}
+              class={`whitespace-nowrap transition-colors py-1 ${
+                esActiva
+                  ? `border-b-2 ${cat.clases.subrayado} ${cat.clases.texto} font-bold`
+                  : 'border-b-2 border-transparent text-tinta-suave hover:text-tinta'
+              }`}
+            >
+              {cat.nombre}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Panel de Menú Móvil a pantalla completa -->
+  <div
+    id="panel-movil-menu"
+    hidden
+    class="fixed inset-0 z-50 bg-papel overflow-y-auto p-6 flex flex-col justify-between"
+  >
+    <div class="space-y-6">
+      <div class="flex items-center justify-between pb-4 border-b border-linea">
+        <a href="/" class="font-display font-bold text-xl text-tinta">
+          {SITIO.nombre}
+        </a>
+        <button
+          type="button"
+          id="btn-cerrar-movil"
+          aria-label="Cerrar menú"
+          class="p-2 rounded-[6px] text-tinta-suave hover:text-tinta border border-linea cursor-pointer"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Buscador en móvil -->
+      <form action="/buscar" method="GET" class="space-y-1.5">
+        <label for="busqueda-movil" class="block text-xs font-semibold uppercase tracking-wider text-tinta-suave">
+          Buscar
+        </label>
+        <div class="flex gap-2">
+          <input
+            type="search"
+            id="busqueda-movil"
+            name="q"
+            placeholder="Buscar guías y artículos..."
+            class="flex-1 px-3 py-2 text-sm bg-superficie border border-linea text-tinta rounded-[6px] focus:outline-none focus:ring-2 focus:ring-indigo"
+          />
+          <button
+            type="submit"
+            class="px-4 py-2 text-xs font-bold bg-indigo text-white rounded-[6px] cursor-pointer"
+          >
+            Buscar
+          </button>
+        </div>
+      </form>
+
+      <!-- Navegación principal móvil -->
+      <nav aria-label="Menú principal móvil" class="space-y-2 border-t border-linea pt-4">
+        <a href="/" class="block py-2 text-base font-bold text-tinta hover:text-indigo">
+          Inicio
+        </a>
+        <a href="/articulos" class="block py-2 text-base font-bold text-tinta hover:text-indigo">
+          Artículos y guías
+        </a>
+        <a href="/sobre-nosotros" class="block py-2 text-base font-bold text-tinta hover:text-indigo">
+          Sobre nosotros
+        </a>
+        <a href="/contacto" class="block py-2 text-base font-bold text-tinta hover:text-indigo">
+          Contacto
+        </a>
+      </nav>
+
+      <!-- Herramientas móvil -->
+      <div class="border-t border-linea pt-4 space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-tinta-suave block">
+          Herramientas
+        </span>
+        <a href="/articulos/hablar-con-la-ia" class="block py-1.5 text-sm text-tinta font-semibold hover:text-indigo">
+          Constructor de prompts
+        </a>
+        <a href="/articulos/beneficios-ia" class="block py-1.5 text-sm text-tinta font-semibold hover:text-indigo">
+          Explorador por profesión
+        </a>
+      </div>
+
+      <!-- Categorías móvil -->
+      <div class="border-t border-linea pt-4 space-y-2">
+        <span class="text-xs font-bold uppercase tracking-wider text-tinta-suave block">
+          Categorías
+        </span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+          {CATEGORIAS.map((cat) => (
+            <a
+              href={`/categoria/${cat.slug}`}
+              class={`py-1.5 px-2 border-l-[3px] ${cat.clases.bordeLateral} text-xs font-semibold text-tinta hover:bg-superficie`}
+            >
+              {cat.nombre}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Enlaces legales móvil -->
+    <div class="border-t border-linea pt-4 mt-8 flex items-center justify-between text-xs text-tinta-suave">
+      <div class="flex gap-4">
+        <a href="/privacidad" class="hover:underline">Privacidad</a>
+        <a href="/terminos" class="hover:underline">Términos</a>
+      </div>
+      <p>© {SITIO.nombre}</p>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function() {
+    // Control Desplegable Categorías
+    const btnCat = document.getElementById('btn-dropdown-cat');
+    const panelCat = document.getElementById('panel-dropdown-cat');
+    const flechaCat = document.getElementById('flecha-dropdown-cat');
+    const wrapperCat = document.getElementById('dropdown-cat-wrapper');
+
+    // Control Desplegable Herramientas
+    const btnHerr = document.getElementById('btn-dropdown-herr');
+    const panelHerr = document.getElementById('panel-dropdown-herr');
+    const flechaHerr = document.getElementById('flecha-dropdown-herr');
+    const wrapperHerr = document.getElementById('dropdown-herr-wrapper');
+
+    function cerrarDropdownCat() {
+      if (!panelCat) return;
+      panelCat.setAttribute('hidden', '');
+      btnCat?.setAttribute('aria-expanded', 'false');
+      flechaCat?.classList.remove('rotate-180');
+    }
+
+    function abrirDropdownCat() {
+      cerrarDropdownHerr();
+      if (!panelCat) return;
+      panelCat.removeAttribute('hidden');
+      btnCat?.setAttribute('aria-expanded', 'true');
+      flechaCat?.classList.add('rotate-180');
+    }
+
+    function cerrarDropdownHerr() {
+      if (!panelHerr) return;
+      panelHerr.setAttribute('hidden', '');
+      btnHerr?.setAttribute('aria-expanded', 'false');
+      flechaHerr?.classList.remove('rotate-180');
+    }
+
+    function abrirDropdownHerr() {
+      cerrarDropdownCat();
+      if (!panelHerr) return;
+      panelHerr.removeAttribute('hidden');
+      btnHerr?.setAttribute('aria-expanded', 'true');
+      flechaHerr?.classList.add('rotate-180');
+    }
+
+    if (btnCat && panelCat) {
+      btnCat.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const abierto = btnCat.getAttribute('aria-expanded') === 'true';
+        if (abierto) cerrarDropdownCat();
+        else abrirDropdownCat();
+      });
+    }
+
+    if (btnHerr && panelHerr) {
+      btnHerr.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const abierto = btnHerr.getAttribute('aria-expanded') === 'true';
+        if (abierto) cerrarDropdownHerr();
+        else abrirDropdownHerr();
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      if (wrapperCat && !wrapperCat.contains(e.target)) cerrarDropdownCat();
+      if (wrapperHerr && !wrapperHerr.contains(e.target)) cerrarDropdownHerr();
+    });
+
+    // Control Menú Móvil Pantalla Completa
+    const btnMovil = document.getElementById('btn-movil-menu');
+    const btnCerrarMovil = document.getElementById('btn-cerrar-movil');
+    const panelMovil = document.getElementById('panel-movil-menu');
+
+    function abrirMenuMovil() {
+      if (!panelMovil) return;
+      panelMovil.removeAttribute('hidden');
+      btnMovil?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      const inputBusqueda = document.getElementById('busqueda-movil');
+      inputBusqueda?.focus();
+    }
+
+    function cerrarMenuMovil() {
+      if (!panelMovil) return;
+      panelMovil.setAttribute('hidden', '');
+      btnMovil?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      btnMovil?.focus();
+    }
+
+    btnMovil?.addEventListener('click', function() {
+      const abierto = btnMovil.getAttribute('aria-expanded') === 'true';
+      if (abierto) cerrarMenuMovil();
+      else abrirMenuMovil();
+    });
+
+    btnCerrarMovil?.addEventListener('click', cerrarMenuMovil);
+
+    // Cierre con Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        cerrarDropdownCat();
+        cerrarDropdownHerr();
+        if (panelMovil && !panelMovil.hasAttribute('hidden')) {
+          cerrarMenuMovil();
+        }
+      }
+    });
+  })();
+</script>

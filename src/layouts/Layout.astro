@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { CATEGORIAS } from '../data/categorias';
 import { SITIO } from '../config';
+import Cabecera from '../components/Cabecera.astro';
 import AvisoCookies from '../components/AvisoCookies.astro';
 
 interface Props {
@@ -61,201 +62,58 @@ const anioActual = new Date().getFullYear();
       })();
     </script>
   </head>
-  <body class="min-h-full flex flex-col justify-between bg-slate-100 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
+  <body class="min-h-full flex flex-col justify-between bg-papel text-tinta font-display antialiased selection:bg-indigo selection:text-white">
     <!-- Enlace accesible de salto al contenido -->
     <a
       href="#contenido-principal"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-indigo text-white font-semibold rounded-[6px] shadow-sm"
     >
       Saltar al contenido
     </a>
 
-    <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-6">
-          <a href="/" class="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white font-extrabold text-sm shadow-xs">IA</span>
-            <span>{SITIO.nombre}</span>
-          </a>
-
-          <!-- Navegación escritorio -->
-          <nav aria-label="Navegación principal" class="hidden md:flex items-center gap-4 text-sm font-semibold">
-            <a href="/articulos" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors py-2">
-              Artículos
-            </a>
-
-            <!-- Menú desplegable Categorías -->
-            <div class="relative" id="dropdown-categorias-wrapper">
-              <button
-                type="button"
-                id="btn-dropdown-categorias"
-                aria-expanded="false"
-                aria-haspopup="true"
-                class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors py-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md px-1"
-              >
-                <span>Categorías</span>
-                <svg class="w-4 h-4 transition-transform duration-200" id="dropdown-icono-flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-
-              <div
-                id="panel-dropdown-categorias"
-                hidden
-                class="absolute left-0 top-full mt-2 w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl dark:border-slate-800 dark:bg-slate-900 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto"
-              >
-                <div class="grid grid-cols-1 gap-1">
-                  {CATEGORIAS.map((cat) => (
-                    <a
-                      href={`/categoria/${cat.slug}`}
-                      class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-colors group"
-                    >
-                      <span class="text-xl shrink-0 mt-0.5">{cat.emoji}</span>
-                      <div class="flex flex-col">
-                        <span class="text-xs font-bold text-slate-800 group-hover:text-indigo-600 dark:text-slate-200 dark:group-hover:text-indigo-400">
-                          {cat.nombre}
-                        </span>
-                        <span class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">
-                          {cat.descripcion}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Botón de Tema (Oscuro / Claro) -->
-          <button
-            id="btn-tema"
-            type="button"
-            aria-label="Cambiar a modo oscuro"
-            class="p-2 rounded-lg text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-slate-300 dark:hover:bg-slate-800 dark:focus:ring-offset-slate-900 transition-colors cursor-pointer"
-          >
-            <!-- Icono Luna (visible en modo claro) -->
-            <svg class="w-5 h-5 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-            <!-- Icono Sol (visible en modo oscuro) -->
-            <svg class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="5" />
-              <line x1="12" y1="1" x2="12" y2="3" />
-              <line x1="12" y1="21" x2="12" y2="23" />
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-              <line x1="1" y1="12" x2="3" y2="12" />
-              <line x1="21" y1="12" x2="23" y2="12" />
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-            </svg>
-          </button>
-
-          <!-- Botón Hamburguesa Móvil -->
-          <button
-            type="button"
-            id="btn-movil-menu"
-            aria-expanded="false"
-            aria-controls="panel-movil-menu"
-            aria-label="Abrir menú de navegación"
-            class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
-          >
-            <svg id="icono-hamburguesa" class="w-5 h-5 block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-            <svg id="icono-cerrar" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Panel de Menú Móvil -->
-      <div
-        id="panel-movil-menu"
-        hidden
-        class="md:hidden border-b border-slate-200 bg-white px-4 py-4 dark:border-slate-800 dark:bg-slate-900 max-h-[calc(100vh-4.5rem)] overflow-y-auto"
-      >
-        <nav aria-label="Menú móvil" class="flex flex-col gap-3">
-          <a href="/" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
-            Inicio
-          </a>
-          <a href="/articulos" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
-            Todos los artículos
-          </a>
-          <a href="/sobre-nosotros" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
-            Sobre nosotros
-          </a>
-          <a href="/contacto" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
-            Contacto
-          </a>
-
-          <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-2">
-              Categorías
-            </span>
-            <div class="grid grid-cols-1 gap-1">
-              {CATEGORIAS.map((cat) => (
-                <a
-                  href={`/categoria/${cat.slug}`}
-                  class="flex items-center gap-2.5 py-1.5 px-2 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                >
-                  <span>{cat.emoji}</span>
-                  <span>{cat.nombre}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
+    <!-- Cabecera editorial -->
+    <Cabecera />
 
     <main id="contenido-principal" class="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
       <slot />
     </main>
 
-    <footer class="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 mt-16 py-12">
+    <footer class="border-t border-linea bg-superficie mt-16 py-12">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8">
           <!-- Columna Marca -->
           <div class="sm:col-span-2 lg:col-span-2 space-y-3">
-            <a href="/" class="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white">
-              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-white font-extrabold text-xs">IA</span>
-              <span>{SITIO.nombre}</span>
+            <a href="/" class="font-display font-bold text-lg text-tinta hover:text-indigo transition-colors">
+              {SITIO.nombre}
             </a>
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+            <p class="text-xs text-tinta-suave leading-relaxed max-w-sm">
               {SITIO.eslogan} Plataforma formativa e interactiva desarrollada desde {SITIO.pais}.
             </p>
           </div>
 
           <!-- Columna Sitio -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
               Sitio
             </h3>
             <ul class="space-y-2 text-xs">
               <li>
-                <a href="/" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                <a href="/" class="text-tinta-suave hover:text-indigo transition-colors">
                   Inicio
                 </a>
               </li>
               <li>
-                <a href="/articulos" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
-                  Artículos y Guías
+                <a href="/articulos" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Artículos y guías
                 </a>
               </li>
               <li>
-                <a href="/sobre-nosotros" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                <a href="/sobre-nosotros" class="text-tinta-suave hover:text-indigo transition-colors">
                   Sobre nosotros
                 </a>
               </li>
               <li>
-                <a href="/contacto" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                <a href="/contacto" class="text-tinta-suave hover:text-indigo transition-colors">
                   Contacto
                 </a>
               </li>
@@ -264,17 +122,17 @@ const anioActual = new Date().getFullYear();
 
           <!-- Columna Legal -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
               Legal
             </h3>
             <ul class="space-y-2 text-xs">
               <li>
-                <a href="/privacidad" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                <a href="/privacidad" class="text-tinta-suave hover:text-indigo transition-colors">
                   Política de Privacidad
                 </a>
               </li>
               <li>
-                <a href="/terminos" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                <a href="/terminos" class="text-tinta-suave hover:text-indigo transition-colors">
                   Términos de Uso
                 </a>
               </li>
@@ -282,7 +140,7 @@ const anioActual = new Date().getFullYear();
                 <button
                   type="button"
                   id="btn-preferencias-cookies"
-                  class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors text-left cursor-pointer focus:outline-none focus:underline"
+                  class="text-tinta-suave hover:text-indigo transition-colors text-left cursor-pointer focus:outline-none focus:underline"
                 >
                   Preferencias de cookies
                 </button>
@@ -290,18 +148,17 @@ const anioActual = new Date().getFullYear();
             </ul>
           </div>
 
-          <!-- Columna Categorías -->
+          <!-- Columna Categorías (9 categorías completas sin emojis) -->
           <div class="sm:col-span-2 lg:col-span-2 space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
               Categorías
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
               {CATEGORIAS.map((cat) => (
                 <a
                   href={`/categoria/${cat.slug}`}
-                  class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5 truncate min-w-0"
+                  class="text-tinta-suave hover:text-indigo transition-colors flex items-center gap-1.5 truncate min-w-0"
                 >
-                  <span class="shrink-0">{cat.emoji}</span>
                   <span class="truncate">{cat.nombre}</span>
                 </a>
               ))}
@@ -309,7 +166,7 @@ const anioActual = new Date().getFullYear();
           </div>
         </div>
 
-        <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+        <div class="mt-12 pt-6 border-t border-linea flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-tinta-suave">
           <p>© {anioActual} {SITIO.nombre}. {SITIO.autor}. Todos los derechos reservados.</p>
           <p>Educación abierta en español neutro.</p>
         </div>
@@ -352,10 +209,9 @@ const anioActual = new Date().getFullYear();
     <!-- Componente de aviso de cookies -->
     <AvisoCookies />
 
-    <!-- Scripts vanilla para Dropdowns, Menú Móvil y Modo Oscuro -->
+    <!-- Script para control de tema claro/oscuro -->
     <script is:inline>
       (function() {
-        // 1. Control del botón de modo oscuro
         const botonTema = document.getElementById('btn-tema');
         if (botonTema) {
           function actualizarAriaLabel(esOscuro) {
@@ -373,73 +229,6 @@ const anioActual = new Date().getFullYear();
               localStorage.setItem('tema', esOscuro ? 'oscuro' : 'claro');
             } catch (_) {}
             actualizarAriaLabel(esOscuro);
-          });
-        }
-
-        // 2. Control de Dropdown de Categorías en escritorio
-        const btnDropdown = document.getElementById('btn-dropdown-categorias');
-        const panelDropdown = document.getElementById('panel-dropdown-categorias');
-        const flechaDropdown = document.getElementById('dropdown-icono-flecha');
-        const wrapperDropdown = document.getElementById('dropdown-categorias-wrapper');
-
-        function cerrarDropdown() {
-          if (!panelDropdown) return;
-          panelDropdown.setAttribute('hidden', '');
-          btnDropdown?.setAttribute('aria-expanded', 'false');
-          flechaDropdown?.classList.remove('rotate-180');
-        }
-
-        function abrirDropdown() {
-          if (!panelDropdown) return;
-          panelDropdown.removeAttribute('hidden');
-          btnDropdown?.setAttribute('aria-expanded', 'true');
-          flechaDropdown?.classList.add('rotate-180');
-        }
-
-        if (btnDropdown && panelDropdown) {
-          btnDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const estaAbierto = btnDropdown.getAttribute('aria-expanded') === 'true';
-            if (estaAbierto) {
-              cerrarDropdown();
-            } else {
-              abrirDropdown();
-            }
-          });
-
-          document.addEventListener('click', function(e) {
-            if (wrapperDropdown && !wrapperDropdown.contains(e.target)) {
-              cerrarDropdown();
-            }
-          });
-
-          document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-              cerrarDropdown();
-            }
-          });
-        }
-
-        // 3. Control de Menú Móvil
-        const btnMovil = document.getElementById('btn-movil-menu');
-        const panelMovil = document.getElementById('panel-movil-menu');
-        const iconoHamburguesa = document.getElementById('icono-hamburguesa');
-        const iconoCerrar = document.getElementById('icono-cerrar');
-
-        if (btnMovil && panelMovil) {
-          btnMovil.addEventListener('click', function() {
-            const abierto = btnMovil.getAttribute('aria-expanded') === 'true';
-            if (abierto) {
-              panelMovil.setAttribute('hidden', '');
-              btnMovil.setAttribute('aria-expanded', 'false');
-              iconoHamburguesa?.classList.remove('hidden');
-              iconoCerrar?.classList.add('hidden');
-            } else {
-              panelMovil.removeAttribute('hidden');
-              btnMovil.setAttribute('aria-expanded', 'true');
-              iconoHamburguesa?.classList.add('hidden');
-              iconoCerrar?.classList.remove('hidden');
-            }
           });
         }
       })();

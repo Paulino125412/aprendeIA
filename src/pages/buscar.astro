@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Buscar | AprendeIA"
+  description="Encuentra artículos, talleres prácticos y conceptos sobre inteligencia artificial."
+>
+  <div class="max-w-3xl mx-auto space-y-8">
+    <header class="space-y-2 border-b border-linea pb-6">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-tinta">
+        Buscar
+      </h1>
+      <p class="text-sm text-tinta-suave">
+        Encuentra artículos, explicaciones y talleres prácticos en toda la plataforma.
+      </p>
+    </header>
+
+    <form id="form-buscar" role="search" class="space-y-2" onsubmit="return false;">
+      <label for="input-busqueda" class="block text-xs font-semibold uppercase tracking-wider text-tinta-suave">
+        Términos de búsqueda
+      </label>
+      <div class="relative">
+        <input
+          type="search"
+          id="input-busqueda"
+          name="q"
+          placeholder="Ejemplo: prompting, educación, ética, modelos..."
+          autocomplete="off"
+          class="w-full px-4 py-3 bg-superficie border border-linea text-tinta placeholder:text-tinta-suave text-sm rounded-[6px] focus:outline-none focus:ring-2 focus:ring-indigo"
+        />
+      </div>
+    </form>
+
+    <div id="contenedor-estado" class="text-xs text-tinta-suave" aria-live="polite">
+      Escribe al menos una palabra para comenzar la búsqueda.
+    </div>
+
+    <div id="estado-vacio" class="hidden p-8 border border-linea bg-superficie text-center space-y-2">
+      <p class="text-sm font-semibold text-tinta">No se encontraron artículos</p>
+      <p class="text-xs text-tinta-suave">
+        No hay resultados que coincidan con todas las palabras ingresadas. Prueba con sinónimos o términos más generales.
+      </p>
+    </div>
+
+    <ul id="lista-resultados" class="divide-y divide-linea border-y border-linea bg-superficie hidden" role="list">
+      <!-- Los resultados se inyectan dinámicamente con vanilla JS -->
+    </ul>
+  </div>
+
+  <script is:inline>
+    (function() {
+      const input = document.getElementById('input-busqueda');
+      const contenedorEstado = document.getElementById('contenedor-estado');
+      const estadoVacio = document.getElementById('estado-vacio');
+      const listaResultados = document.getElementById('lista-resultados');
+
+      let indiceArticulos = [];
+      let indiceCargado = false;
+
+      function normalizar(texto) {
+        if (!texto) return '';
+        return texto
+          .toString()
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .trim();
+      }
+
+      async function cargarIndice() {
+        if (indiceCargado) return;
+        try {
+          const res = await fetch('/buscar.json');
+          if (!res.ok) throw new Error('Error al cargar índice');
+          indiceArticulos = await res.json();
+          indiceCargado = true;
+        } catch (err) {
+          if (contenedorEstado) {
+            contenedorEstado.textContent = 'No se pudo cargar el índice de búsqueda.';
+          }
+        }
+      }
+
+      function renderizarResultados(resultados) {
+        if (!listaResultados || !contenedorEstado || !estadoVacio) return;
+
+        if (resultados.length === 0) {
+          listaResultados.innerHTML = '';
+          listaResultados.classList.add('hidden');
+          estadoVacio.classList.remove('hidden');
+          contenedorEstado.textContent = '0 resultados encontrados.';
+          return;
+        }
+
+        estadoVacio.classList.add('hidden');
+        listaResultados.classList.remove('hidden');
+        contenedorEstado.textContent = `${resultados.length} ${resultados.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}.`;
+
+        listaResultados.innerHTML = resultados.map((item) => {
+          return `
+            <li class="p-5 space-y-2 hover:bg-papel transition-colors">
+              <div class="flex items-center gap-3 text-xs text-tinta-suave">
+                <a href="/categoria/${item.categoria.slug}" class="font-semibold text-indigo hover:underline">
+                  ${item.categoria.nombre}
+                </a>
+                <span>${item.minutos} min de lectura</span>
+              </div>
+              <h2 class="text-lg font-bold text-tinta tracking-tight">
+                <a href="${item.url}" class="hover:text-indigo transition-colors">
+                  ${item.titulo}
+                </a>
+              </h2>
+              <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed line-clamp-2">
+                ${item.descripcion}
+              </p>
+            </li>
+          `;
+        }).join('');
+      }
+
+      function ejecutarBusqueda() {
+        const query = (input?.value || '').trim();
+        const textoNormalizado = normalizar(query);
+
+        if (!textoNormalizado) {
+          if (listaResultados) {
+            listaResultados.innerHTML = '';
+            listaResultados.classList.add('hidden');
+          }
+          if (estadoVacio) estadoVacio.classList.add('hidden');
+          if (contenedorEstado) {
+            contenedorEstado.textContent = 'Escribe al menos una palabra para comenzar la búsqueda.';
+          }
+          return;
+        }
+
+        const palabras = textoNormalizado.split(/\s+/).filter(Boolean);
+
+        const resultados = indiceArticulos.filter((item) => {
+          const textoCompleto = normalizar(
+            `${item.titulo} ${item.descripcion} ${item.categoria.nombre} ${(item.etiquetas || []).join(' ')}`
+          );
+          // Requiere que TODAS las palabras escritas aparezcan
+          return palabras.every((palabra) => textoCompleto.includes(palabra));
+        });
+
+        // Ordenamiento por relevancia (coincidencias en título primero, luego fecha reciente)
+        resultados.sort((a, b) => {
+          const tituloA = normalizar(a.titulo);
+          const tituloB = normalizar(b.titulo);
+          const puntosA = palabras.filter((p) => tituloA.includes(p)).length;
+          const puntosB = palabras.filter((p) => tituloB.includes(p)).length;
+
+          if (puntosB !== puntosA) {
+            return puntosB - puntosA;
+          }
+          return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+        });
+
+        renderizarResultados(resultados, palabras);
+      }
+
+      async function inicializar() {
+        await cargarIndice();
+
+        // Parámetro de URL ?q=...
+        const params = new URLSearchParams(window.location.search);
+        const qInicial = params.get('q');
+        if (qInicial && input) {
+          input.value = qInicial;
+          ejecutarBusqueda();
+        }
+
+        input?.addEventListener('input', ejecutarBusqueda);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', inicializar);
+      } else {
+        inicializar();
+      }
+    })();
+  </script>
+</Layout>

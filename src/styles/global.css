@@ -1,10 +1,115 @@
 @import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/source-serif-4";
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
+
+:root {
+  --color-papel: #F7F7FB;
+  --color-superficie: #FFFFFF;
+  --color-tinta: #161A2E;
+  --color-tinta-suave: #4A4F68;
+  --color-linea: #D9DCE8;
+  --color-indigo: #4338CA;
+  --color-esmeralda: #059669;
+  --color-rosa: #BE123C;
+}
+
+.dark {
+  --color-papel: #0E1120;
+  --color-superficie: #151934;
+  --color-tinta: #E8EAF4;
+  --color-tinta-suave: #A3A8C3;
+  --color-linea: #2A2F52;
+  --color-indigo: #8B93FF;
+  --color-esmeralda: #34D399;
+  --color-rosa: #FB7185;
+}
+
+@theme {
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-texto: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
+
+  --color-papel: var(--color-papel);
+  --color-superficie: var(--color-superficie);
+  --color-tinta: var(--color-tinta);
+  --color-tinta-suave: var(--color-tinta-suave);
+  --color-linea: var(--color-linea);
+  --color-indigo: var(--color-indigo);
+  --color-esmeralda: var(--color-esmeralda);
+  --color-rosa: var(--color-rosa);
+}
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: var(--font-display);
+    background-color: var(--color-papel);
+    color: var(--color-tinta);
+  }
+
+  body {
+    background-color: var(--color-papel);
+    color: var(--color-tinta);
+    font-family: var(--font-display);
+  }
+
+  /* Artículos y páginas legales: Source Serif 4, 1.125rem, line-height 1.75, max 68ch */
+  .prose {
+    font-family: var(--font-texto);
+    font-size: 1.125rem;
+    line-height: 1.75;
+    max-width: 68ch;
+    color: var(--color-tinta);
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    font-family: var(--font-display);
+    color: var(--color-tinta);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  .prose strong,
+  .prose b {
+    color: var(--color-tinta);
+    font-weight: 600;
+  }
+
+  .prose a {
+    color: var(--color-indigo);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.875em;
+  }
+
+  /* Accesibilidad: respeta prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Accesibilidad: foco visible con contraste AA */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-indigo);
+    outline-offset: 2px;
   }
 }

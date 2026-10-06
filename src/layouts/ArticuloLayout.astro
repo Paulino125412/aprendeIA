@@ -54,71 +54,52 @@ const siguiente = indiceActual >= 0 && indiceActual < deMismaCategoria.length - 
 <Layout title={`${titulo} | AprendeIA`} description={descripcion}>
   <div class="max-w-6xl mx-auto">
     <!-- Migas de pan accesibles -->
-    <nav aria-label="Migas de pan" class="mb-6 flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 flex-wrap">
-      <a href="/" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <nav aria-label="Migas de pan" class="mb-6 flex items-center gap-2 text-xs font-medium text-tinta-suave flex-wrap">
+      <a href="/" class="hover:text-indigo transition-colors">
         Inicio
       </a>
       <span>/</span>
       {infoCategoria && (
         <>
-          <a href={`/categoria/${infoCategoria.slug}`} class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
-            <span>{infoCategoria.emoji}</span>
-            <span>{infoCategoria.nombre}</span>
+          <a href={`/categoria/${infoCategoria.slug}`} class={`hover:underline ${infoCategoria.clases.texto}`}>
+            {infoCategoria.nombre}
           </a>
           <span>/</span>
         </>
       )}
-      <span class="text-slate-800 dark:text-slate-200 font-semibold truncate max-w-xs sm:max-w-md">
+      <span class="text-tinta font-semibold truncate max-w-xs sm:max-w-md">
         {titulo}
       </span>
     </nav>
 
     <!-- Cabecera del Artículo -->
-    <header class="mb-8 space-y-4 border-b border-slate-200 pb-8 dark:border-slate-800">
+    <header class="mb-8 space-y-4 border-b border-linea pb-8">
       {infoCategoria && (
         <a
           href={`/categoria/${infoCategoria.slug}`}
-          class={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border transition-opacity hover:opacity-80 ${infoCategoria.clases.badge}`}
+          class={`font-display text-xs font-bold ${infoCategoria.clases.texto} hover:underline block`}
         >
-          <span>{infoCategoria.emoji}</span>
-          <span>{infoCategoria.nombre}</span>
+          {infoCategoria.nombre}
         </a>
       )}
 
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-tinta leading-tight">
         {titulo}
       </h1>
 
-      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl">
+      <p class="text-lg text-tinta-suave leading-relaxed max-w-4xl">
         {descripcion}
       </p>
 
-      <div class="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 flex-wrap pt-2">
-        <div class="flex items-center gap-1.5">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
-          <time datetime={fecha.toISOString()}>Publicado el {fechaFormateada}</time>
-        </div>
-
+      <!-- Metadatos limpios separados por espacio -->
+      <div class="flex items-center gap-4 text-xs text-tinta-suave flex-wrap pt-2">
+        <time datetime={fecha.toISOString()}>Publicado el {fechaFormateada}</time>
         {actualizadoFormateado && (
-          <div class="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-medium">
-            <span>•</span>
-            <span>Actualizado: {actualizadoFormateado}</span>
-          </div>
+          <span class="text-indigo font-medium">
+            Actualizado el {actualizadoFormateado}
+          </span>
         )}
-
-        <div class="flex items-center gap-1.5">
-          <span>•</span>
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          <span>{tiempoLecturaMinutos} min de lectura</span>
-        </div>
+        <span>{tiempoLecturaMinutos} min de lectura</span>
       </div>
     </header>
 
@@ -129,30 +110,30 @@ const siguiente = indiceActual >= 0 && indiceActual < deMismaCategoria.length - 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-8">
       <!-- Cuerpo del artículo -->
       <div class="lg:col-span-8 min-w-0">
-        <!-- TOC versión móvil (aparece al inicio en pantallas pequeñas) -->
+        <!-- TOC versión móvil -->
         <div class="lg:hidden">
           <TablaContenido headings={headings} />
         </div>
 
-        <article class="prose prose-lg dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 leading-relaxed [&_h2]:scroll-mt-24 [&_h3]:scroll-mt-24 [&_h4]:scroll-mt-24">
+        <article class="prose prose-lg max-w-none leading-relaxed [&_h2]:scroll-mt-24 [&_h3]:scroll-mt-24 [&_h4]:scroll-mt-24">
           <slot />
         </article>
 
         <!-- Anuncio final después del contenido -->
         <Anuncio posicion="final" />
 
-        <!-- Navegación Anterior / Siguiente dentro de la categoría -->
+        <!-- Navegación Anterior / Siguiente dentro de la categoría (sin flechas) -->
         {(anterior || siguiente) && (
-          <nav aria-label="Navegación entre artículos" class="my-10 pt-6 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <nav aria-label="Navegación entre artículos" class="my-10 pt-6 border-t border-linea grid grid-cols-1 sm:grid-cols-2 gap-4">
             {anterior ? (
               <a
                 href={`/articulos/${anterior.id}`}
-                class="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 transition-colors group"
+                class="flex flex-col p-4 border border-linea bg-superficie hover:border-indigo transition-colors group"
               >
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1">
-                  ← Artículo anterior
+                <span class="text-xs font-semibold text-tinta-suave mb-1">
+                  Artículo anterior
                 </span>
-                <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-2">
+                <span class="text-sm font-bold text-tinta group-hover:text-indigo line-clamp-2">
                   {anterior.data.titulo}
                 </span>
               </a>
@@ -161,12 +142,12 @@ const siguiente = indiceActual >= 0 && indiceActual < deMismaCategoria.length - 
             {siguiente ? (
               <a
                 href={`/articulos/${siguiente.id}`}
-                class="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-500 transition-colors text-right group"
+                class="flex flex-col p-4 border border-linea bg-superficie hover:border-indigo transition-colors text-right group"
               >
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1 flex items-center justify-end gap-1">
-                  Siguiente artículo →
+                <span class="text-xs font-semibold text-tinta-suave mb-1">
+                  Siguiente artículo
                 </span>
-                <span class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 line-clamp-2">
+                <span class="text-sm font-bold text-tinta group-hover:text-indigo line-clamp-2">
                   {siguiente.data.titulo}
                 </span>
               </a>
