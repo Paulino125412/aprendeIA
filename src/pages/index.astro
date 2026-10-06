@@ -1,139 +1,381 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import { CATEGORIAS } from '../data/categorias';
+import HeroDemo from '../components/HeroDemo';
+import Anuncio from '../components/Anuncio.astro';
+import { CATEGORIAS, getCategoria } from '../data/categorias';
+
+const articulos = await getCollection('articulos');
+const articulosOrdenados = articulos.sort(
+  (a, b) => b.data.fecha.getTime() - a.data.fecha.getTime()
+);
+
+const conteoCategorias = new Map<string, number>();
+for (const art of articulos) {
+  conteoCategorias.set(art.data.categoria, (conteoCategorias.get(art.data.categoria) || 0) + 1);
+}
+
+const categoriasConArticulos = CATEGORIAS.filter((c) => (conteoCategorias.get(c.slug) || 0) > 0);
+const categoriasSinArticulos = CATEGORIAS.filter((c) => (conteoCategorias.get(c.slug) || 0) === 0);
+
+const primerArticulo = articulosOrdenados[0];
+const otrosArticulos = articulosOrdenados.slice(1, 5);
+
+const formateadorFecha = new Intl.DateTimeFormat('es-PE', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+function calcularMinutos(body?: string): number {
+  const palabras = body ? body.split(/\s+/).filter(Boolean).length : 0;
+  return Math.max(1, Math.ceil(palabras / 200));
+}
 ---
 
 <Layout
   title="AprendeIA | Educación Práctica sobre Inteligencia Artificial"
-  description="Domina el uso productivo y ético de la Inteligencia Artificial con guías prácticas, talleres e islas interactivas para aprender haciendo."
+  description="Guías cortas, ejemplos que puedes copiar y herramientas para practicar en la misma página. Sin humo y con criterio."
 >
-  <div class="space-y-16">
-    <!-- Sección de Introducción / Hero -->
-    <section class="py-8 md:py-14 max-w-3xl space-y-4">
-      <p class="text-xs font-semibold text-tinta-suave">
-        Educación abierta en inteligencia artificial
-      </p>
-      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-tinta leading-tight">
-        Aprende a colaborar con la Inteligencia Artificial haciendo
-      </h1>
-      <p class="text-base sm:text-lg text-tinta-suave leading-relaxed max-w-2xl">
-        Plataforma formativa libre de tecnicismos vacíos. Descubre aplicaciones concretas para tu disciplina y domina la formulación de instrucciones precisas con talleres interactivos.
-      </p>
-      <div class="pt-4 flex items-center gap-3 flex-wrap">
-        <a
-          href="/articulos"
-          class="px-5 py-2.5 rounded-[6px] font-bold text-sm bg-indigo text-white hover:opacity-90 transition-opacity"
-        >
-          Explorar todos los artículos
-        </a>
-        <a
-          href="/articulos/hablar-con-la-ia"
-          class="px-5 py-2.5 rounded-[6px] font-semibold text-sm bg-superficie border border-linea text-tinta hover:bg-papel transition-colors"
-        >
-          Taller de formulación
-        </a>
-      </div>
-    </section>
-
-    <!-- Sección de Categorías -->
-    <section aria-labelledby="seccion-categorias-home" class="space-y-6">
-      <div class="flex items-center justify-between border-b border-linea pb-4">
-        <div>
-          <h2 id="seccion-categorias-home" class="text-2xl font-bold text-tinta tracking-tight">
-            Categorías temáticas
-          </h2>
-          <p class="text-sm text-tinta-suave mt-0.5">
-            Encuentra guías y talleres enfocados exactamente en lo que necesitas aprender.
-          </p>
-        </div>
-        <a href="/articulos" class="text-xs font-semibold text-indigo hover:underline hidden sm:block">
-          Ver todas las publicaciones
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {CATEGORIAS.map((cat) => (
+  <div class="space-y-20 md:space-y-28">
+    <!-- 1. HERO (dos columnas desde lg, apilado en móvil) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8">
+      <!-- Columna izquierda: titular y botones -->
+      <div class="lg:col-span-7 space-y-6 text-left">
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-tinta leading-[1.08]">
+          La IA se aprende usándola.
+        </h1>
+        <p class="text-base sm:text-lg text-tinta-suave leading-relaxed max-w-xl">
+          Guías cortas, ejemplos que puedes copiar y herramientas para practicar en la misma página. Sin humo y con criterio.
+        </p>
+        <div class="pt-2 flex items-center gap-3 flex-wrap">
           <a
-            href={`/categoria/${cat.slug}`}
-            class={`border border-linea bg-superficie p-4 border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors group block`}
+            href="/articulos"
+            class="px-5 py-2.5 rounded-[6px] font-bold text-sm bg-indigo text-white hover:opacity-90 transition-opacity"
           >
-            <h3 class={`text-sm font-bold ${cat.clases.texto} transition-colors`}>
-              {cat.nombre}
-            </h3>
-            <p class="text-xs text-tinta-suave mt-1 line-clamp-2 leading-relaxed">
-              {cat.descripcion}
-            </p>
+            Explorar los artículos
           </a>
-        ))}
+          <a
+            href="/articulos/hablar-con-la-ia"
+            class="px-5 py-2.5 rounded-[6px] font-semibold text-sm bg-superficie border border-linea text-tinta hover:bg-papel transition-colors"
+          >
+            Probar el constructor de prompts
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: isla interactiva con la demo del hero -->
+      <div class="lg:col-span-5 w-full">
+        <HeroDemo client:load />
       </div>
     </section>
 
-    <!-- Artículos destacados con islas interactivas (radio 12px en demo cards) -->
-    <section aria-labelledby="seccion-articulos-destacados" class="space-y-6">
+    <!-- 2. "Por dónde empezar" (categorías) -->
+    <section aria-labelledby="seccion-por-donde-empezar" class="space-y-8">
       <div class="border-b border-linea pb-4">
-        <h2 id="seccion-articulos-destacados" class="text-2xl font-bold text-tinta tracking-tight">
-          Guías y talleres destacados
+        <h2 id="seccion-por-donde-empezar" class="text-2xl font-bold tracking-tight text-tinta">
+          Por dónde empezar
         </h2>
-        <p class="text-sm text-tinta-suave mt-0.5">
-          Aprende con simuladores y generadores integrados en el propio artículo.
+        <p class="text-sm text-tinta-suave mt-1">
+          Rutas temáticas organizadas por nivel y necesidad concreta.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Tarjeta Demo 1: radio 12px -->
-        <article class="flex flex-col justify-between p-6 sm:p-8 rounded-[12px] bg-superficie border border-linea">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between text-xs text-tinta-suave">
-              <span class="font-bold text-sky-600 dark:text-sky-400">
-                IA en tu profesión
+      <!-- Bloques anchos para categorías con artículos publicados -->
+      {categoriasConArticulos.length > 0 && (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {categoriasConArticulos.map((cat) => {
+            const cantidad = conteoCategorias.get(cat.slug) || 0;
+            const textoCantidad = cantidad === 1 ? '1 artículo disponible' : `${cantidad} artículos disponibles`;
+            return (
+              <a
+                href={`/categoria/${cat.slug}`}
+                class={`p-6 border border-linea bg-superficie border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors block group`}
+              >
+                <div class="flex items-center justify-between gap-4 mb-2">
+                  <h3 class={`text-lg font-bold ${cat.clases.texto}`}>
+                    {cat.nombre}
+                  </h3>
+                  <span class="text-xs text-tinta-suave font-medium">
+                    {textoCantidad}
+                  </span>
+                </div>
+                <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+                  {cat.descripcion}
+                </p>
+              </a>
+            );
+          })}
+        </div>
+      )}
+
+      <!-- Filas compactas para las categorías en preparación -->
+      {categoriasSinArticulos.length > 0 && (
+        <div class="border-y border-linea divide-y divide-linea bg-superficie">
+          {categoriasSinArticulos.map((cat) => (
+            <a
+              href={`/categoria/${cat.slug}`}
+              class={`p-4 border-l-[3px] ${cat.clases.bordeLateral} flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-papel transition-colors`}
+            >
+              <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 min-w-0">
+                <span class={`text-xs font-bold ${cat.clases.texto} shrink-0`}>
+                  {cat.nombre}
+                </span>
+                <span class="text-xs text-tinta-suave truncate">
+                  {cat.descripcion}
+                </span>
+              </div>
+              <span class="text-[11px] text-tinta-suave shrink-0 font-medium self-start sm:self-auto">
+                Próximamente
               </span>
-              <span>Guía práctica</span>
-            </div>
-            <h3 class="text-2xl font-bold text-tinta tracking-tight">
-              Beneficios de la IA en cualquier profesión
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <!-- 3. "Practica sin salir de la página" -->
+    <section aria-labelledby="seccion-practica-en-pagina" class="space-y-8">
+      <div class="border-b border-linea pb-4">
+        <h2 id="seccion-practica-en-pagina" class="text-2xl font-bold tracking-tight text-tinta">
+          Practica sin salir de la página
+        </h2>
+        <p class="text-sm text-tinta-suave mt-1">
+          Módulos interactivos integrados en los artículos para probar lo aprendido al instante.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        <!-- Panel 1: Explorador por profesión -->
+        <article class="p-6 sm:p-8 border border-linea bg-superficie flex flex-col justify-between space-y-6">
+          <div class="space-y-3">
+            <span class="text-xs font-bold text-sky-600 dark:text-sky-400">
+              Orientación profesional
+            </span>
+            <h3 class="text-xl sm:text-2xl font-bold text-tinta tracking-tight">
+              Explorador por profesión
             </h3>
             <p class="text-sm text-tinta-suave leading-relaxed">
-              Descubre qué herramienta utilizar según tu perfil profesional (Educación, Programación, Negocios, Vida Cotidiana o Diseño) y obtén prompts optimizados de inmediato.
+              Eliges un ámbito de trabajo y un objetivo laboral específico. Recibes la herramienta más recomendada, un beneficio medible y un prompt probado listo para copiar.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-linea flex items-center justify-between">
-            <span class="text-xs font-medium text-tinta-suave">Incluye explorador interactivo</span>
+          <div>
             <a
               href="/articulos/beneficios-ia"
-              class="text-sm font-bold text-indigo hover:underline"
+              class="inline-block px-4 py-2 rounded-[6px] text-xs font-bold bg-indigo text-white hover:opacity-90 transition-opacity"
             >
-              Explorar artículo
+              Abrir el explorador
             </a>
           </div>
         </article>
 
-        <!-- Tarjeta Demo 2: radio 12px -->
-        <article class="flex flex-col justify-between p-6 sm:p-8 rounded-[12px] bg-superficie border border-linea">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between text-xs text-tinta-suave">
-              <span class="font-bold text-emerald-600 dark:text-emerald-400">
-                Prompting
-              </span>
-              <span>Taller interactivo</span>
-            </div>
-            <h3 class="text-2xl font-bold text-tinta tracking-tight">
-              Hablar con la IA correctamente: La regla de 4 pasos
+        <!-- Panel 2: Constructor de prompts -->
+        <article class="p-6 sm:p-8 border border-linea bg-superficie flex flex-col justify-between space-y-6">
+          <div class="space-y-3">
+            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">
+              Ingeniería de instrucciones
+            </span>
+            <h3 class="text-xl sm:text-2xl font-bold text-tinta tracking-tight">
+              Constructor de prompts
             </h3>
             <p class="text-sm text-tinta-suave leading-relaxed">
-              Aprende a formular instrucciones infalibles separando Rol, Contexto, Tarea y Tono con un taller interactivo que ensambla tu prompt en vivo con resaltado visual.
+              Aprende a formular órdenes efectivas con la regla de 4 pasos: rol, contexto, tarea y tono. La herramienta ensambla la instrucción en tiempo real con resaltado visual.
             </p>
           </div>
-          <div class="mt-8 pt-4 border-t border-linea flex items-center justify-between">
-            <span class="text-xs font-medium text-tinta-suave">Incluye constructor en vivo</span>
+          <div>
             <a
               href="/articulos/hablar-con-la-ia"
-              class="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+              class="inline-block px-4 py-2 rounded-[6px] text-xs font-bold bg-indigo text-white hover:opacity-90 transition-opacity"
             >
-              Abrir taller
+              Armar un prompt
             </a>
           </div>
         </article>
       </div>
+    </section>
+
+    <!-- 4. "Lo último que publicamos" -->
+    <section aria-labelledby="seccion-lo-ultimo" class="space-y-8">
+      <div class="flex items-center justify-between border-b border-linea pb-4">
+        <div>
+          <h2 id="seccion-lo-ultimo" class="text-2xl font-bold tracking-tight text-tinta">
+            Lo último que publicamos
+          </h2>
+          <p class="text-sm text-tinta-suave mt-1">
+            Artículos explicativos y guías paso a paso de acceso libre.
+          </p>
+        </div>
+        <a href="/articulos" class="text-xs font-semibold text-indigo hover:underline hidden sm:block">
+          Ver todos los artículos
+        </a>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Artículo más reciente (más grande) -->
+        {primerArticulo && (() => {
+          const catInfo = getCategoria(primerArticulo.data.categoria);
+          const minutos = calcularMinutos(primerArticulo.body);
+          const fechaFormateada = formateadorFecha.format(primerArticulo.data.fecha);
+          return (
+            <article class={`p-6 sm:p-8 border border-linea bg-superficie border-l-[3px] ${catInfo?.clases.bordeLateral || 'border-l-indigo'}`}>
+              <div class="flex items-center gap-3 text-xs text-tinta-suave mb-3 flex-wrap">
+                {catInfo && (
+                  <a href={`/categoria/${catInfo.slug}`} class={`font-bold ${catInfo.clases.texto} hover:underline`}>
+                    {catInfo.nombre}
+                  </a>
+                )}
+                <time datetime={primerArticulo.data.fecha.toISOString()}>{fechaFormateada}</time>
+                <span>{minutos} min de lectura</span>
+              </div>
+              <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-tinta mb-3">
+                <a href={`/articulos/${primerArticulo.id}`} class="hover:text-indigo transition-colors">
+                  {primerArticulo.data.titulo}
+                </a>
+              </h3>
+              <p class="text-sm sm:text-base text-tinta-suave leading-relaxed max-w-3xl mb-6">
+                {primerArticulo.data.descripcion}
+              </p>
+              <div>
+                <a
+                  href={`/articulos/${primerArticulo.id}`}
+                  class="text-xs font-semibold text-indigo hover:underline"
+                >
+                  Leer guía completa
+                </a>
+              </div>
+            </article>
+          );
+        })()}
+
+        <!-- Artículos restantes en filas compactas (hasta 5 en total) -->
+        {otrosArticulos.length > 0 && (
+          <div class="border-y border-linea divide-y divide-linea bg-superficie">
+            {otrosArticulos.map((art) => {
+              const catInfo = getCategoria(art.data.categoria);
+              const minutos = calcularMinutos(art.body);
+              const fechaFormateada = formateadorFecha.format(art.data.fecha);
+              return (
+                <article class={`p-4 sm:p-5 border-l-[3px] ${catInfo?.clases.bordeLateral || 'border-l-indigo'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-papel transition-colors`}>
+                  <div class="space-y-1 min-w-0">
+                    <div class="flex items-center gap-3 text-xs text-tinta-suave">
+                      {catInfo && (
+                        <a href={`/categoria/${catInfo.slug}`} class={`font-bold ${catInfo.clases.texto} hover:underline`}>
+                          {catInfo.nombre}
+                        </a>
+                      )}
+                      <time datetime={art.data.fecha.toISOString()}>{fechaFormateada}</time>
+                      <span>{minutos} min de lectura</span>
+                    </div>
+                    <h4 class="text-base font-bold text-tinta truncate">
+                      <a href={`/articulos/${art.id}`} class="hover:text-indigo transition-colors">
+                        {art.data.titulo}
+                      </a>
+                    </h4>
+                  </div>
+                  <div class="shrink-0 self-start sm:self-auto">
+                    <a
+                      href={`/articulos/${art.id}`}
+                      class="text-xs font-semibold text-indigo hover:underline"
+                    >
+                      Leer artículo
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        <div class="pt-2 sm:hidden">
+          <a href="/articulos" class="text-xs font-semibold text-indigo hover:underline block">
+            Ver todos los artículos
+          </a>
+        </div>
+      </div>
+
+      <!-- Anuncio condicional: solo si hay 3 o más artículos publicados. Es el único de la portada -->
+      {articulos.length >= 3 && <Anuncio posicion="medio" />}
+    </section>
+
+    <!-- 5. "Cómo se aprende aquí" (secuencia numerada 1, 2, 3) -->
+    <section aria-labelledby="seccion-metodo-aprendizaje" class="space-y-8">
+      <div class="border-b border-linea pb-4">
+        <h2 id="seccion-metodo-aprendizaje" class="text-2xl font-bold tracking-tight text-tinta">
+          Cómo se aprende aquí
+        </h2>
+        <p class="text-sm text-tinta-suave mt-1">
+          Un método directo enfocado en la comprensión conceptual y la aplicación inmediata.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 border border-linea bg-superficie space-y-3">
+          <span class="font-mono text-xs font-bold text-indigo">
+            01
+          </span>
+          <h3 class="text-lg font-bold text-tinta">
+            Lee una guía corta
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            Cada artículo va al grano y se lee en pocos minutos.
+          </p>
+        </div>
+
+        <div class="p-6 border border-linea bg-superficie space-y-3">
+          <span class="font-mono text-xs font-bold text-indigo">
+            02
+          </span>
+          <h3 class="text-lg font-bold text-tinta">
+            Practica con la herramienta
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            Prueba lo que acabas de leer en la misma página.
+          </p>
+        </div>
+
+        <div class="p-6 border border-linea bg-superficie space-y-3">
+          <span class="font-mono text-xs font-bold text-indigo">
+            03
+          </span>
+          <h3 class="text-lg font-bold text-tinta">
+            Aplícalo a tu caso
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            Copia el prompt, cámbialo por tu situación y úsalo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Cierre: buscador -->
+    <section aria-labelledby="seccion-cierre-buscador" class="p-6 sm:p-10 border border-linea bg-superficie space-y-4">
+      <div class="space-y-1">
+        <h2 id="seccion-cierre-buscador" class="text-xl sm:text-2xl font-bold tracking-tight text-tinta">
+          ¿Buscas un tema concreto?
+        </h2>
+        <p class="text-xs sm:text-sm text-tinta-suave">
+          Encuentra explicaciones, tutoriales y comparativas de herramientas en nuestra biblioteca.
+        </p>
+      </div>
+
+      <form action="/buscar" method="GET" class="flex flex-col sm:flex-row gap-3 pt-2 max-w-xl">
+        <label for="campo-busqueda-portada" class="sr-only">
+          Término de búsqueda
+        </label>
+        <input
+          type="search"
+          id="campo-busqueda-portada"
+          name="q"
+          placeholder="Escribe lo que buscas (ej. finanzas, redacción, ChatGPT)..."
+          class="flex-1 px-4 py-2.5 text-sm bg-papel border border-linea text-tinta placeholder:text-tinta-suave rounded-[6px] focus:outline-none focus:ring-2 focus:ring-indigo"
+        />
+        <button
+          type="submit"
+          class="px-5 py-2.5 rounded-[6px] text-xs font-bold bg-indigo text-white hover:opacity-90 transition-opacity cursor-pointer shrink-0"
+        >
+          Buscar
+        </button>
+      </form>
     </section>
   </div>
 </Layout>
