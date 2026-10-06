@@ -1,0 +1,43 @@
+---
+titulo: "Hablar con la IA correctamente: La regla de 4 pasos"
+descripcion: "Domina el arte del prompting eficaz con la regla de 4 pasos: Rol, Contexto, Tarea y Tono con un taller interactivo en vivo."
+categoria: "prompting"
+fecha: 2026-03-20
+orden: 1
+destacado: true
+etiquetas: ["prompting", "metodologia", "taller", "buenas-practicas"]
+---
+import ConstructorPrompts from '../../components/ConstructorPrompts';
+import Pestanas from '../../components/Pestanas.astro';
+import Pestana from '../../components/Pestana.astro';
+import Anuncio from '../../components/Anuncio.astro';
+
+## Los 4 pilares de una instrucción efectiva
+
+Las respuestas genéricas o poco útiles que entrega un modelo generativo suelen deberse a instrucciones vagas o ambiguas. Siguiendo este método de cuatro bloques estructurados, obtendrás respuestas de mayor precisión desde el primer intento:
+
+1. **Rol**: Define el sombrero profesional que asume el modelo para delimitar su vocabulario y perspectiva analítica.
+2. **Contexto**: Aporta antecedentes, restricciones, público objetivo o el problema de fondo que motiva la consulta.
+3. **Tarea**: Especifica con un verbo de acción inequívoco qué entregable necesitas (diseñar, listar, redactar, evaluar).
+4. **Tono**: Establece el registro estilístico: profesional, conciso, pedagógico o adaptado a un público joven.
+
+<Pestanas>
+  <Pestana titulo="Resumen">
+    La regla de 4 pasos transforma peticiones ambiguas en instrucciones técnicas reproducibles. Definir el rol y contexto antes de la tarea acota el espacio de solución del modelo y elimina respuestas superficiales.
+  </Pestana>
+  <Pestana titulo="Errores comunes">
+    El error más frecuente es solicitar directamente el producto final sin proveer antecedentes ni formato esperado. Otro fallo habitual es mezclar múltiples objetivos dispares en un único prompt en lugar de estructurar el diálogo por etapas.
+  </Pestana>
+</Pestanas>
+
+<Anuncio posicion="medio" />
+
+## Taller interactivo de ensamblado de prompts
+
+Aprende a formular instrucciones de alta precisión probando en directo cómo se combinan cada una de las cuatro secciones:
+
+<ConstructorPrompts client:visible />
+
+## Consejo de iteración continua
+
+Si el primer resultado necesita ajustes, no comiences un nuevo chat desde cero. Pídele al modelo: *"Mantén la misma estructura pero enfatiza más el punto X"* o *"Reescribe la sección con mayor brevedad"*.

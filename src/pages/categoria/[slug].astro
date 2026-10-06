@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TarjetaArticulo from '../../components/TarjetaArticulo.astro';
+import { CATEGORIAS, type Categoria } from '../../data/categorias';
+
+export function getStaticPaths() {
+  return CATEGORIAS.map((cat) => ({
+    params: { slug: cat.slug },
+    props: { categoria: cat },
+  }));
+}
+
+interface Props {
+  categoria: Categoria;
+}
+
+const { categoria } = Astro.props;
+
+const todosLosArticulos = await getCollection('articulos');
+const articulosDeCategoria = todosLosArticulos
+  .filter((art) => art.data.categoria === categoria.slug)
+  .sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
+
+const sinArticulos = articulosDeCategoria.length === 0;
+---
+
+<Layout
+  title={`${categoria.nombre} | Guías y Artículos de IA`}
+  description={categoria.descripcion}
+  noindex={sinArticulos}
+>
+  <div class="space-y-10">
+    <!-- Migas de pan -->
+    <nav aria-label="Migas de pan" class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+      <a href="/" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+        Inicio
+      </a>
+      <span>/</span>
+      <a href="/articulos" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+        Artículos
+      </a>
+      <span>/</span>
+      <span class="text-slate-800 dark:text-slate-200 font-semibold">
+        {categoria.nombre}
+      </span>
+    </nav>
+
+    <!-- Cabecera de Categoría -->
+    <header class="space-y-4 max-w-3xl border-b border-slate-200 pb-8 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 text-3xl p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs w-fit">
+        <span>{categoria.emoji}</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        {categoria.nombre}
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        {categoria.descripcion}
+      </p>
+    </header>
+
+    <!-- Artículos de la categoría -->
+    <section aria-labelledby="titulo-articulos-categoria" class="space-y-6">
+      <h2 id="titulo-articulos-categoria" class="sr-only">
+        Publicaciones en {categoria.nombre}
+      </h2>
+
+      {sinArticulos ? (
+        <div class="p-10 rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 text-center space-y-3">
+          <span class="text-4xl block">📝</span>
+          <h3 class="text-lg font-bold text-slate-800 dark:text-slate-200">
+            Próximamente publicaremos guías en esta categoría
+          </h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+            Estamos preparando artículos y talleres interactivos para {categoria.nombre.toLowerCase()}. Vuelve pronto o explora otras secciones.
+          </p>
+          <div class="pt-4">
+            <a
+              href="/articulos"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+            >
+              Explorar todos los artículos
+            </a>
+          </div>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {articulosDeCategoria.map((art) => (
+            <TarjetaArticulo articulo={art} />
+          ))}
+        </div>
+      )}
+    </section>
+  </div>
+</Layout>

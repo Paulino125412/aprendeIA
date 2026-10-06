@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TarjetaArticulo from '../../components/TarjetaArticulo.astro';
+import { CATEGORIAS } from '../../data/categorias';
+
+const articulos = await getCollection('articulos');
+const ordenados = articulos.sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
+---
+
+<Layout
+  title="Todos los Artículos y Guías | AprendeIA"
+  description="Explora nuestra biblioteca completa de artículos, talleres interactivos y guías prácticas sobre Inteligencia Artificial."
+>
+  <div class="space-y-10">
+    <header class="space-y-4 max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 dark:text-indigo-300 dark:bg-indigo-950/60 rounded-full border border-indigo-200 dark:border-indigo-800">
+        Biblioteca formativa
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        Artículos, talleres y guías de IA
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        Contenido estructurado para aprender a utilizar modelos de inteligencia artificial en el trabajo, los estudios y la vida cotidiana.
+      </p>
+    </header>
+
+    <!-- Chips de filtro por categoría -->
+    <section aria-labelledby="titulo-categorias" class="space-y-3">
+      <h2 id="titulo-categorias" class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        Filtrar por categoría temática
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        <a
+          href="/articulos"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-indigo-600 text-white shadow-xs"
+        >
+          <span>Todos ({ordenados.length})</span>
+        </a>
+        {CATEGORIAS.map((cat) => (
+          <a
+            href={`/categoria/${cat.slug}`}
+            class={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all hover:scale-105 ${cat.clases.badge}`}
+          >
+            <span>{cat.emoji}</span>
+            <span>{cat.nombre}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Listado de artículos -->
+    <section aria-labelledby="titulo-listado" class="space-y-6">
+      <h2 id="titulo-listado" class="sr-only">
+        Listado completo de publicaciones
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {ordenados.map((articulo) => (
+          <TarjetaArticulo articulo={articulo} />
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>

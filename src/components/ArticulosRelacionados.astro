@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import type { CategoriaSlug } from '../data/categorias';
+import TarjetaArticulo from './TarjetaArticulo.astro';
+
+interface Props {
+  categoria: CategoriaSlug;
+  slugActual: string;
+}
+
+const { categoria, slugActual } = Astro.props;
+
+const todos = await getCollection('articulos');
+const relacionados = todos
+  .filter((art) => art.data.categoria === categoria && art.id !== slugActual)
+  .sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime())
+  .slice(0, 3);
+---
+
+{relacionados.length > 0 && (
+  <section aria-labelledby="titulo-relacionados" class="my-12 pt-8 border-t border-slate-200 dark:border-slate-800">
+    <div class="mb-6">
+      <h2 id="titulo-relacionados" class="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+        Artículos relacionados
+      </h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        Continúa aprendiendo con más guías en esta misma categoría.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {relacionados.map((art) => (
+        <TarjetaArticulo articulo={art} />
+      ))}
+    </div>
+  </section>
+)}
