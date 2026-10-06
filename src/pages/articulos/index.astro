@@ -27,13 +27,13 @@ const ordenados = articulos.sort((a, b) => b.data.fecha.getTime() - a.data.fecha
 
     <!-- Filtro por categoría temática (sin emojis, radio 6px) -->
     <section aria-labelledby="titulo-categorias" class="space-y-3">
-      <h2 id="titulo-categorias" class="text-xs font-bold uppercase tracking-wider text-tinta-suave">
+      <h2 id="titulo-categorias" class="text-xs font-bold text-tinta-suave">
         Filtrar por categoría temática
       </h2>
       <div class="flex flex-wrap gap-2">
         <a
           href="/articulos"
-          class="inline-flex items-center px-3 py-1.5 rounded-[6px] text-xs font-bold bg-indigo text-white shadow-xs"
+          class="inline-flex items-center px-3 py-1.5 rounded-[6px] text-xs font-bold bg-indigo text-white"
         >
           Todos ({ordenados.length})
         </a>

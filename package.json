@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "astro dev --port 3000 --host 0.0.0.0",
-    "build": "NODE_ENV=production astro build",
+    "dev": "NODE_ENV=development astro dev --port 3000 --host 0.0.0.0",
+    "build": "astro build",
     "preview": "astro preview",
     "check": "astro check"
   },

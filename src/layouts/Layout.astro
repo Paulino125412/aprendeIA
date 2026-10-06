@@ -10,13 +10,15 @@ interface Props {
   description?: string;
   noindex?: boolean;
   imagen?: string;
+  tipoOg?: 'website' | 'article';
 }
 
 const {
   title,
   description = SITIO.eslogan,
   noindex = false,
-  imagen = '/favicon.svg',
+  imagen,
+  tipoOg = 'website',
 } = Astro.props;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
@@ -37,11 +39,15 @@ const anioActual = new Date().getFullYear();
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content={imagen} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:type" content={tipoOg} />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content={SITIO.nombre} />
+    {imagen && <meta property="og:image" content={imagen} />}
+    <meta name="twitter:card" content={imagen ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <slot name="head" />
 
     <!-- Script en línea para prevenir parpadeo de modo oscuro -->
     <script is:inline>
@@ -63,10 +69,10 @@ const anioActual = new Date().getFullYear();
     </script>
   </head>
   <body class="min-h-full flex flex-col justify-between bg-papel text-tinta font-display antialiased selection:bg-indigo selection:text-white">
-    <!-- Enlace accesible de salto al contenido -->
+    <!-- Enlace accesible de salto al contenido (sin sombra) -->
     <a
       href="#contenido-principal"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-indigo text-white font-semibold rounded-[6px] shadow-sm"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-indigo text-white font-semibold rounded-[6px]"
     >
       Saltar al contenido
     </a>
@@ -93,7 +99,7 @@ const anioActual = new Date().getFullYear();
 
           <!-- Columna Sitio -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
+            <h3 class="text-xs font-bold text-tinta">
               Sitio
             </h3>
             <ul class="space-y-2 text-xs">
@@ -122,7 +128,7 @@ const anioActual = new Date().getFullYear();
 
           <!-- Columna Legal -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
+            <h3 class="text-xs font-bold text-tinta">
               Legal
             </h3>
             <ul class="space-y-2 text-xs">
@@ -150,7 +156,7 @@ const anioActual = new Date().getFullYear();
 
           <!-- Columna Categorías (9 categorías completas sin emojis) -->
           <div class="sm:col-span-2 lg:col-span-2 space-y-3">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-tinta">
+            <h3 class="text-xs font-bold text-tinta">
               Categorías
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">

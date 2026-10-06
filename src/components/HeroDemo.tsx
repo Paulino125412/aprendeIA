@@ -73,26 +73,16 @@ export default function HeroDemo(): React.JSX.Element {
           id="panel-prompt-vago"
           aria-labelledby="tab-prompt-vago"
           hidden={tabActiva !== 'vago'}
-          className={`space-y-4 transition-opacity duration-150 motion-reduce:transition-none ${
+          className={`space-y-3 transition-opacity duration-150 motion-reduce:transition-none ${
             tabActiva === 'vago' ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="space-y-1.5">
-            <span className="text-[11px] font-semibold text-tinta-suave uppercase tracking-wider block">
-              Instrucción sin contexto
-            </span>
-            <div className="p-3 bg-papel border border-linea text-sm font-mono text-tinta">
-              "Hazme un plan de ahorro."
-            </div>
+          <div className="p-3 bg-papel border border-linea text-sm font-mono text-tinta">
+            "Hazme un plan de ahorro."
           </div>
 
-          <div className="space-y-1.5">
-            <span className="text-[11px] font-semibold text-tinta-suave uppercase tracking-wider block">
-              Respuesta del modelo
-            </span>
-            <div className="p-3 bg-papel border border-linea border-l-[3px] border-l-rosa text-xs sm:text-sm text-tinta leading-relaxed">
-              Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.
-            </div>
+          <div className="p-3 bg-papel border border-linea border-l-[3px] border-l-rosa text-xs sm:text-sm text-tinta leading-relaxed">
+            Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.
           </div>
         </div>
 
@@ -102,41 +92,31 @@ export default function HeroDemo(): React.JSX.Element {
           id="panel-prompt-armado"
           aria-labelledby="tab-prompt-armado"
           hidden={tabActiva !== 'armado'}
-          className={`space-y-4 transition-opacity duration-150 motion-reduce:transition-none ${
+          className={`space-y-3 transition-opacity duration-150 motion-reduce:transition-none ${
             tabActiva === 'armado' ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="space-y-1.5">
-            <span className="text-[11px] font-semibold text-tinta-suave uppercase tracking-wider block">
-              Instrucción estructurada en 4 bloques
-            </span>
-            <div className="p-3 bg-papel border border-linea text-xs sm:text-sm space-y-2">
-              <div>
-                <span className="font-bold text-tinta">Rol: </span>
-                <span className="text-tinta-suave">Actúa como asesor de finanzas personales.</span>
-              </div>
-              <div>
-                <span className="font-bold text-tinta">Contexto: </span>
-                <span className="text-tinta-suave">Tengo una tienda de barrio y mis ingresos cambian cada mes.</span>
-              </div>
-              <div>
-                <span className="font-bold text-tinta">Tarea: </span>
-                <span className="text-tinta-suave">Hazme un plan de ahorro para 3 meses.</span>
-              </div>
-              <div>
-                <span className="font-bold text-tinta">Tono: </span>
-                <span className="text-tinta-suave">Explícalo directo y sin tecnicismos.</span>
-              </div>
+          <div className="p-3 bg-papel border border-linea text-xs sm:text-sm space-y-2">
+            <div>
+              <span className="font-bold text-tinta">Rol: </span>
+              <span className="text-tinta-suave">Actúa como asesor de finanzas personales.</span>
+            </div>
+            <div>
+              <span className="font-bold text-tinta">Contexto: </span>
+              <span className="text-tinta-suave">Tengo una tienda de barrio y mis ingresos cambian cada mes.</span>
+            </div>
+            <div>
+              <span className="font-bold text-tinta">Tarea: </span>
+              <span className="text-tinta-suave">Hazme un plan de ahorro para 3 meses.</span>
+            </div>
+            <div>
+              <span className="font-bold text-tinta">Tono: </span>
+              <span className="text-tinta-suave">Explícalo directo y sin tecnicismos.</span>
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <span className="text-[11px] font-semibold text-tinta-suave uppercase tracking-wider block">
-              Respuesta del modelo
-            </span>
-            <div className="p-3 bg-papel border border-linea border-l-[3px] border-l-esmeralda text-xs sm:text-sm text-tinta leading-relaxed">
-              Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.
-            </div>
+          <div className="p-3 bg-papel border border-linea border-l-[3px] border-l-esmeralda text-xs sm:text-sm text-tinta leading-relaxed">
+            Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.
           </div>
         </div>
       </div>

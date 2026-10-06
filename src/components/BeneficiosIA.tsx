@@ -141,7 +141,7 @@ export default function BeneficiosIA(): React.JSX.Element {
           <article className="flex flex-col gap-6 p-6 border border-linea bg-papel">
             {/* a) Mejor herramienta de IA */}
             <div className="p-4 border border-linea bg-superficie">
-              <span className="text-xs font-bold uppercase tracking-wider text-indigo block mb-1">
+              <span className="text-xs font-bold text-indigo block mb-1">
                 Herramienta recomendada
               </span>
               <h3 className="text-lg font-bold text-tinta">
@@ -154,7 +154,7 @@ export default function BeneficiosIA(): React.JSX.Element {
 
             {/* b) Beneficio directo y concreto */}
             <div className="p-4 border border-linea bg-superficie border-l-[3px] border-l-esmeralda">
-              <span className="text-xs font-bold uppercase tracking-wider text-esmeralda block mb-1">
+              <span className="text-xs font-bold text-esmeralda block mb-1">
                 Beneficio directo y cuantificable
               </span>
               <p className="text-sm sm:text-base font-semibold text-tinta">
@@ -166,7 +166,7 @@ export default function BeneficiosIA(): React.JSX.Element {
             <div>
               <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-tinta block">
+                  <span className="text-xs font-bold text-tinta block">
                     Prompt de ejemplo optimizado
                   </span>
                   <span className="text-xs text-tinta-suave">

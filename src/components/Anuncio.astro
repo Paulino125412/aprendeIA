@@ -6,7 +6,7 @@ interface Props {
 
 const { posicion, slot: slotId } = Astro.props;
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
-const esDev = Boolean(import.meta.env.DEV && import.meta.env.MODE === 'development' && process.env.NODE_ENV !== 'production');
+const esDev = Boolean(import.meta.env.DEV && import.meta.env.MODE === 'development');
 
 // Si no hay ID y no estamos en entorno de desarrollo, no renderizar nada para no dejar espacio en blanco en producción
 const debeRenderizar = Boolean(adsenseClient || esDev);
@@ -17,7 +17,7 @@ const debeRenderizar = Boolean(adsenseClient || esDev);
     aria-label="Publicidad"
     class="anuncio-contenedor my-8 mx-auto w-full max-w-3xl min-h-[280px] flex flex-col items-center justify-center p-4"
   >
-    <span class="text-[10px] font-semibold tracking-wider uppercase text-tinta-suave mb-2 select-none">
+    <span class="text-[10px] font-semibold text-tinta-suave mb-2 select-none">
       Publicidad
     </span>
 

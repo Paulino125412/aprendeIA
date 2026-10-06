@@ -200,7 +200,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
         <div>
           <div className="flex items-center justify-between gap-4 mb-4 pb-3 border-b border-linea flex-wrap">
             <div className="flex items-center gap-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-tinta">
+              <h3 className="text-xs font-bold text-tinta">
                 Resultado ensamblado
               </h3>
             </div>

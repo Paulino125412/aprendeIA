@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Buscar | AprendeIA"
   description="Encuentra artículos, talleres prácticos y conceptos sobre inteligencia artificial."
+  noindex={true}
 >
   <div class="max-w-3xl mx-auto space-y-8">
     <header class="space-y-2 border-b border-linea pb-6">
@@ -17,7 +18,7 @@ import Layout from '../layouts/Layout.astro';
     </header>
 
     <form id="form-buscar" role="search" class="space-y-2" onsubmit="return false;">
-      <label for="input-busqueda" class="block text-xs font-semibold uppercase tracking-wider text-tinta-suave">
+      <label for="input-busqueda" class="block text-xs font-semibold text-tinta-suave">
         Términos de búsqueda
       </label>
       <div class="relative">
@@ -158,7 +159,7 @@ import Layout from '../layouts/Layout.astro';
           return new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
         });
 
-        renderizarResultados(resultados, palabras);
+        renderizarResultados(resultados);
       }
 
       async function inicializar() {
