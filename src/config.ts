@@ -16,3 +16,8 @@ export const SITIO: SitioConfig = {
   emailContacto: 'contacto@tudominio.com',
   ultimaActualizacionLegal: '6 de octubre de 2026',
 };
+
+if (SITIO.emailContacto.includes('tudominio.com')) {
+  console.warn('[AprendeIA] Reemplaza emailContacto en src/config.ts antes de publicar.');
+}
+
