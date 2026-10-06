@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { CATEGORIAS } from '../data/categorias';
+import { SITIO } from '../config';
+import AvisoCookies from '../components/AvisoCookies.astro';
 
 interface Props {
   title: string;
@@ -11,13 +13,14 @@ interface Props {
 
 const {
   title,
-  description = 'Plataforma educativa para aprender a utilizar la Inteligencia Artificial de forma productiva, ética y efectiva con talleres interactivos.',
+  description = SITIO.eslogan,
   noindex = false,
   imagen = '/favicon.svg',
 } = Astro.props;
 
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
-const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT || '';
+const anioActual = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -38,15 +41,6 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Script de AdSense si existe cliente configurado -->
-    {adsenseClient && (
-      <script
-        async
-        src={`https://pagead2.googlesyndicationv2.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-        crossorigin="anonymous"
-      />
-    )}
 
     <!-- Script en línea para prevenir parpadeo de modo oscuro -->
     <script is:inline>
@@ -81,7 +75,7 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
         <div class="flex items-center gap-6">
           <a href="/" class="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
             <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white font-extrabold text-sm shadow-xs">IA</span>
-            <span>AprendeIA</span>
+            <span>{SITIO.nombre}</span>
           </a>
 
           <!-- Navegación escritorio -->
@@ -194,6 +188,12 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
           <a href="/articulos" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
             Todos los artículos
           </a>
+          <a href="/sobre-nosotros" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
+            Sobre nosotros
+          </a>
+          <a href="/contacto" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 py-1">
+            Contacto
+          </a>
 
           <div class="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-2">
@@ -221,15 +221,15 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
 
     <footer class="border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 mt-16 py-12">
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
           <!-- Columna Marca -->
-          <div class="md:col-span-1 space-y-3">
+          <div class="sm:col-span-2 md:col-span-2 space-y-3">
             <a href="/" class="flex items-center gap-2 font-bold text-lg text-slate-900 dark:text-white">
               <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-white font-extrabold text-xs">IA</span>
-              <span>AprendeIA</span>
+              <span>{SITIO.nombre}</span>
             </a>
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              Plataforma educativa interactiva en español para aprender a colaborar con la Inteligencia Artificial con rigor, método y ética.
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+              {SITIO.eslogan} Plataforma formativa e interactiva desarrollada desde {SITIO.pais}.
             </p>
           </div>
 
@@ -249,16 +249,54 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
                   Artículos y Guías
                 </a>
               </li>
+              <li>
+                <a href="/sobre-nosotros" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                  Sobre nosotros
+                </a>
+              </li>
+              <li>
+                <a href="/contacto" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                  Contacto
+                </a>
+              </li>
             </ul>
           </div>
 
-          <!-- Columnas Categorías (2 columnas de categorías) -->
-          <div class="md:col-span-2 space-y-3">
+          <!-- Columna Legal -->
+          <div class="space-y-3">
             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
-              Categorías temáticas
+              Legal
             </h3>
-            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
-              {CATEGORIAS.map((cat) => (
+            <ul class="space-y-2 text-xs">
+              <li>
+                <a href="/privacidad" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                  Política de Privacidad
+                </a>
+              </li>
+              <li>
+                <a href="/terminos" class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors">
+                  Términos de Uso
+                </a>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  id="btn-preferencias-cookies"
+                  class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors text-left cursor-pointer focus:outline-none focus:underline"
+                >
+                  Preferencias de cookies
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Columna Categorías -->
+          <div class="space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-slate-200">
+              Categorías
+            </h3>
+            <div class="grid grid-cols-1 gap-y-1.5 text-xs">
+              {CATEGORIAS.slice(0, 5).map((cat) => (
                 <a
                   href={`/categoria/${cat.slug}`}
                   class="text-slate-600 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5 truncate"
@@ -272,11 +310,45 @@ const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT;
         </div>
 
         <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
-          <p>© 2026 AprendeIA. Contenido formativo enfocado en uso ético y productivo de la Inteligencia Artificial.</p>
+          <p>© {anioActual} {SITIO.nombre}. {SITIO.autor}. Todos los derechos reservados.</p>
           <p>Educación abierta en español neutro.</p>
         </div>
       </div>
     </footer>
+
+    <!-- Inyección condicional de AdSense por consentimiento -->
+    <script is:inline define:vars={{ adsenseClient }}>
+      (function() {
+        if (!adsenseClient) return;
+
+        window.__iniciarAdSense = function(decision) {
+          if (window.__adsenseInyectado) return;
+          if (decision !== 'aceptado' && decision !== 'rechazado') return;
+
+          if (decision === 'rechazado') {
+            (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = 1;
+          }
+
+          const script = document.createElement('script');
+          script.async = true;
+          script.crossOrigin = 'anonymous';
+          script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(adsenseClient);
+          document.head.appendChild(script);
+          window.__adsenseInyectado = true;
+        };
+
+        // Si ya hay decisión previa en localStorage, inyectar inmediatamente
+        try {
+          const decisionGuardada = localStorage.getItem('consentimiento-cookies');
+          if (decisionGuardada) {
+            window.__iniciarAdSense(decisionGuardada);
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <!-- Componente de aviso de cookies -->
+    <AvisoCookies />
 
     <!-- Scripts vanilla para Dropdowns, Menú Móvil y Modo Oscuro -->
     <script is:inline>

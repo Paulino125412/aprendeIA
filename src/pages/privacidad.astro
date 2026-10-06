@@ -1,0 +1,88 @@
+---
+import PaginaLegalLayout from '../layouts/PaginaLegalLayout.astro';
+import { SITIO } from '../config';
+---
+
+<PaginaLegalLayout
+  title="Política de Privacidad"
+  description={`Conoce cómo protegemos y tratamos la información en ${SITIO.nombre}, el uso de cookies y tus derechos de privacidad.`}
+>
+  <p>
+    En <strong>{SITIO.nombre}</strong> (en adelante, "el Sitio"), accesible desde este dominio web, la privacidad de nuestros visitantes es de máxima prioridad. Esta Política de Privacidad describe qué información se recopila, cómo se utiliza y qué controles tienes a tu disposición.
+  </p>
+
+  <h2>1. Responsable del tratamiento y legislación aplicable</h2>
+  <p>
+    El tratamiento de datos derivado del uso de este sitio web es administrado por {SITIO.autor}, con domicilio de referencia en {SITIO.pais}. Nos comprometemos a cumplir con los principios rectores de legalidad, consentimiento, finalidad y proporcionalidad establecidos en la <strong>Ley N.º 29733 (Ley de Protección de Datos Personales de la República del Perú)</strong> y su reglamento correspondiente.
+  </p>
+
+  <h2>2. Datos que recopilamos</h2>
+  <p>
+    {SITIO.nombre} es una plataforma de acceso libre y formativo. <strong>No solicitamos registro de cuentas de usuario, contraseñas ni formularios con datos personales sensibles</strong>. La información técnica recopilada se limita a:
+  </p>
+  <ul>
+    <li>
+      <strong>Datos técnicos de navegación:</strong> Dirección IP anonimizada, tipo de navegador web, sistema operativo, páginas de referencia y fecha y hora de acceso, empleados exclusivamente para análisis estadístico anónimo y seguridad del servidor.
+    </li>
+    <li>
+      <strong>Almacenamiento local del navegador (localStorage):</strong> Guardamos tu preferencia de interfaz visual (modo claro u oscuro) bajo la clave <code>tema</code>, y el estado de tu elección sobre cookies bajo la clave <code>consentimiento-cookies</code>. Esta información reside exclusivamente en tu dispositivo.
+    </li>
+  </ul>
+
+  <h2>3. Uso de cookies y tecnologías similares</h2>
+  <p>
+    Una cookie es un pequeño archivo que se almacena en tu navegador. Clasificamos las tecnologías de almacenamiento del Sitio en:
+  </p>
+  <ul>
+    <li>
+      <strong>Técnicas y funcionales:</strong> Necesarias para recordar tus preferencias de diseño visual y mantener la navegación accesible.
+    </li>
+    <li>
+      <strong>De terceros y publicidad:</strong> Proveídas por socios tecnológicos, específicamente Google.
+    </li>
+  </ul>
+
+  <h2>4. Publicidad de Google AdSense y cookies de terceros</h2>
+  <p>
+    Este sitio web utiliza o tiene previsto utilizar los servicios de publicidad de <strong>Google AdSense</strong>. Google, como proveedor externo, utiliza cookies para publicar anuncios en nuestro sitio:
+  </p>
+  <ul>
+    <li>
+      Google y sus socios publicitarios utilizan cookies para mostrar anuncios a los usuarios según sus visitas previas a este sitio web o a otros sitios de Internet.
+    </li>
+    <li>
+      Los usuarios pueden consultar cómo utiliza Google la información de los sitios web que emplean sus servicios accediendo a <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Cómo utiliza Google los datos cuando utilizas los sitios web de nuestros socios</a>.
+    </li>
+    <li>
+      Puedes inhabilitar o personalizar la publicidad personalizada visitando la <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Configuración de anuncios de Google</a> o el portal de la iniciativa <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">AboutAds.info</a>.
+    </li>
+  </ul>
+
+  <h2>5. Gestión y retiro del consentimiento de cookies</h2>
+  <p>
+    Al ingresar por primera vez al Sitio, ponemos a tu disposición un aviso de consentimiento en el que puedes aceptar o rechazar la carga de anuncios personalizados. Rechazar esta opción no bloquea el acceso a nuestros contenidos educativos.
+  </p>
+  <p>
+    Puedes modificar o retirar tu decisión en cualquier momento haciendo clic en el enlace <strong>"Preferencias de cookies"</strong> ubicado en el pie de página de cualquier sección del Sitio.
+  </p>
+
+  <h2>6. Enlaces a sitios externos</h2>
+  <p>
+    Nuestras guías y artículos pueden contener enlaces a sitios web de terceros (por ejemplo, herramientas de IA, documentación oficial o repositorios). {SITIO.nombre} no ejerce control sobre las prácticas de privacidad ni los contenidos de dichos sitios externos, por lo que te sugerimos revisar sus políticas correspondientes al visitarlos.
+  </p>
+
+  <h2>7. Ejercicio de derechos ARCO</h2>
+  <p>
+    Conforme a la Ley N.º 29733 de Protección de Datos Personales de Perú, todo titular de datos tiene derecho a ejercer sus derechos de <strong>Acceso, Rectificación, Cancelación y Oposición (ARCO)</strong>. Dado que este sitio no conserva bases de datos con registros nominativos de usuarios, la interacción se circunscribe a las consultas que remitas por correo electrónico.
+  </p>
+
+  <h2>8. Datos de contacto</h2>
+  <p>
+    Para cualquier consulta sobre esta Política de Privacidad o el tratamiento de información técnica, puedes escribirnos directamente a: <a href={`mailto:${SITIO.emailContacto}`}>{SITIO.emailContacto}</a>.
+  </p>
+
+  <h2>9. Modificaciones a esta política</h2>
+  <p>
+    Nos reservamos el derecho de actualizar esta política para reflejar cambios legales o mejoras técnicas en la plataforma. Cualquier modificación será publicada en esta misma página indicando la fecha de última revisión.
+  </p>
+</PaginaLegalLayout>

@@ -1,0 +1,75 @@
+---
+import PaginaLegalLayout from '../layouts/PaginaLegalLayout.astro';
+import { SITIO } from '../config';
+---
+
+<PaginaLegalLayout
+  title="Términos y Condiciones de Uso"
+  description={`Condiciones de acceso, límites de responsabilidad y normas de uso de los contenidos y herramientas de ${SITIO.nombre}.`}
+>
+  <p>
+    Bienvenido a <strong>{SITIO.nombre}</strong>. Al acceder y navegar en este sitio web, aceptas cumplir con los presentes Términos y Condiciones de Uso. Si no estás de acuerdo con alguna de estas disposiciones, te recomendamos abstenerte de utilizar nuestros servicios y contenidos.
+  </p>
+
+  <h2>1. Naturaleza exclusivamente educativa e informativa</h2>
+  <p>
+    Todos los artículos, talleres interactivos, guías, tablas comparativas y ejemplos de prompts publicados en {SITIO.nombre} tienen una finalidad <strong>estrictamente educativa, formativa y divulgativa</strong>.
+  </p>
+  <p>
+    <strong>No constituyen asesoramiento profesional:</strong> Ningún contenido del Sitio debe interpretarse como asesoría legal, contable, médica, tributaria o de inversión financiera. Las decisiones operativas, empresariales o personales adoptadas por el usuario a partir del material aquí expuesto son de su entera y exclusiva responsabilidad.
+  </p>
+
+  <h2>2. Verificación de respuestas y naturaleza de la Inteligencia Artificial</h2>
+  <p>
+    Los modelos fundacionales de Inteligencia Artificial (LLMs) son herramientas estadísticas generativas que pueden cometer errores fácticos, incurrir en "alucinaciones" u ofrecer salidas inexactas o desactualizadas.
+  </p>
+  <p>
+    El usuario asume el deber de <strong>verificar y validar rigurosamente cualquier texto, código o cálculo</strong> producido por un modelo de lenguaje antes de incorporarlo a entornos de producción, evaluaciones académicas o decisiones de negocio.
+  </p>
+
+  <h2>3. Propiedad intelectual</h2>
+  <p>
+    Los textos explicativos, la arquitectura didáctica, la estructura del código del sitio web y los diseños propios son propiedad de {SITIO.autor} o cuentan con las autorizaciones pertinentes.
+  </p>
+  <ul>
+    <li>
+      Se autoriza la consulta personal y el uso formativo de los ejemplos de prompts.
+    </li>
+    <li>
+      Queda prohibida la reproducción masiva, extracción automatizada ("scraping") o republicación comercial no autorizada de los artículos completos sin atribución expresa y enlace directo a la fuente original.
+    </li>
+  </ul>
+
+  <h2>4. Uso aceptable del sitio web</h2>
+  <p>
+    El usuario se compromete a hacer un uso lícito y ético del Sitio, absteniéndose de:
+  </p>
+  <ul>
+    <li>
+      Intentar vulnerar la seguridad, integridad o disponibilidad de la infraestructura técnica.
+    </li>
+    <li>
+      Emplear las herramientas interactivas del Sitio para propósitos ilícitos, engañosos o difamatorios.
+    </li>
+  </ul>
+
+  <h2>5. Enlaces y herramientas de terceros</h2>
+  <p>
+    {SITIO.nombre} menciona marcas comerciales, modelos y servicios de terceros (por ejemplo, OpenAI, Anthropic, Google, GitHub, etc.) con fines explicativos y de referencia. Dichas marcas pertenecen a sus respectivos propietarios y su inclusión no implica patrocinio ni vinculación formal.
+  </p>
+
+  <h2>6. Limitación de responsabilidad</h2>
+  <p>
+    En la máxima medida permitida por la legislación aplicable en {SITIO.pais}, {SITIO.autor} no se responsabiliza por daños directos, indirectos o consecuentes derivados de la interrupción del servicio, posibles errores u omisiones en el contenido, o resultados obtenidos mediante el uso de herramientas de terceros recomendadas.
+  </p>
+
+  <h2>7. Modificaciones a los términos</h2>
+  <p>
+    Nos reservamos el derecho de modificar estos Términos en cualquier momento. La continuidad en el uso del Sitio tras la publicación de cambios implicará la aceptación plena de los términos actualizados.
+  </p>
+
+  <h2>8. Contacto</h2>
+  <p>
+    Para consultas referidas a estos Términos, comunícate con nosotros a través de <a href={`mailto:${SITIO.emailContacto}`}>{SITIO.emailContacto}</a>.
+  </p>
+</PaginaLegalLayout>

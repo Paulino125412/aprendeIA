@@ -1,0 +1,108 @@
+---
+// AvisoCookies.astro - Aviso de consentimiento conforme a privacidad y Google AdSense
+---
+
+<div
+  id="banner-cookies"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="titulo-cookies"
+  aria-describedby="desc-cookies"
+  hidden
+  class="fixed bottom-0 inset-x-0 z-50 p-4 sm:p-6 transition-transform duration-300 pointer-events-none"
+>
+  <div class="max-w-4xl mx-auto rounded-2xl border border-slate-200 bg-white/95 p-5 sm:p-6 shadow-2xl backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/95 pointer-events-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div class="space-y-1.5 max-w-2xl text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+      <h2 id="titulo-cookies" class="font-bold text-slate-900 dark:text-white flex items-center gap-1.5 text-sm">
+        <span>🍪</span>
+        <span>Aviso de privacidad y cookies</span>
+      </h2>
+      <p id="desc-cookies">
+        Utilizamos cookies técnicas para recordar tus preferencias y, con tu consentimiento, cookies de terceros (Google AdSense) para mostrar anuncios. Puedes aceptar o rechazar la personalización sin afectar tu lectura. Más información en nuestra <a href="/privacidad" class="text-indigo-600 dark:text-indigo-400 underline font-medium hover:text-indigo-700">Política de Privacidad</a>.
+      </p>
+    </div>
+
+    <!-- Botones de igual peso visual -->
+    <div class="flex items-center gap-2.5 w-full md:w-auto shrink-0">
+      <button
+        type="button"
+        id="btn-cookies-rechazar"
+        class="flex-1 md:flex-none px-4 py-2.5 rounded-xl text-xs font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors cursor-pointer text-center focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        Rechazar
+      </button>
+      <button
+        type="button"
+        id="btn-cookies-aceptar"
+        class="flex-1 md:flex-none px-4 py-2.5 rounded-xl text-xs font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors cursor-pointer text-center focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    const banner = document.getElementById('banner-cookies');
+    const btnAceptar = document.getElementById('btn-cookies-aceptar');
+    const btnRechazar = document.getElementById('btn-cookies-rechazar');
+    const btnReabrir = document.getElementById('btn-preferencias-cookies');
+
+    function obtenerConsentimiento() {
+      try {
+        return localStorage.getItem('consentimiento-cookies');
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function guardarConsentimiento(valor) {
+      try {
+        localStorage.setItem('consentimiento-cookies', valor);
+      } catch (_) {}
+      cerrarBanner();
+      if (typeof window.__iniciarAdSense === 'function') {
+        window.__iniciarAdSense(valor);
+      }
+    }
+
+    function abrirBanner() {
+      if (!banner) return;
+      banner.removeAttribute('hidden');
+      btnAceptar?.focus();
+    }
+
+    function cerrarBanner() {
+      if (!banner) return;
+      banner.setAttribute('hidden', '');
+    }
+
+    // Comprobación inicial: si no hay decisión, mostrar banner
+    const decision = obtenerConsentimiento();
+    if (!decision) {
+      abrirBanner();
+    }
+
+    btnAceptar?.addEventListener('click', function() {
+      guardarConsentimiento('aceptado');
+    });
+
+    btnRechazar?.addEventListener('click', function() {
+      guardarConsentimiento('rechazado');
+    });
+
+    // Botón del footer para reabrir
+    btnReabrir?.addEventListener('click', function(e) {
+      e.preventDefault();
+      abrirBanner();
+    });
+
+    // Cerrar con Escape sin guardar (se volverá a mostrar en la siguiente visita)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && banner && !banner.hasAttribute('hidden')) {
+        cerrarBanner();
+      }
+    });
+  })();
+</script>

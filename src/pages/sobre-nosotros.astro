@@ -1,0 +1,63 @@
+---
+import PaginaLegalLayout from '../layouts/PaginaLegalLayout.astro';
+import { SITIO } from '../config';
+---
+
+<PaginaLegalLayout
+  title="Sobre Nosotros"
+  description={`Conoce la misión, los principios editoriales y el enfoque pedagógico de ${SITIO.nombre}.`}
+>
+  <p class="lead text-xl text-slate-700 dark:text-slate-300">
+    <strong>{SITIO.nombre}</strong> es una iniciativa educativa independiente nacida con un objetivo claro: desmitificar el uso de la Inteligencia Artificial y convertir conceptos complejos en habilidades prácticas aplicables al día a día.
+  </p>
+
+  <h2>Nuestra misión</h2>
+  <p>
+    Creemos que la tecnología debe empoderar a las personas sin crear barreras de entrada. Nuestra misión es brindar educación abierta, rigurosa y en español neutro que permita a cualquier persona comprender las capacidades reales y los límites de los modelos de IA, promoviendo un uso productivo, crítico y ético.
+  </p>
+
+  <h2>Qué ofrece la plataforma</h2>
+  <ul>
+    <li>
+      <strong>Guías por categorías especializadas:</strong> Publicaciones estructuradas sobre fundamentos técnicos, ingeniería de prompts, productividad profesional, técnicas de estudio activo, automatización y ética digital.
+    </li>
+    <li>
+      <strong>Herramientas interactivas integradas:</strong> Módulos prácticos como el constructor de prompts y el recomendador por disciplina laboral, diseñados para aprender haciendo directamente desde el navegador.
+    </li>
+    <li>
+      <strong>Prompts listos para la acción:</strong> Ejemplos reales y testeados que los lectores pueden adaptar a sus propios flujos de trabajo.
+    </li>
+  </ul>
+
+  <h2>A quién va dirigido</h2>
+  <p>
+    El contenido está pensado para un público amplio y diverso:
+  </p>
+  <ul>
+    <li><strong>Estudiantes y docentes:</strong> Que buscan incorporar la IA como apoyo pedagógico y estudio activo sin atentar contra la integridad académica.</li>
+    <li><strong>Profesionales y emprendedores:</strong> Que necesitan agilizar tareas repetitivas, redacción comercial y análisis operativo.</li>
+    <li><strong>Desarrolladores de software:</strong> Interesados en patrones de arquitectura y asistencia de código con criterio técnico.</li>
+    <li><strong>Usuarios curiosos:</strong> Que desean organizar su vida cotidiana y mantenerse informados sobre el impacto social de la tecnología.</li>
+  </ul>
+
+  <h2>Nuestros principios editoriales</h2>
+  <ol>
+    <li>
+      <strong>Claridad sin tecnicismos vacíos:</strong> Explicamos los conceptos con rigor conceptual pero en lenguaje directo, evitando la jerga innecesaria y el sensacionalismo tecnológico.
+    </li>
+    <li>
+      <strong>Verificación y realismo:</strong> No realizamos promesas exageradas ni presentamos a la IA como una solución mágica. Señalamos abiertamente sus limitaciones, sesgos y propensión a errores.
+    </li>
+    <li>
+      <strong>Actualización constante:</strong> El ecosistema de inteligencia artificial evoluciona con rapidez. Revisamos periódicamente nuestras guías para mantener nombres, métodos y buenas prácticas al día.
+    </li>
+    <li>
+      <strong>Transparencia editorial y publicitaria:</strong> El acceso a nuestros artículos es 100% gratuito. Para costear los gastos de infraestructura y desarrollo, mostramos espacios publicitarios discretos que no condicionan nuestras recomendaciones técnicas.
+    </li>
+  </ol>
+
+  <h2>Cómo contactarnos</h2>
+  <p>
+    Las sugerencias de contenido, correcciones o preguntas son siempre bienvenidas. Puedes escribirnos a través de nuestro correo oficial: <a href={`mailto:${SITIO.emailContacto}`}>{SITIO.emailContacto}</a> o consultar nuestra sección de <a href="/contacto">Contacto</a>.
+  </p>
+</PaginaLegalLayout>

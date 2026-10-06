@@ -1,0 +1,41 @@
+---
+import Layout from './Layout.astro';
+import { SITIO } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={`${title} | ${SITIO.nombre}`} description={description}>
+  <div class="max-w-3xl mx-auto">
+    <!-- Migas de pan -->
+    <nav aria-label="Migas de pan" class="mb-6 flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+      <a href="/" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+        Inicio
+      </a>
+      <span>/</span>
+      <span class="text-slate-800 dark:text-slate-200 font-semibold truncate">
+        {title}
+      </span>
+    </nav>
+
+    <!-- Encabezado legal -->
+    <header class="mb-8 border-b border-slate-200 pb-8 dark:border-slate-800 space-y-3">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        {title}
+      </h1>
+      <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+        Última actualización: {SITIO.ultimaActualizacionLegal}
+      </p>
+    </header>
+
+    <!-- Contenido legal -->
+    <main class="prose prose-lg dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 leading-relaxed">
+      <slot />
+    </main>
+  </div>
+</Layout>
