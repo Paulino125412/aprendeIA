@@ -1,6 +1,6 @@
 # AprendeIA
 
-Plataforma educativa estática y accesible enfocada en el aprendizaje práctico y ético de la Inteligencia Artificial para el público general de Latinoamérica. Construida con Astro 5, React 19 y Tailwind CSS v4, sin plantillas genéricas ni artificios visuales innecesarios.
+Plataforma educativa estática en español sobre Inteligencia Artificial, orientada al aprendizaje práctico y ético para el público general de Latinoamérica. Construida con Astro 5 y Tailwind CSS v4, con componentes interactivos en JavaScript nativo (sin framework).
 
 ---
 
@@ -54,19 +54,19 @@ PUBLIC_SITE_URL=
 ```text
 ├── public/               # Archivos estáticos públicos (favicon, etc.)
 ├── src/
-│   ├── components/       # Componentes Astro e islas interactivas React
+│   ├── components/       # Componentes Astro con interactividad en JavaScript nativo
 │   │   ├── Anuncio.astro           # Componente de publicidad controlada
+│   │   ├── ArticulosRelacionados.astro # Artículos recomendados por categoría
 │   │   ├── AvisoCookies.astro      # Banner de privacidad y consentimiento
-│   │   ├── BeneficiosIA.tsx        # Isla React: explorador por profesión
+│   │   ├── BeneficiosIA.astro      # Explorador interactivo por profesión
 │   │   ├── Cabecera.astro          # Navegación principal, categorías y temas
-│   │   ├── ConstructorPrompts.tsx  # Isla React: taller interactivo de prompts
-│   │   ├── ContactoCopiar.tsx      # Isla React: botón para copiar correo
-│   │   ├── HeroDemo.tsx            # Isla React: comparativa de prompts
+│   │   ├── ConstructorPrompts.astro# Taller interactivo de prompts
+│   │   ├── ContactoCopiar.astro    # Botón interactivo para copiar correo
+│   │   ├── HeroDemo.astro          # Comparativa interactiva de prompts
 │   │   ├── Pestana.astro           # Pestaña individual
 │   │   ├── Pestanas.astro          # Contenedor de pestañas accesibles
 │   │   ├── TablaContenido.astro    # Tabla de contenidos lateral
-│   │   ├── TarjetaArticulo.astro   # Tarjeta de artículo para listados
-│   │   └── ArticulosRelacionados.astro
+│   │   └── TarjetaArticulo.astro   # Tarjeta de artículo para listados
 │   ├── content/
 │   │   └── articulos/    # Artículos editoriales en formato MDX
 │   ├── data/
@@ -111,7 +111,7 @@ etiquetas: ["aprendizaje", "herramientas", "productividad"]
 
 import Pestanas from '../../components/Pestanas.astro';
 import Pestana from '../../components/Pestana.astro';
-import ConstructorPrompts from '../../components/ConstructorPrompts';
+import ConstructorPrompts from '../../components/ConstructorPrompts.astro';
 
 ## Primera sección
 
@@ -128,9 +128,9 @@ Texto del artículo utilizando prosa estándar.
 
 ## Práctica interactiva
 
-Puedes integrar islas interactivas de React cuando sea pertinente:
+Puedes integrar componentes interactivos cuando sea pertinente:
 
-<ConstructorPrompts client:visible />
+<ConstructorPrompts />
 ```
 
 ### Slugs válidos para `categoria`

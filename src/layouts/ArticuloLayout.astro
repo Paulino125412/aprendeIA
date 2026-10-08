@@ -54,8 +54,10 @@ const siguiente = indiceActual >= 0 && indiceActual < deMismaCategoria.length - 
 // URLs y Schemas JSON-LD
 const siteUrl = Astro.site ? Astro.site.origin : '';
 const urlInicio = siteUrl ? new URL('/', Astro.site).href : '/';
-const urlCategoria = siteUrl ? new URL(`/categoria/${categoria}`, Astro.site).href : `/categoria/${categoria}`;
-const urlArticulo = siteUrl ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
+const categoriaPath = `/categoria/${categoria}/`;
+const urlCategoria = siteUrl ? new URL(categoriaPath, Astro.site).href : categoriaPath;
+const articuloPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const urlArticulo = siteUrl ? new URL(articuloPath, Astro.site).href : articuloPath;
 
 const jsonLdArticulo = {
   '@context': 'https://schema.org',

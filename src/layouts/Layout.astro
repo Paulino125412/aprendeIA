@@ -40,6 +40,7 @@ const anioActual = new Date().getFullYear();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={tipoOg} />
+    {canonicalURL && <meta property="og:url" content={canonicalURL} />}
     <meta property="og:locale" content="es_PE" />
     <meta property="og:site_name" content={SITIO.nombre} />
     {imagen && <meta property="og:image" content={imagen} />}
