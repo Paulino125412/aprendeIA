@@ -1,0 +1,302 @@
+---
+import { AMBITOS, OBJETIVOS, BENEFICIOS_DATA } from '../data/beneficiosIA';
+
+const jsonData = JSON.stringify(BENEFICIOS_DATA);
+---
+
+<section
+  aria-labelledby="titulo-beneficios-ia"
+  class="beneficios-ia-root w-full max-w-4xl mx-auto my-8 p-6 md:p-8 bg-superficie border border-linea"
+>
+  <header class="mb-6">
+    <p class="text-xs font-semibold text-tinta-suave mb-1">
+      Explorador interactivo
+    </p>
+    <h2
+      id="titulo-beneficios-ia"
+      class="text-2xl md:text-3xl font-bold tracking-tight text-tinta"
+    >
+      Beneficios de la IA en cualquier profesión
+    </h2>
+    <p class="mt-2 text-sm text-tinta-suave">
+      Personaliza tu perfil profesional y tu meta para descubrir la herramienta ideal, el beneficio clave y un prompt listo para usar.
+    </p>
+  </header>
+
+  {/* Selectores accesibles */}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+    <div>
+      <label
+        for="select-ambito"
+        class="block text-sm font-semibold text-tinta mb-2"
+      >
+        1. Selecciona tu ámbito o profesión:
+      </label>
+      <div class="relative">
+        <select
+          id="select-ambito"
+          class="select-ambito w-full appearance-none rounded-[6px] border border-linea bg-papel px-4 py-3 pr-10 text-sm font-medium text-tinta transition-colors focus:border-indigo focus:outline-none focus:ring-2 focus:ring-indigo/20 cursor-pointer"
+        >
+          <option value="">-- Elige un ámbito --</option>
+          {AMBITOS.map((item) => (
+            <option value={item}>{item}</option>
+          ))}
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-tinta-suave">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="select-objetivo"
+        class="block text-sm font-semibold text-tinta mb-2"
+      >
+        2. Selecciona tu objetivo principal:
+      </label>
+      <div class="relative">
+        <select
+          id="select-objetivo"
+          class="select-objetivo w-full appearance-none rounded-[6px] border border-linea bg-papel px-4 py-3 pr-10 text-sm font-medium text-tinta transition-colors focus:border-indigo focus:outline-none focus:ring-2 focus:ring-indigo/20 cursor-pointer"
+        >
+          <option value="">-- Elige un objetivo --</option>
+          {OBJETIVOS.map((item) => (
+            <option value={item}>{item}</option>
+          ))}
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-tinta-suave">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Contenedor de resultado */}
+  <div
+    aria-live="polite"
+    class="min-h-[440px] flex flex-col justify-start transition-all"
+  >
+    {/* Estado Inicial: Vacío */}
+    <div class="panel-vacio h-full min-h-[440px] flex flex-col items-center justify-center p-8 text-center border border-dashed border-linea bg-papel">
+      <h3 class="text-base font-semibold text-tinta">
+        Personaliza tu consulta
+      </h3>
+      <p class="mt-1 text-xs sm:text-sm text-tinta-suave max-w-md">
+        Selecciona tu ámbito y tu objetivo en los desplegables para ver la recomendación y el prompt adaptado.
+      </p>
+    </div>
+
+    {/* Estado Activo: Detalle */}
+    <article class="panel-detalle hidden flex-col gap-6 p-6 border border-linea bg-papel">
+      {/* Herramienta recomendada */}
+      <div class="p-4 border border-linea bg-superficie">
+        <span class="text-xs font-bold text-indigo block mb-1">
+          Herramienta recomendada
+        </span>
+        <h3 class="herramienta-nombre text-lg font-bold text-tinta"></h3>
+        <p class="herramienta-razon mt-1 text-sm text-tinta-suave"></p>
+      </div>
+
+      {/* Beneficio directo */}
+      <div class="p-4 border border-linea bg-superficie border-l-[3px] border-l-esmeralda">
+        <span class="text-xs font-bold text-esmeralda block mb-1">
+          Beneficio directo y cuantificable
+        </span>
+        <p class="beneficio-texto text-sm sm:text-base font-semibold text-tinta"></p>
+      </div>
+
+      {/* Prompt estructurado */}
+      <div>
+        <div class="flex items-center justify-between gap-3 mb-2 flex-wrap">
+          <div>
+            <span class="text-xs font-bold text-tinta block">
+              Prompt de ejemplo optimizado
+            </span>
+            <span class="text-xs text-tinta-suave">
+              Estructura: Rol, Contexto, Tarea, Formato de salida
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="btn-copiar-prompt inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo bg-indigo text-sobre-acento hover:opacity-90"
+            aria-label="Copiar prompt de ejemplo al portapapeles"
+          >
+            <span class="prompt-icon-copiar flex items-center gap-1.5">
+              <svg
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copiar prompt</span>
+            </span>
+            <span class="prompt-icon-copiado hidden items-center gap-1.5 text-sobre-acento">
+              <svg
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Copiado</span>
+            </span>
+          </button>
+        </div>
+
+        <pre class="w-full overflow-x-auto p-4 border border-linea bg-superficie text-tinta text-xs md:text-sm font-mono leading-relaxed whitespace-pre-wrap"><code class="prompt-codigo"></code></pre>
+      </div>
+    </article>
+  </div>
+
+  <script type="application/json" class="beneficios-raw-data" set:html={jsonData}></script>
+</section>
+
+<script is:inline>
+  (function () {
+    function initBeneficios() {
+      const roots = document.querySelectorAll('.beneficios-ia-root');
+      roots.forEach((root) => {
+        if (root.dataset.iniciado === 'true') return;
+        root.dataset.iniciado = 'true';
+
+        const dataScript = root.querySelector('.beneficios-raw-data');
+        if (!dataScript) return;
+        let data = {};
+        try {
+          data = JSON.parse(dataScript.textContent || '{}');
+        } catch (_) {
+          return;
+        }
+
+        const selAmbito = root.querySelector('.select-ambito');
+        const selObjetivo = root.querySelector('.select-objetivo');
+        const panelVacio = root.querySelector('.panel-vacio');
+        const panelDetalle = root.querySelector('.panel-detalle');
+        const hNombre = root.querySelector('.herramienta-nombre');
+        const hRazon = root.querySelector('.herramienta-razon');
+        const bTexto = root.querySelector('.beneficio-texto');
+        const pCodigo = root.querySelector('.prompt-codigo');
+        const btnCopiar = root.querySelector('.btn-copiar-prompt');
+        const iconCopiar = root.querySelector('.prompt-icon-copiar');
+        const iconCopiado = root.querySelector('.prompt-icon-copiado');
+        let timer = null;
+
+        let currentPrompt = '';
+
+        function actualizar() {
+          const ambito = selAmbito?.value || '';
+          const objetivo = selObjetivo?.value || '';
+
+          if (!ambito || !objetivo || !data[ambito] || !data[ambito][objetivo]) {
+            panelVacio?.classList.remove('hidden');
+            panelVacio?.classList.add('flex');
+            panelDetalle?.classList.add('hidden');
+            panelDetalle?.classList.remove('flex');
+            currentPrompt = '';
+            return;
+          }
+
+          const detalle = data[ambito][objetivo];
+          currentPrompt = detalle.promptEjemplo || '';
+
+          if (hNombre) hNombre.textContent = detalle.herramienta.nombre;
+          if (hRazon) hRazon.textContent = detalle.herramienta.razon;
+          if (bTexto) bTexto.textContent = detalle.beneficioDirecto;
+          if (pCodigo) pCodigo.textContent = currentPrompt;
+
+          panelVacio?.classList.add('hidden');
+          panelVacio?.classList.remove('flex');
+          panelDetalle?.classList.remove('hidden');
+          panelDetalle?.classList.add('flex');
+        }
+
+        selAmbito?.addEventListener('change', actualizar);
+        selObjetivo?.addEventListener('change', actualizar);
+
+        btnCopiar?.addEventListener('click', async () => {
+          if (!currentPrompt) return;
+          let ok = false;
+          if (navigator.clipboard && window.isSecureContext) {
+            try {
+              await navigator.clipboard.writeText(currentPrompt);
+              ok = true;
+            } catch (_) {}
+          }
+          if (!ok) {
+            try {
+              const el = document.createElement('textarea');
+              el.value = currentPrompt;
+              el.style.position = 'fixed';
+              el.style.left = '-9999px';
+              el.style.opacity = '0';
+              document.body.appendChild(el);
+              el.focus();
+              el.select();
+              ok = document.execCommand('copy');
+              document.body.removeChild(el);
+            } catch (_) {}
+          }
+
+          if (ok) {
+            if (timer) clearTimeout(timer);
+            btnCopiar.className = 'btn-copiar-prompt inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo bg-esmeralda text-sobre-acento';
+            iconCopiar?.classList.add('hidden');
+            iconCopiar?.classList.remove('flex');
+            iconCopiado?.classList.remove('hidden');
+            iconCopiado?.classList.add('flex');
+
+            timer = setTimeout(() => {
+              btnCopiar.className = 'btn-copiar-prompt inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo bg-indigo text-sobre-acento hover:opacity-90';
+              iconCopiar?.classList.remove('hidden');
+              iconCopiar?.classList.add('flex');
+              iconCopiado?.classList.add('hidden');
+              iconCopiado?.classList.remove('flex');
+            }, 2000);
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBeneficios);
+    } else {
+      initBeneficios();
+    }
+  })();
+</script>

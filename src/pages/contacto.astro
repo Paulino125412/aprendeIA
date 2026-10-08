@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITIO } from '../config';
-import ContactoCopiar from '../components/ContactoCopiar';
+import ContactoCopiar from '../components/ContactoCopiar.astro';
 ---
 
 <Layout
@@ -47,7 +47,7 @@ import ContactoCopiar from '../components/ContactoCopiar';
             {SITIO.emailContacto}
           </a>
           <div class="shrink-0">
-            <ContactoCopiar client:visible email={SITIO.emailContacto} />
+            <ContactoCopiar email={SITIO.emailContacto} />
           </div>
         </div>
       </div>

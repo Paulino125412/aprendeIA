@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -8,7 +7,7 @@ import { loadEnv } from 'vite';
 const { PUBLIC_SITE_URL } = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
 const site = PUBLIC_SITE_URL || undefined;
 
-const integrations = [react(), mdx()];
+const integrations = [mdx()];
 if (site) {
   integrations.push(
     sitemap({

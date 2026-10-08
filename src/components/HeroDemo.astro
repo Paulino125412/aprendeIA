@@ -1,0 +1,163 @@
+---
+// HeroDemo.astro - Pestañas interactivas y accesibles para comparar prompts
+---
+
+<div class="w-full hero-demo-root">
+  {/* Único elemento con radio de 12px en la portada */}
+  <div class="rounded-[12px] border border-linea bg-superficie p-5 sm:p-6 transition-colors">
+    {/* Pestañas accesibles */}
+    <div
+      role="tablist"
+      aria-label="Comparación de prompts"
+      class="flex border-b border-linea gap-4 mb-4"
+    >
+      <button
+        type="button"
+        role="tab"
+        id="tab-prompt-vago"
+        aria-controls="panel-prompt-vago"
+        aria-selected="true"
+        tabindex="0"
+        class="tab-btn pb-2.5 text-xs font-semibold cursor-pointer border-b-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo border-rosa text-rosa font-bold"
+        data-tab="vago"
+      >
+        Prompt vago
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        id="tab-prompt-armado"
+        aria-controls="panel-prompt-armado"
+        aria-selected="false"
+        tabindex="-1"
+        class="tab-btn pb-2.5 text-xs font-semibold cursor-pointer border-b-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo border-transparent text-tinta-suave hover:text-tinta"
+        data-tab="armado"
+      >
+        Prompt armado
+      </button>
+    </div>
+
+    {/* Panel 1: Prompt vago */}
+    <div
+      role="tabpanel"
+      id="panel-prompt-vago"
+      aria-labelledby="tab-prompt-vago"
+      tabindex="0"
+      class="tab-panel space-y-3 transition-opacity duration-150 motion-reduce:transition-none"
+    >
+      <div class="p-3 bg-papel border border-linea text-sm font-mono text-tinta">
+        "Hazme un plan de ahorro."
+      </div>
+
+      <div class="p-3 bg-papel border border-linea border-l-[3px] border-l-rosa text-xs sm:text-sm text-tinta leading-relaxed">
+        Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.
+      </div>
+    </div>
+
+    {/* Panel 2: Prompt armado */}
+    <div
+      role="tabpanel"
+      id="panel-prompt-armado"
+      aria-labelledby="tab-prompt-armado"
+      tabindex="0"
+      hidden
+      class="tab-panel space-y-3 transition-opacity duration-150 motion-reduce:transition-none"
+    >
+      <div class="p-3 bg-papel border border-linea text-xs sm:text-sm space-y-2">
+        <div>
+          <span class="font-bold text-tinta">Rol: </span>
+          <span class="text-tinta-suave">Actúa como asesor de finanzas personales.</span>
+        </div>
+        <div>
+          <span class="font-bold text-tinta">Contexto: </span>
+          <span class="text-tinta-suave">Tengo una tienda de barrio y mis ingresos cambian cada mes.</span>
+        </div>
+        <div>
+          <span class="font-bold text-tinta">Tarea: </span>
+          <span class="text-tinta-suave">Hazme un plan de ahorro para 3 meses.</span>
+        </div>
+        <div>
+          <span class="font-bold text-tinta">Tono: </span>
+          <span class="text-tinta-suave">Explícalo directo y sin tecnicismos.</span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-papel border border-linea border-l-[3px] border-l-esmeralda text-xs sm:text-sm text-tinta leading-relaxed">
+        Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.
+      </div>
+    </div>
+  </div>
+
+  {/* Aclaración bajo la tarjeta */}
+  <p class="text-[11px] text-tinta-suave mt-2 leading-normal">
+    Ejemplo ilustrativo de cómo cambia una respuesta. No es asesoría financiera.
+  </p>
+</div>
+
+<script is:inline>
+  (function () {
+    function initHeroDemo() {
+      const roots = document.querySelectorAll('.hero-demo-root');
+      roots.forEach((root) => {
+        if (root.dataset.iniciado === 'true') return;
+        root.dataset.iniciado = 'true';
+
+        const tabVago = root.querySelector('#tab-prompt-vago');
+        const tabArmado = root.querySelector('#tab-prompt-armado');
+        const panelVago = root.querySelector('#panel-prompt-vago');
+        const panelArmado = root.querySelector('#panel-prompt-armado');
+
+        function activar(tab) {
+          if (tab === 'vago') {
+            tabVago?.setAttribute('aria-selected', 'true');
+            tabVago?.setAttribute('tabindex', '0');
+            tabVago?.classList.remove('border-transparent', 'text-tinta-suave');
+            tabVago?.classList.add('border-rosa', 'text-rosa', 'font-bold');
+
+            tabArmado?.setAttribute('aria-selected', 'false');
+            tabArmado?.setAttribute('tabindex', '-1');
+            tabArmado?.classList.remove('border-esmeralda', 'text-esmeralda', 'font-bold');
+            tabArmado?.classList.add('border-transparent', 'text-tinta-suave');
+
+            panelVago?.removeAttribute('hidden');
+            panelArmado?.setAttribute('hidden', '');
+          } else {
+            tabArmado?.setAttribute('aria-selected', 'true');
+            tabArmado?.setAttribute('tabindex', '0');
+            tabArmado?.classList.remove('border-transparent', 'text-tinta-suave');
+            tabArmado?.classList.add('border-esmeralda', 'text-esmeralda', 'font-bold');
+
+            tabVago?.setAttribute('aria-selected', 'false');
+            tabVago?.setAttribute('tabindex', '-1');
+            tabVago?.classList.remove('border-rosa', 'text-rosa', 'font-bold');
+            tabVago?.classList.add('border-transparent', 'text-tinta-suave');
+
+            panelArmado?.removeAttribute('hidden');
+            panelVago?.setAttribute('hidden', '');
+          }
+        }
+
+        tabVago?.addEventListener('click', () => activar('vago'));
+        tabArmado?.addEventListener('click', () => activar('armado'));
+
+        [tabVago, tabArmado].forEach((btn) => {
+          btn?.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+              e.preventDefault();
+              const next = btn === tabVago ? 'armado' : 'vago';
+              activar(next);
+              (next === 'vago' ? tabVago : tabArmado)?.focus();
+            }
+          });
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroDemo);
+    } else {
+      initHeroDemo();
+    }
+  })();
+</script>

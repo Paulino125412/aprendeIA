@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import HeroDemo from '../components/HeroDemo';
+import HeroDemo from '../components/HeroDemo.astro';
 import Anuncio from '../components/Anuncio.astro';
 import { CATEGORIAS, getCategoria } from '../data/categorias';
 
@@ -64,9 +64,9 @@ function calcularMinutos(body?: string): number {
         </div>
       </div>
 
-      <!-- Columna derecha: isla interactiva con la demo del hero -->
+      <!-- Columna derecha: demo del hero -->
       <div class="lg:col-span-5 w-full">
-        <HeroDemo client:load />
+        <HeroDemo />
       </div>
     </section>
 

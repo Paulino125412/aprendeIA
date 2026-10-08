@@ -1,0 +1,408 @@
+---
+// ConstructorPrompts.astro - Taller interactivo de ensamblado de prompts en 4 pasos
+---
+
+<section
+  aria-labelledby="titulo-constructor-prompts"
+  class="constructor-prompts-root w-full max-w-4xl mx-auto my-8 p-6 md:p-8 bg-superficie border border-linea"
+>
+  <header class="mb-6">
+    <p class="text-xs font-semibold text-tinta-suave mb-1">
+      Taller práctico
+    </p>
+    <h2
+      id="titulo-constructor-prompts"
+      class="text-2xl md:text-3xl font-bold tracking-tight text-tinta"
+    >
+      Constructor de prompts efectivos (regla de 4 pasos)
+    </h2>
+    <p class="mt-2 text-sm text-tinta-suave">
+      Aprende a comunicarte con cualquier modelo de IA estructurando tu solicitud paso a paso: Rol, Contexto, Tarea y Tono.
+    </p>
+  </header>
+
+  {/* Formulario */}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    {/* Paso 1: Rol */}
+    <div>
+      <label
+        for="input-rol"
+        class="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
+      >
+        <span class="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
+          1
+        </span>
+        <span>Rol (¿Quién debe ser la IA?)</span>
+      </label>
+      <span class="block text-xs text-tinta-suave mb-2">
+        Pista: asígnale una profesión o especialidad concreta.
+      </span>
+      <input
+        id="input-rol"
+        type="text"
+        placeholder="ej. Diseñador instruccional sénior experto en microaprendizaje"
+        class="input-rol w-full rounded-[6px] border border-linea bg-papel px-4 py-2.5 text-sm text-tinta placeholder:text-tinta-suave focus:border-indigo focus:outline-none focus:ring-2 focus:ring-indigo/20"
+      />
+    </div>
+
+    {/* Paso 2: Contexto */}
+    <div>
+      <label
+        for="input-contexto"
+        class="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
+      >
+        <span class="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
+          2
+        </span>
+        <span>Contexto (Situación actual)</span>
+      </label>
+      <span class="block text-xs text-tinta-suave mb-2">
+        Pista: antecedentes, audiencia o restricciones importantes.
+      </span>
+      <textarea
+        id="input-contexto"
+        rows="2"
+        placeholder="ej. Tengo un equipo de ventas que necesita aprender un CRM nuevo en sesiones de 15 minutos diarios."
+        class="input-contexto w-full rounded-[6px] border border-linea bg-papel px-4 py-2 text-sm text-tinta placeholder:text-tinta-suave focus:border-indigo focus:outline-none focus:ring-2 focus:ring-indigo/20"
+      ></textarea>
+    </div>
+
+    {/* Paso 3: Tarea */}
+    <div>
+      <label
+        for="input-tarea"
+        class="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
+      >
+        <span class="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-esmeralda rounded-[6px]">
+          3
+        </span>
+        <span>Tarea (Acción exacta)</span>
+      </label>
+      <span class="block text-xs text-tinta-suave mb-2">
+        Pista: verbo imperativo y entregable esperado.
+      </span>
+      <input
+        id="input-tarea"
+        type="text"
+        placeholder="ej. Diseña una estructura curricular de 5 micromódulos prácticos con ejercicios aplicados."
+        class="input-tarea w-full rounded-[6px] border border-linea bg-papel px-4 py-2.5 text-sm text-tinta placeholder:text-tinta-suave focus:border-esmeralda focus:outline-none focus:ring-2 focus:ring-esmeralda/20"
+      />
+    </div>
+
+    {/* Paso 4: Tono */}
+    <div>
+      <label
+        for="select-tono"
+        class="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
+      >
+        <span class="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
+          4
+        </span>
+        <span>Tono deseado</span>
+      </label>
+      <span class="block text-xs text-tinta-suave mb-2">
+        Pista: define el estilo y la complejidad del lenguaje.
+      </span>
+      <div class="relative">
+        <select
+          id="select-tono"
+          class="select-tono w-full appearance-none rounded-[6px] border border-linea bg-papel px-4 py-2.5 pr-10 text-sm font-medium text-tinta transition-colors focus:border-indigo focus:outline-none focus:ring-2 focus:ring-indigo/20 cursor-pointer"
+        >
+          <option value="Profesional">Profesional</option>
+          <option value="Directo y Conciso">Directo y Conciso</option>
+          <option value="Amigable">Amigable</option>
+          <option value="Explicación para niños">Explicación para niños</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-tinta-suave">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Contenedor de resultado en vivo */}
+  <div
+    aria-live="polite"
+    class="min-h-[300px] border border-linea bg-papel p-5 md:p-6 text-tinta flex flex-col justify-between"
+  >
+    <div>
+      <div class="flex items-center justify-between gap-4 mb-4 pb-3 border-b border-linea flex-wrap">
+        <div class="flex items-center gap-2">
+          <h3 class="text-xs font-bold text-tinta">
+            Resultado ensamblado
+          </h3>
+        </div>
+
+        {/* Contador de caracteres */}
+        <span class="contador-caracteres text-xs font-mono px-2 py-0.5 border border-linea text-tinta-suave">
+          0 caracteres
+        </span>
+      </div>
+
+      {/* Bloque visual */}
+      <div class="font-mono text-xs md:text-sm leading-relaxed space-y-2">
+        <div class="p-2.5 border border-linea bg-superficie">
+          <span class="font-bold text-indigo">[ROL]: </span>
+          <span class="bloque-rol-texto">
+            <span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) Diseñador instruccional sénior experto en microaprendizaje</span>
+          </span>
+        </div>
+
+        <div class="p-2.5 border border-linea bg-superficie">
+          <span class="font-bold text-indigo">[CONTEXTO]: </span>
+          <span class="bloque-contexto-texto">
+            <span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) Tengo un equipo de ventas que necesita aprender un CRM nuevo en sesiones de 15 minutos diarios.</span>
+          </span>
+        </div>
+
+        <div class="p-2.5 border border-linea bg-superficie">
+          <span class="font-bold text-esmeralda">[TAREA]: </span>
+          <span class="bloque-tarea-texto">
+            <span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) Diseña una estructura curricular de 5 micromódulos prácticos con ejercicios aplicados.</span>
+          </span>
+        </div>
+
+        <div class="p-2.5 border border-linea bg-superficie">
+          <span class="font-bold text-indigo">[INSTRUCCIÓN DE TONO]: </span>
+          <span class="bloque-tono-texto text-tinta font-medium">Mantén un tono profesional, riguroso y objetivo.</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Barra inferior */}
+    <div class="mt-6 pt-4 border-t border-linea flex items-center justify-between flex-wrap gap-4">
+      <span class="mensaje-estado text-xs text-tinta-suave">
+        Introduce al menos un Rol y una Tarea para habilitar el copiado.
+      </span>
+
+      <div class="flex items-center gap-3">
+        <button
+          type="button"
+          disabled
+          aria-label="Copiar prompt completo ensamblado"
+          class="btn-copiar-ensamblado inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors border border-linea bg-papel text-tinta-suave cursor-not-allowed opacity-60 focus:outline-none focus:ring-2 focus:ring-indigo"
+        >
+          <span class="icon-copiar flex items-center gap-2">
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copiar prompt</span>
+          </span>
+          <span class="icon-copiado hidden items-center gap-2 text-sobre-acento">
+            <svg
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Copiado</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const TONOS = {
+      'Profesional': 'Mantén un tono profesional, riguroso y objetivo.',
+      'Directo y Conciso': 'Sé directo, conciso y ve al grano sin introducciones ni rodeos.',
+      'Amigable': 'Responde en un tono amigable, cercano y pedagógico.',
+      'Explicación para niños': 'Explica con analogías sencillas, ejemplos cotidianos y lenguaje comprensible para un niño de 10 años.',
+    };
+
+    const PLACEHOLDERS = {
+      rol: 'Diseñador instruccional sénior experto en microaprendizaje',
+      contexto: 'Tengo un equipo de ventas que necesita aprender un CRM nuevo en sesiones de 15 minutos diarios.',
+      tarea: 'Diseña una estructura curricular de 5 micromódulos prácticos con ejercicios aplicados.',
+    };
+
+    function initConstructor() {
+      const roots = document.querySelectorAll('.constructor-prompts-root');
+      roots.forEach((root) => {
+        if (root.dataset.iniciado === 'true') return;
+        root.dataset.iniciado = 'true';
+
+        const inRol = root.querySelector('.input-rol');
+        const inContexto = root.querySelector('.input-contexto');
+        const inTarea = root.querySelector('.input-tarea');
+        const selTono = root.querySelector('.select-tono');
+
+        const bRol = root.querySelector('.bloque-rol-texto');
+        const bContexto = root.querySelector('.bloque-contexto-texto');
+        const bTarea = root.querySelector('.bloque-tarea-texto');
+        const bTono = root.querySelector('.bloque-tono-texto');
+
+        const contador = root.querySelector('.contador-caracteres');
+        const mensaje = root.querySelector('.mensaje-estado');
+        const btnCopiar = root.querySelector('.btn-copiar-ensamblado');
+        const iconCopiar = root.querySelector('.icon-copiar');
+        const iconCopiado = root.querySelector('.icon-copiado');
+        let timer = null;
+
+        function actualizar() {
+          const rol = inRol?.value.trim() || '';
+          const contexto = inContexto?.value.trim() || '';
+          const tarea = inTarea?.value.trim() || '';
+          const tonoKey = selTono?.value || 'Profesional';
+          const tonoTexto = TONOS[tonoKey] || TONOS['Profesional'];
+
+          if (bRol) {
+            bRol.innerHTML = rol
+              ? `<span class="font-semibold text-tinta">${escapeHtml(rol)}</span>`
+              : `<span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) ${PLACEHOLDERS.rol}</span>`;
+          }
+
+          if (bContexto) {
+            bContexto.innerHTML = contexto
+              ? `<span class="text-tinta">${escapeHtml(contexto)}</span>`
+              : `<span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) ${PLACEHOLDERS.contexto}</span>`;
+          }
+
+          if (bTarea) {
+            bTarea.innerHTML = tarea
+              ? `<span class="font-semibold text-tinta">${escapeHtml(tarea)}</span>`
+              : `<span aria-hidden="true" class="italic text-tinta-suave">(ejemplo) ${PLACEHOLDERS.tarea}</span>`;
+          }
+
+          if (bTono) {
+            bTono.textContent = tonoTexto;
+          }
+
+          // Armar prompt final solo con los campos llenados (+ tono)
+          const lineas = [];
+          if (rol) lineas.push(`[ROL]: ${rol}`);
+          if (contexto) lineas.push(`[CONTEXTO]: ${contexto}`);
+          if (tarea) lineas.push(`[TAREA]: ${tarea}`);
+          lineas.push(`[INSTRUCCIÓN DE TONO]: ${tonoTexto}`);
+
+          const promptFinal = lineas.join('\n');
+          if (contador) contador.textContent = `${promptFinal.length} caracteres`;
+
+          const habilitado = rol !== '' && tarea !== '';
+          if (btnCopiar) {
+            btnCopiar.disabled = !habilitado;
+            if (habilitado) {
+              btnCopiar.className = 'btn-copiar-ensamblado inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo bg-indigo text-sobre-acento hover:opacity-90';
+            } else {
+              btnCopiar.className = 'btn-copiar-ensamblado inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors border border-linea bg-papel text-tinta-suave cursor-not-allowed opacity-60 focus:outline-none focus:ring-2 focus:ring-indigo';
+            }
+          }
+
+          if (mensaje) {
+            mensaje.textContent = habilitado
+              ? 'Prompt listo para copiar.'
+              : 'Introduce al menos un Rol y una Tarea para habilitar el copiado.';
+          }
+        }
+
+        function escapeHtml(str) {
+          return str
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+
+        inRol?.addEventListener('input', actualizar);
+        inContexto?.addEventListener('input', actualizar);
+        inTarea?.addEventListener('input', actualizar);
+        selTono?.addEventListener('change', actualizar);
+
+        btnCopiar?.addEventListener('click', async () => {
+          const rol = inRol?.value.trim() || '';
+          const contexto = inContexto?.value.trim() || '';
+          const tarea = inTarea?.value.trim() || '';
+          const tonoKey = selTono?.value || 'Profesional';
+          const tonoTexto = TONOS[tonoKey] || TONOS['Profesional'];
+
+          if (!rol || !tarea) return;
+
+          const lineas = [];
+          lineas.push(`[ROL]: ${rol}`);
+          if (contexto) lineas.push(`[CONTEXTO]: ${contexto}`);
+          lineas.push(`[TAREA]: ${tarea}`);
+          lineas.push(`[INSTRUCCIÓN DE TONO]: ${tonoTexto}`);
+          const promptFinal = lineas.join('\n');
+
+          let ok = false;
+          if (navigator.clipboard && window.isSecureContext) {
+            try {
+              await navigator.clipboard.writeText(promptFinal);
+              ok = true;
+            } catch (_) {}
+          }
+          if (!ok) {
+            try {
+              const el = document.createElement('textarea');
+              el.value = promptFinal;
+              el.style.position = 'fixed';
+              el.style.left = '-9999px';
+              el.style.opacity = '0';
+              document.body.appendChild(el);
+              el.focus();
+              el.select();
+              ok = document.execCommand('copy');
+              document.body.removeChild(el);
+            } catch (_) {}
+          }
+
+          if (ok) {
+            if (timer) clearTimeout(timer);
+            btnCopiar.className = 'btn-copiar-ensamblado inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo bg-esmeralda text-sobre-acento';
+            iconCopiar?.classList.add('hidden');
+            iconCopiar?.classList.remove('flex');
+            iconCopiado?.classList.remove('hidden');
+            iconCopiado?.classList.add('flex');
+
+            timer = setTimeout(() => {
+              actualizar();
+              iconCopiar?.classList.remove('hidden');
+              iconCopiar?.classList.add('flex');
+              iconCopiado?.classList.add('hidden');
+              iconCopiado?.classList.remove('flex');
+            }, 2000);
+          }
+        });
+
+        // Inicializar texto y contador por primera vez
+        actualizar();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initConstructor);
+    } else {
+      initConstructor();
+    }
+  })();
+</script>

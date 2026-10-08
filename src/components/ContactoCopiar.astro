@@ -1,0 +1,96 @@
+---
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+---
+
+<div class="contacto-copiar-root inline-block" data-email={email}>
+  <button
+    type="button"
+    aria-label="Copiar correo al portapapeles"
+    class="btn-copiar-correo inline-flex items-center gap-2 px-4 py-2 rounded-[6px] text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo cursor-pointer bg-papel border border-linea text-tinta hover:bg-superficie"
+  >
+    <span class="icon-copiar flex items-center gap-2">
+      <svg class="w-4 h-4 text-tinta-suave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span>Copiar correo</span>
+    </span>
+    <span class="icon-copiado hidden items-center gap-2 text-sobre-acento">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span>Correo copiado</span>
+    </span>
+  </button>
+</div>
+
+<script is:inline>
+  (function () {
+    function initContactoCopiar() {
+      const roots = document.querySelectorAll('.contacto-copiar-root');
+      roots.forEach((root) => {
+        if (root.dataset.iniciado === 'true') return;
+        root.dataset.iniciado = 'true';
+
+        const email = root.dataset.email || '';
+        const btn = root.querySelector('.btn-copiar-correo');
+        const iconCopiar = root.querySelector('.icon-copiar');
+        const iconCopiado = root.querySelector('.icon-copiado');
+        let timer = null;
+
+        btn?.addEventListener('click', async () => {
+          let copiado = false;
+          if (navigator.clipboard && window.isSecureContext) {
+            try {
+              await navigator.clipboard.writeText(email);
+              copiado = true;
+            } catch (_) {}
+          }
+          if (!copiado) {
+            try {
+              const el = document.createElement('textarea');
+              el.value = email;
+              el.style.position = 'fixed';
+              el.style.left = '-9999px';
+              el.style.opacity = '0';
+              document.body.appendChild(el);
+              el.focus();
+              el.select();
+              copiado = document.execCommand('copy');
+              document.body.removeChild(el);
+            } catch (_) {}
+          }
+
+          if (copiado) {
+            if (timer) clearTimeout(timer);
+            btn.className = 'btn-copiar-correo inline-flex items-center gap-2 px-4 py-2 rounded-[6px] text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo cursor-pointer bg-esmeralda text-sobre-acento';
+            iconCopiar?.classList.add('hidden');
+            iconCopiar?.classList.remove('flex');
+            iconCopiado?.classList.remove('hidden');
+            iconCopiado?.classList.add('flex');
+            btn.setAttribute('aria-label', 'Correo copiado al portapapeles');
+
+            timer = setTimeout(() => {
+              btn.className = 'btn-copiar-correo inline-flex items-center gap-2 px-4 py-2 rounded-[6px] text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo cursor-pointer bg-papel border border-linea text-tinta hover:bg-superficie';
+              iconCopiar?.classList.remove('hidden');
+              iconCopiar?.classList.add('flex');
+              iconCopiado?.classList.add('hidden');
+              iconCopiado?.classList.remove('flex');
+              btn.setAttribute('aria-label', 'Copiar correo al portapapeles');
+            }, 2500);
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initContactoCopiar);
+    } else {
+      initContactoCopiar();
+    }
+  })();
+</script>
