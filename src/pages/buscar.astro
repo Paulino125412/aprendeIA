@@ -17,7 +17,7 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </header>
 
-    <form id="form-buscar" role="search" class="space-y-2" onsubmit="return false;">
+    <form id="form-buscar" role="search" class="space-y-2">
       <label for="input-busqueda" class="block text-xs font-semibold text-tinta-suave">
         Términos de búsqueda
       </label>
@@ -33,12 +33,37 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </form>
 
+    <noscript>
+      <div class="p-6 border border-linea bg-superficie space-y-4">
+        <h2 class="text-sm font-semibold text-tinta">
+          La búsqueda interactiva requiere JavaScript
+        </h2>
+        <p class="text-xs text-tinta-suave leading-relaxed">
+          Para filtrar los contenidos en tiempo real se necesita soporte de JavaScript en tu navegador. Puedes consultar directamente el listado de publicaciones o ingresar a cualquiera de las categorías:
+        </p>
+        <div class="pt-2 flex flex-wrap gap-2 text-xs">
+          <a href="/articulos" class="font-bold text-indigo hover:underline mr-2">
+            Ver todos los artículos
+          </a>
+          <a href="/categoria/fundamentos" class="text-tinta-suave hover:text-indigo">Fundamentos</a>
+          <a href="/categoria/prompting" class="text-tinta-suave hover:text-indigo">Prompting</a>
+          <a href="/categoria/profesion" class="text-tinta-suave hover:text-indigo">Profesión</a>
+          <a href="/categoria/estudiar" class="text-tinta-suave hover:text-indigo">Estudiar</a>
+          <a href="/categoria/vida-diaria" class="text-tinta-suave hover:text-indigo">Vida diaria</a>
+          <a href="/categoria/etica" class="text-tinta-suave hover:text-indigo">Ética</a>
+          <a href="/categoria/herramientas" class="text-tinta-suave hover:text-indigo">Herramientas</a>
+          <a href="/categoria/automatizacion" class="text-tinta-suave hover:text-indigo">Automatización</a>
+          <a href="/categoria/recursos" class="text-tinta-suave hover:text-indigo">Recursos</a>
+        </div>
+      </div>
+    </noscript>
+
     <div id="contenedor-estado" class="text-xs text-tinta-suave" aria-live="polite">
       Escribe al menos una palabra para comenzar la búsqueda.
     </div>
 
     <div id="estado-vacio" class="hidden p-8 border border-linea bg-superficie text-center space-y-2">
-      <p class="text-sm font-semibold text-tinta">No se encontraron artículos</p>
+      <h2 class="text-sm font-semibold text-tinta">No se encontraron artículos</h2>
       <p class="text-xs text-tinta-suave">
         No hay resultados que coincidan con todas las palabras ingresadas. Prueba con sinónimos o términos más generales.
       </p>
@@ -51,13 +76,28 @@ import Layout from '../layouts/Layout.astro';
 
   <script is:inline>
     (function() {
+      const form = document.getElementById('form-buscar');
       const input = document.getElementById('input-busqueda');
       const contenedorEstado = document.getElementById('contenedor-estado');
       const estadoVacio = document.getElementById('estado-vacio');
       const listaResultados = document.getElementById('lista-resultados');
 
+      form?.addEventListener('submit', function(e) {
+        e.preventDefault();
+      });
+
       let indiceArticulos = [];
       let indiceCargado = false;
+
+      function escaparHtml(str) {
+        if (!str && str !== 0) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
 
       function normalizar(texto) {
         if (!texto) return '';
@@ -99,21 +139,28 @@ import Layout from '../layouts/Layout.astro';
         contenedorEstado.textContent = `${resultados.length} ${resultados.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}.`;
 
         listaResultados.innerHTML = resultados.map((item) => {
+          const catSlug = escaparHtml(item.categoria?.slug || '');
+          const catNombre = escaparHtml(item.categoria?.nombre || '');
+          const url = escaparHtml(item.url || '');
+          const titulo = escaparHtml(item.titulo || '');
+          const descripcion = escaparHtml(item.descripcion || '');
+          const minutos = escaparHtml(item.minutos || '1');
+
           return `
             <li class="p-5 space-y-2 hover:bg-papel transition-colors">
               <div class="flex items-center gap-3 text-xs text-tinta-suave">
-                <a href="/categoria/${item.categoria.slug}" class="font-semibold text-indigo hover:underline">
-                  ${item.categoria.nombre}
+                <a href="/categoria/${catSlug}" class="font-semibold text-indigo hover:underline">
+                  ${catNombre}
                 </a>
-                <span>${item.minutos} min de lectura</span>
+                <span>${minutos} min de lectura</span>
               </div>
-              <h2 class="text-lg font-bold text-tinta tracking-tight">
-                <a href="${item.url}" class="hover:text-indigo transition-colors">
-                  ${item.titulo}
+              <h3 class="text-lg font-bold text-tinta tracking-tight">
+                <a href="${url}" class="hover:text-indigo transition-colors">
+                  ${titulo}
                 </a>
-              </h2>
+              </h3>
               <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed line-clamp-2">
-                ${item.descripcion}
+                ${descripcion}
               </p>
             </li>
           `;
@@ -123,6 +170,18 @@ import Layout from '../layouts/Layout.astro';
       function ejecutarBusqueda() {
         const query = (input?.value || '').trim();
         const textoNormalizado = normalizar(query);
+
+        // Actualizar URL con history.replaceState (?q=texto o sin parámetro si vacío)
+        try {
+          const currentUrl = new URL(window.location.href);
+          if (query) {
+            currentUrl.searchParams.set('q', query);
+          } else {
+            currentUrl.searchParams.delete('q');
+          }
+          const nuevaRuta = currentUrl.pathname + (currentUrl.search ? currentUrl.search : '');
+          window.history.replaceState(null, '', nuevaRuta);
+        } catch (_) {}
 
         if (!textoNormalizado) {
           if (listaResultados) {

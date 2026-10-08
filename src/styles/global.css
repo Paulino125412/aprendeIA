@@ -11,8 +11,9 @@
   --color-tinta-suave: #4A4F68;
   --color-linea: #D9DCE8;
   --color-indigo: #4338CA;
-  --color-esmeralda: #059669;
+  --color-esmeralda: #047857;
   --color-rosa: #BE123C;
+  --color-sobre-acento: #FFFFFF;
 }
 
 .dark {
@@ -24,6 +25,7 @@
   --color-indigo: #8B93FF;
   --color-esmeralda: #34D399;
   --color-rosa: #FB7185;
+  --color-sobre-acento: #0E1120;
 }
 
 @theme {
@@ -38,6 +40,7 @@
   --color-indigo: var(--color-indigo);
   --color-esmeralda: var(--color-esmeralda);
   --color-rosa: var(--color-rosa);
+  --color-sobre-acento: var(--color-sobre-acento);
 }
 
 @layer base {
@@ -60,7 +63,6 @@
     font-size: 1.125rem;
     line-height: 1.75;
     max-width: 68ch;
-    color: var(--color-tinta);
   }
 
   .prose h1,
@@ -68,19 +70,16 @@
   .prose h3,
   .prose h4 {
     font-family: var(--font-display);
-    color: var(--color-tinta);
     letter-spacing: -0.02em;
     font-weight: 700;
   }
 
   .prose strong,
   .prose b {
-    color: var(--color-tinta);
     font-weight: 600;
   }
 
   .prose a {
-    color: var(--color-indigo);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -112,4 +111,23 @@
     outline: 2px solid var(--color-indigo);
     outline-offset: 2px;
   }
+}
+
+.prose {
+  --tw-prose-body: var(--color-tinta);
+  --tw-prose-headings: var(--color-tinta);
+  --tw-prose-lead: var(--color-tinta-suave);
+  --tw-prose-links: var(--color-indigo);
+  --tw-prose-bold: var(--color-tinta);
+  --tw-prose-counters: var(--color-tinta-suave);
+  --tw-prose-bullets: var(--color-tinta-suave);
+  --tw-prose-hr: var(--color-linea);
+  --tw-prose-quotes: var(--color-tinta);
+  --tw-prose-quote-borders: var(--color-linea);
+  --tw-prose-captions: var(--color-tinta-suave);
+  --tw-prose-code: var(--color-tinta);
+  --tw-prose-pre-code: var(--color-tinta);
+  --tw-prose-pre-bg: var(--color-superficie);
+  --tw-prose-th-borders: var(--color-linea);
+  --tw-prose-td-borders: var(--color-linea);
 }

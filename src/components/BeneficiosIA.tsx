@@ -181,8 +181,8 @@ export default function BeneficiosIA(): React.JSX.Element {
                   aria-label="Copiar prompt de ejemplo al portapapeles"
                   className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-[6px] transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo ${
                     copiado
-                      ? 'bg-esmeralda text-white'
-                      : 'bg-indigo text-white hover:opacity-90'
+                      ? 'bg-esmeralda text-sobre-acento'
+                      : 'bg-indigo text-sobre-acento hover:opacity-90'
                   }`}
                 >
                   {copiado ? (

@@ -34,20 +34,18 @@ export default function ConstructorPrompts(): React.JSX.Element {
 
   const { copiado, error: errorCopia, copiar } = useCopiar(2000);
 
-  // Textos finales y placeholders
-  const textoRol = rol.trim() || PLACEHOLDERS_DEFECTO.rol;
-  const textoContexto = contexto.trim() || PLACEHOLDERS_DEFECTO.contexto;
-  const textoTarea = tarea.trim() || PLACEHOLDERS_DEFECTO.tarea;
   const textoInstruccionTono = TONOS_MAPA[tono];
 
-  // Prompt completo ensamblado
-  const promptEnsamblado = `[ROL]: ${textoRol}
-[CONTEXTO]: ${textoContexto}
-[TAREA]: ${textoTarea}
-[INSTRUCCIÓN DE TONO]: ${textoInstruccionTono}`;
+  // Prompt con SOLO los campos que el usuario llenó (+ Tono siempre)
+  const lineasPrompt: string[] = [];
+  if (rol.trim()) lineasPrompt.push(`[ROL]: ${rol.trim()}`);
+  if (contexto.trim()) lineasPrompt.push(`[CONTEXTO]: ${contexto.trim()}`);
+  if (tarea.trim()) lineasPrompt.push(`[TAREA]: ${tarea.trim()}`);
+  lineasPrompt.push(`[INSTRUCCIÓN DE TONO]: ${textoInstruccionTono}`);
 
+  const promptEnsamblado = lineasPrompt.join('\n');
   const cantidadCaracteres = promptEnsamblado.length;
-  const botonDeshabilitado = rol.trim() === '' && tarea.trim() === '';
+  const botonDeshabilitado = rol.trim() === '' || tarea.trim() === '';
 
   const handleCopiarPrompt = async () => {
     if (botonDeshabilitado) return;
@@ -82,7 +80,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
             htmlFor={rolId}
             className="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
           >
-            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-indigo rounded-[6px]">
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
               1
             </span>
             <span>Rol (¿Quién debe ser la IA?)</span>
@@ -106,7 +104,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
             htmlFor={contextoId}
             className="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
           >
-            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-indigo rounded-[6px]">
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
               2
             </span>
             <span>Contexto (Situación actual)</span>
@@ -130,7 +128,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
             htmlFor={tareaId}
             className="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
           >
-            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-esmeralda rounded-[6px]">
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-esmeralda rounded-[6px]">
               3
             </span>
             <span>Tarea (Acción exacta)</span>
@@ -154,7 +152,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
             htmlFor={tonoId}
             className="flex items-center gap-2 text-sm font-bold text-tinta mb-1"
           >
-            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-indigo rounded-[6px]">
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-bold text-sobre-acento bg-indigo rounded-[6px]">
               4
             </span>
             <span>Tono deseado</span>
@@ -216,27 +214,33 @@ export default function ConstructorPrompts(): React.JSX.Element {
             <div className="p-2.5 border border-linea bg-superficie">
               <span className="font-bold text-indigo">[ROL]: </span>
               {rol.trim() ? (
-                <span className="font-semibold text-tinta">{rol}</span>
+                <span className="font-semibold text-tinta">{rol.trim()}</span>
               ) : (
-                <span className="italic text-tinta-suave">{PLACEHOLDERS_DEFECTO.rol}</span>
+                <span aria-hidden="true" className="italic text-tinta-suave">
+                  (ejemplo) {PLACEHOLDERS_DEFECTO.rol}
+                </span>
               )}
             </div>
 
             <div className="p-2.5 border border-linea bg-superficie">
               <span className="font-bold text-indigo">[CONTEXTO]: </span>
               {contexto.trim() ? (
-                <span className="text-tinta">{contexto}</span>
+                <span className="text-tinta">{contexto.trim()}</span>
               ) : (
-                <span className="italic text-tinta-suave">{PLACEHOLDERS_DEFECTO.contexto}</span>
+                <span aria-hidden="true" className="italic text-tinta-suave">
+                  (ejemplo) {PLACEHOLDERS_DEFECTO.contexto}
+                </span>
               )}
             </div>
 
             <div className="p-2.5 border border-linea bg-superficie">
               <span className="font-bold text-esmeralda">[TAREA]: </span>
               {tarea.trim() ? (
-                <span className="font-semibold text-tinta">{tarea}</span>
+                <span className="font-semibold text-tinta">{tarea.trim()}</span>
               ) : (
-                <span className="italic text-tinta-suave">{PLACEHOLDERS_DEFECTO.tarea}</span>
+                <span aria-hidden="true" className="italic text-tinta-suave">
+                  (ejemplo) {PLACEHOLDERS_DEFECTO.tarea}
+                </span>
               )}
             </div>
 
@@ -251,7 +255,7 @@ export default function ConstructorPrompts(): React.JSX.Element {
         <div className="mt-6 pt-4 border-t border-linea flex items-center justify-between flex-wrap gap-4">
           <span className="text-xs text-tinta-suave">
             {botonDeshabilitado
-              ? 'Introduce al menos un Rol o una Tarea para habilitar el copiado.'
+              ? 'Introduce al menos un Rol y una Tarea para habilitar el copiado.'
               : 'Prompt listo para copiar.'}
           </span>
 
@@ -270,8 +274,8 @@ export default function ConstructorPrompts(): React.JSX.Element {
                 botonDeshabilitado
                   ? 'border border-linea bg-papel text-tinta-suave cursor-not-allowed opacity-60'
                   : copiado
-                  ? 'bg-esmeralda text-white'
-                  : 'bg-indigo text-white hover:opacity-90'
+                  ? 'bg-esmeralda text-sobre-acento'
+                  : 'bg-indigo text-sobre-acento hover:opacity-90'
               }`}
             >
               {copiado ? (

@@ -31,6 +31,7 @@ export default function HeroDemo(): React.JSX.Element {
           className="flex border-b border-linea gap-4 mb-4"
         >
           <button
+            type="button"
             ref={tabVagoRef}
             role="tab"
             id="tab-prompt-vago"
@@ -49,6 +50,7 @@ export default function HeroDemo(): React.JSX.Element {
           </button>
 
           <button
+            type="button"
             ref={tabArmadoRef}
             role="tab"
             id="tab-prompt-armado"
