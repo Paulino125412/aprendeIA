@@ -15,9 +15,6 @@ for (const art of articulos) {
   conteoCategorias.set(art.data.categoria, (conteoCategorias.get(art.data.categoria) || 0) + 1);
 }
 
-const categoriasConArticulos = CATEGORIAS.filter((c) => (conteoCategorias.get(c.slug) || 0) > 0);
-const categoriasSinArticulos = CATEGORIAS.filter((c) => (conteoCategorias.get(c.slug) || 0) === 0);
-
 const primerArticulo = articulosOrdenados[0];
 const otrosArticulos = articulosOrdenados.slice(1, 5);
 
@@ -31,35 +28,109 @@ function calcularMinutos(body?: string): number {
   const palabras = body ? body.split(/\s+/).filter(Boolean).length : 0;
   return Math.max(1, Math.ceil(palabras / 200));
 }
+
+// 10 etapas de aprendizaje ordenadas progresivamente
+const ETAPAS = [
+  {
+    numero: 1,
+    slug: 'fundamentos',
+    titulo: 'Fundamentos',
+    descripcion: 'Qué es la IA, cómo funciona y por qué importa',
+    emoji: '🧠',
+  },
+  {
+    numero: 2,
+    slug: 'tipos-de-ia',
+    titulo: 'Panorama y Tipos',
+    descripcion: 'Mapa de todas las IAs y para qué sirve cada una',
+    emoji: '🗺️',
+  },
+  {
+    numero: 3,
+    slug: 'ia-texto',
+    titulo: 'IAs de Texto',
+    descripcion: 'ChatGPT, Gemini, Claude y asistentes conversacionales',
+    emoji: '💬',
+  },
+  {
+    numero: 4,
+    slug: 'ia-imagenes',
+    titulo: 'IAs de Imagen',
+    descripcion: 'Midjourney, DALL-E, Flux y generación visual',
+    emoji: '🎨',
+  },
+  {
+    numero: 5,
+    slug: 'ia-video',
+    titulo: 'IAs de Video',
+    descripcion: 'Sora, Runway, Kling y animación generativa',
+    emoji: '🎬',
+  },
+  {
+    numero: 6,
+    slug: 'ia-audio',
+    titulo: 'IAs de Audio',
+    descripcion: 'Suno, ElevenLabs y generación de música y voz',
+    emoji: '🎵',
+  },
+  {
+    numero: 7,
+    slug: 'ia-codigo',
+    titulo: 'IAs para Código',
+    descripcion: 'GitHub Copilot, Cursor y programación asistida',
+    emoji: '💻',
+  },
+  {
+    numero: 8,
+    slug: 'ia-productividad',
+    titulo: 'Productividad',
+    descripcion: 'Automatización, diapositivas y flujos de trabajo',
+    emoji: '⚡',
+  },
+  {
+    numero: 9,
+    slug: 'prompting',
+    titulo: 'Prompting',
+    descripcion: 'Técnicas avanzadas para instruir a cualquier IA',
+    emoji: '✍️',
+  },
+  {
+    numero: 10,
+    slug: 'etica',
+    titulo: 'Ética y Criterio',
+    descripcion: 'Uso responsable, privacidad, sesgos y verificación',
+    emoji: '⚖️',
+  },
+];
 ---
 
 <Layout
-  title="AprendeIA | Educación Práctica sobre Inteligencia Artificial"
-  description="Guías cortas, ejemplos que puedes copiar y herramientas para practicar en la misma página. Sin humo y con criterio."
+  title="AprendeIA | Aprende a usar CUALQUIER IA. Paso a paso."
+  description="Guías prácticas de ChatGPT, Gemini, Midjourney, Suno y más de 30 herramientas de IA. Para todo el mundo, en español."
 >
   <div class="space-y-20 md:space-y-28">
-    <!-- 1. HERO (dos columnas desde lg, apilado en móvil) -->
+    <!-- 1. HERO -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8">
       <!-- Columna izquierda: titular y botones -->
       <div class="lg:col-span-7 space-y-6 text-left">
         <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-tinta leading-[1.08]">
-          La IA se aprende usándola.
+          Aprende a usar CUALQUIER IA. Paso a paso.
         </h1>
         <p class="text-base sm:text-lg text-tinta-suave leading-relaxed max-w-xl">
-          Guías cortas, ejemplos que puedes copiar y herramientas para practicar en la misma página. Sin humo y con criterio.
+          Guías prácticas de ChatGPT, Gemini, Midjourney, Suno y más de 30 herramientas de IA. Para todo el mundo, en español.
         </p>
         <div class="pt-2 flex items-center gap-3 flex-wrap">
           <a
             href="/articulos"
             class="px-5 py-2.5 rounded-[6px] font-bold text-sm bg-indigo text-sobre-acento hover:opacity-90 transition-opacity"
           >
-            Explorar los artículos
+            Explorar todas las IAs
           </a>
           <a
-            href="/articulos/hablar-con-la-ia"
+            href="/articulos/cual-ia-para-que"
             class="px-5 py-2.5 rounded-[6px] font-semibold text-sm bg-superficie border border-linea text-tinta hover:bg-papel transition-colors"
           >
-            Probar el constructor de prompts
+            ¿Cuál IA necesito?
           </a>
         </div>
       </div>
@@ -70,33 +141,44 @@ function calcularMinutos(body?: string): number {
       </div>
     </section>
 
-    <!-- 2. "Por dónde empezar" (categorías) -->
-    <section aria-labelledby="seccion-por-donde-empezar" class="space-y-8">
-      <div class="border-b border-linea pb-4">
-        <h2 id="seccion-por-donde-empezar" class="text-2xl font-bold tracking-tight text-tinta">
-          Por dónde empezar
-        </h2>
-        <p class="text-sm text-tinta-suave mt-1">
-          Rutas temáticas organizadas por nivel y necesidad concreta.
-        </p>
+    <!-- 2. "Empieza por aquí" (10 categorías completas) -->
+    <section aria-labelledby="seccion-empieza-por-aqui" class="space-y-8">
+      <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <h2 id="seccion-empieza-por-aqui" class="text-2xl font-bold tracking-tight text-tinta">
+            Empieza por aquí
+          </h2>
+          <p class="text-sm text-tinta-suave mt-1">
+            Explora las 10 disciplinas de Inteligencia Artificial organizadas por propósito.
+          </p>
+        </div>
+        <span class="text-xs text-tinta-suave font-medium">
+          10 áreas temáticas
+        </span>
       </div>
 
-      <!-- Bloques anchos para categorías con artículos publicados -->
-      {categoriasConArticulos.length > 0 && (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {categoriasConArticulos.map((cat) => {
-            const cantidad = conteoCategorias.get(cat.slug) || 0;
-            const textoCantidad = cantidad === 1 ? '1 artículo disponible' : `${cantidad} artículos disponibles`;
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {CATEGORIAS.map((cat) => {
+          const cantidad = conteoCategorias.get(cat.slug) || 0;
+          const tieneArticulos = cantidad > 0;
+          const textoCantidad = cantidad === 1 ? '1 artículo disponible' : `${cantidad} artículos`;
+
+          if (tieneArticulos) {
             return (
               <a
                 href={`/categoria/${cat.slug}`}
-                class={`p-6 border border-linea bg-superficie border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors block group`}
+                class={`p-6 border border-linea bg-superficie border-l-[4px] ${cat.clases.bordeLateral} hover:bg-papel hover:border-linea-fuerte transition-all block group relative`}
               >
-                <div class="flex items-center justify-between gap-4 mb-2">
-                  <h3 class={`text-lg font-bold ${cat.clases.texto}`}>
-                    {cat.nombre}
-                  </h3>
-                  <span class="text-xs text-tinta-suave font-medium">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-2xl shrink-0" aria-hidden="true">
+                      {cat.emoji || '✨'}
+                    </span>
+                    <h3 class={`text-lg font-bold ${cat.clases.texto} group-hover:underline`}>
+                      {cat.nombre}
+                    </h3>
+                  </div>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-[4px] bg-papel border border-linea text-tinta-suave shrink-0">
                     {textoCantidad}
                   </span>
                 </div>
@@ -105,36 +187,111 @@ function calcularMinutos(body?: string): number {
                 </p>
               </a>
             );
-          })}
-        </div>
-      )}
+          }
 
-      <!-- Filas compactas para las categorías en preparación -->
-      {categoriasSinArticulos.length > 0 && (
-        <div class="border-y border-linea divide-y divide-linea bg-superficie">
-          {categoriasSinArticulos.map((cat) => (
-            <a
-              href={`/categoria/${cat.slug}`}
-              class={`p-4 border-l-[3px] ${cat.clases.bordeLateral} flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-papel transition-colors`}
+          return (
+            <div
+              class="p-6 border border-linea bg-superficie/60 border-l-[4px] border-l-linea opacity-75 select-none relative"
             >
-              <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 min-w-0">
-                <span class={`text-xs font-bold ${cat.clases.texto} shrink-0`}>
-                  {cat.nombre}
-                </span>
-                <span class="text-xs text-tinta-suave truncate">
-                  {cat.descripcion}
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-2xl grayscale shrink-0" aria-hidden="true">
+                    {cat.emoji || '✨'}
+                  </span>
+                  <h3 class="text-lg font-bold text-tinta-suave">
+                    {cat.nombre}
+                  </h3>
+                </div>
+                <span class="text-[11px] font-medium px-2 py-0.5 rounded-[4px] bg-papel border border-linea text-tinta-suave shrink-0">
+                  Próximamente
                 </span>
               </div>
-              <span class="text-[11px] text-tinta-suave shrink-0 font-medium self-start sm:self-auto">
-                Próximamente
-              </span>
-            </a>
-          ))}
-        </div>
-      )}
+              <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+                {cat.descripcion}
+              </p>
+            </div>
+          );
+        })}
+      </div>
     </section>
 
-    <!-- 3. "Practica sin salir de la página" -->
+    <!-- 3. SECCIÓN "Etapas de aprendizaje" (línea de progreso visual) -->
+    <section aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8">
+      <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <h2 id="seccion-etapas-aprendizaje" class="text-2xl font-bold tracking-tight text-tinta">
+            Etapas de aprendizaje
+          </h2>
+          <p class="text-sm text-tinta-suave mt-1">
+            Una ruta de progreso paso a paso: desde entender cómo piensa un modelo hasta dominar el uso ético y avanzado.
+          </p>
+        </div>
+        <span class="text-xs font-mono font-bold text-indigo">
+          De novato a usuario con criterio
+        </span>
+      </div>
+
+      <!-- Línea de progreso visual de 10 etapas -->
+      <div class="relative">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {ETAPAS.map((etapa) => {
+            const cantidad = conteoCategorias.get(etapa.slug) || 0;
+            const tieneArticulos = cantidad > 0;
+            const cat = getCategoria(etapa.slug);
+
+            return (
+              <div
+                class={`p-5 border border-linea bg-superficie flex flex-col justify-between space-y-3 relative transition-all ${
+                  tieneArticulos ? 'hover:border-indigo/50' : 'opacity-80'
+                }`}
+              >
+                <!-- Indicador de etapa -->
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-papel border border-linea text-indigo">
+                    Etapa {etapa.numero.toString().padStart(2, '0')}
+                  </span>
+                  <span class="text-xl" aria-hidden="true">
+                    {etapa.emoji}
+                  </span>
+                </div>
+
+                <!-- Título y descripción -->
+                <div class="space-y-1">
+                  <h3 class="text-base font-bold text-tinta tracking-tight">
+                    {etapa.titulo}
+                  </h3>
+                  <p class="text-xs text-tinta-suave leading-relaxed">
+                    {etapa.descripcion}
+                  </p>
+                </div>
+
+                <!-- Enlace o estado -->
+                <div class="pt-2 border-t border-linea/60 flex items-center justify-between text-xs">
+                  {tieneArticulos ? (
+                    <a
+                      href={`/categoria/${etapa.slug}`}
+                      class="font-semibold text-indigo hover:underline flex items-center gap-1"
+                    >
+                      <span>Ver guías</span>
+                      <span aria-hidden="true">&rarr;</span>
+                    </a>
+                  ) : (
+                    <span class="text-tinta-suave text-[11px] italic">
+                      En preparación
+                    </span>
+                  )}
+                  <span class="text-[11px] text-tinta-suave font-medium">
+                    {tieneArticulos ? `${cantidad} ${cantidad === 1 ? 'guía' : 'guías'}` : 'Próximamente'}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. "Practica sin salir de la página" -->
     <section aria-labelledby="seccion-practica-en-pagina" class="space-y-8">
       <div class="border-b border-linea pb-4">
         <h2 id="seccion-practica-en-pagina" class="text-2xl font-bold tracking-tight text-tinta">
@@ -194,7 +351,7 @@ function calcularMinutos(body?: string): number {
       </div>
     </section>
 
-    <!-- 4. "Lo último que publicamos" -->
+    <!-- 5. "Lo último que publicamos" -->
     <section aria-labelledby="seccion-lo-ultimo" class="space-y-8">
       <div class="flex items-center justify-between border-b border-linea pb-4">
         <div>
@@ -297,7 +454,7 @@ function calcularMinutos(body?: string): number {
       {articulos.length >= 3 && <Anuncio posicion="medio" />}
     </section>
 
-    <!-- 5. "Cómo se aprende aquí" (secuencia numerada 1, 2, 3) -->
+    <!-- 6. "Cómo se aprende aquí" (secuencia numerada 1, 2, 3) -->
     <section aria-labelledby="seccion-metodo-aprendizaje" class="space-y-8">
       <div class="border-b border-linea pb-4">
         <h2 id="seccion-metodo-aprendizaje" class="text-2xl font-bold tracking-tight text-tinta">
@@ -347,7 +504,7 @@ function calcularMinutos(body?: string): number {
       </div>
     </section>
 
-    <!-- 6. Cierre: buscador -->
+    <!-- 7. Cierre: buscador -->
     <section aria-labelledby="seccion-cierre-buscador" class="p-6 sm:p-10 border border-linea bg-superficie space-y-4">
       <div class="space-y-1">
         <h2 id="seccion-cierre-buscador" class="text-xl sm:text-2xl font-bold tracking-tight text-tinta">

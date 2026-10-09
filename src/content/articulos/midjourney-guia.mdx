@@ -1,0 +1,164 @@
+---
+titulo: "Midjourney: Cómo Crear Imágenes Profesionales con IA"
+descripcion: "Guía paso a paso para usar Midjourney desde cero. Registro, prompts, estilos y trucos."
+categoria: "ia-imagenes"
+fecha: 2026-10-08
+tags: ["Midjourney", "imágenes", "arte", "guía", "tutorial"]
+nivel: "principiante"
+---
+
+## ¿Qué es Midjourney?
+
+**Midjourney** es un laboratorio de investigación independiente fundado por David Holz que desarrolla uno de los sistemas de generación de imágenes mediante Inteligencia Artificial más admirados del planeta. A diferencia de los modelos lingüísticos que producen texto (como ChatGPT o Claude), Midjourney es un modelo de difusión visual diseñado para transformar descripciones escritas en obras gráficas, ilustraciones, conceptos de diseño y fotografías de un realismo sobrecogedor.
+
+Desde su presentación inicial en 2022 hasta sus versiones modernas (v6 y posteriores), Midjourney ha revolucionado industrias enteras como la publicidad, la arquitectura, el diseño de modas, la cinematografía y los videojuegos. Su principal sello distintivo no es únicamente el hiperrealismo técnico, sino su **criterio estético por defecto**: mientras otras herramientas generan imágenes planas o con aspecto de banco fotográfico genérico, Midjourney aplica instintivamente principios cinematográficos de iluminación, textura de cámara, profundidad de campo y composición artística.
+
+No necesitas saber dibujar ni dominar programas de edición gráfica complejos: si eres capaz de describir con precisión una escena, Midjourney se encargará de plasmarla en píxeles de calidad editorial.
+
+---
+
+## Cómo acceder (web vs Discord, planes y precios)
+
+Durante mucho tiempo, la única forma de acceder a Midjourney era a través de la aplicación de mensajería Discord. En la actualidad, la plataforma ofrece dos caminos según tu comodidad:
+
+### 1. Acceso mediante la Web oficial vs Discord
+* **Plataforma Web oficial (midjourney.com):** Es la experiencia más moderna, visual e intuitiva. Permite explorar galerías de la comunidad, escribir prompts en una barra superior limpia, organizar tus imágenes en carpetas y aplicar ajustes de edición con controles deslizantes sin ver mensajes de otros usuarios.
+* **A través de Discord:** La vía tradicional. Interactúas con el bot oficial de Midjourney (`@Midjourney Bot`) dentro de canales públicos llamados *newbie rooms* o en un chat privado directo con el bot. Se maneja escribiendo comandos que inician con una barra diagonal, principalmente `/imagine`.
+
+### 2. Planes y suscripciones
+A diferencia de algunos competidores respaldados por grandes corporaciones que ofrecen opciones gratuitas con publicidad, Midjourney es un servicio de pago por suscripción debido al masivo costo de sus procesadores gráficos (GPU):
+
+| Plan | Precio mensual | Tiempo de GPU rápida (*Fast Hours*) | Modo relajado (*Relax*) | Visibilidad privada (*Stealth*) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Básico (Basic)** | 10 USD/mes | 3.3 horas/mes (~200 imágenes) | No disponible | No disponible (público) |
+| **Estándar (Standard)** | 30 USD/mes | 15 horas/mes (~900 imágenes) | Ilimitado (sin coste adicional) | No disponible (público) |
+| **Pro** | 60 USD/mes | 30 horas/mes | Ilimitado | Sí (modo privado) |
+| **Mega** | 120 USD/mes | 60 horas/mes | Ilimitado | Sí (modo privado) |
+
+**Consejo para principiantes:** Si estás explorando la herramienta como aficionado, el **Plan Básico (10 USD)** es ideal para dar los primeros pasos. Si planeas usarla con frecuencia para proyectos creativos o de marketing, el **Plan Estándar (30 USD)** es el más conveniente, ya que el modo *Relax* te permite seguir creando imágenes ilimitadas incluso después de agotar tus horas rápidas.
+
+---
+
+## Tu primera imagen: paso a paso
+
+Si estás utilizando Discord o la web, el proceso fundamental para generar tu primera composición consta de cuatro sencillos pasos:
+
+1. **Inicia el comando:** Escribe `/imagine` en la barra de mensajes. Verás que aparece una etiqueta emergente llamada `prompt:`.
+2. **Escribe tu descripción:** Dentro de ese campo, redacta en inglés o español lo que deseas ver (aunque entiende español básico, el modelo comprende muchísimos más matices visuales si redactas en inglés).
+3. **Espera la cuadrícula inicial:** En unos 40 a 60 segundos, Midjourney presentará una cuadrícula de cuatro imágenes preliminares en baja resolución, numeradas del 1 al 4 (1: arriba izquierda, 2: arriba derecha, 3: abajo izquierda, 4: abajo derecha).
+4. **Elige una acción (U o V):** Debajo de la cuadrícula verás dos filas de botones:
+   * **Botones U (Upscale - U1, U2, U3, U4):** Amplían la imagen elegida a máxima resolución para que puedas descargarla con nitidez cristalina.
+   * **Botones V (Vary - V1, V2, V3, V4):** Generan cuatro nuevas variaciones basadas específicamente en el estilo y composición de esa imagen seleccionada.
+   * **Botón de recarga (flechas circulares):** Vuelve a ejecutar todo el prompt desde cero si ninguna de las cuatro opciones te convence.
+
+---
+
+## Anatomía de un buen prompt para imágenes
+
+Un error común al empezar es usar descripciones vagas como *"un perro bonito"* o fórmulas sobrecargadas como *"obra maestra 8k hiperrealista"*. En Midjourney, la calidad del resultado depende de una estructura balanceada:
+
+> **[Sujeto principal]** + **[Entorno]** + **[Estilo visual]** + **[Iluminación]** + **[Cámara o lente]** + **[Parámetros]**
+
+### 5 ejemplos prácticos con su desglose
+
+#### 1. Retrato fotográfico editorial
+* **Prompt:** `Editorial portrait of an elderly artisan potter working with clay, warm golden hour window light, shot on 35mm lens, f/1.8 aperture, subtle film grain --ar 16:9 --v 6.1`
+* **Por qué funciona:** Define protagonista, luz natural rasante y lente de 35mm para desenfocar el fondo con naturalidad.
+
+#### 2. Fotografía de producto
+* **Prompt:** `Studio product shot of an artisan glass perfume bottle with dried lavender inside, marble pedestal, soft pastel lighting, subtle water droplets, luxury aesthetic --ar 1:1 --v 6.1`
+* **Por qué funciona:** Sitúa el envase sobre mármol con luz de estudio difusa, logrando estética de catálogo comercial.
+
+#### 3. Arquitectura e interiores
+* **Prompt:** `Architectural photography of a contemporary brutalist living room with glass windows overlooking a rainy forest, concrete walls, warm wood furniture, ambient lighting --ar 16:9 --v 6.1`
+* **Por qué funciona:** Contrapone concreto frío y lluvia con madera cálida, creando balance visual.
+
+#### 4. Ilustración digital de fantasía
+* **Prompt:** `Digital fantasy illustration of a hidden ancient library inside a giant hollow tree, glowing fairy dust, spiral wooden stairs, storybook art style --ar 4:5 --v 6.1`
+* **Por qué funciona:** Reemplaza la textura fotográfica por un acabado de cuento infantil con iluminación fantástica.
+
+#### 5. Arte conceptual de personajes
+* **Prompt:** `Cyberpunk street vendor cooking noodles in a rainy neon-lit Tokyo alley, steam rising, reflections in wet asphalt, anime-inspired concept art --ar 21:9 --v 6.1`
+* **Por qué funciona:** Genera dinamismo con vapor y reflejos sobre asfalto mojado en formato panorámico cinematográfico.
+
+---
+
+## Parámetros esenciales de Midjourney
+
+Los parámetros son instrucciones especiales que se colocan siempre **al final del prompt**, precedidos por dos guiones medios (`--`). Modifican el formato técnico y el comportamiento del algoritmo:
+
+### 1. Proporción de aspecto (`--ar`)
+Determina el ancho y alto de la imagen. Por defecto, Midjourney crea imágenes cuadradas (1:1).
+* `--ar 16:9`: Formato panorámico ideal para fondos de pantalla, presentaciones o banners de YouTube.
+* `--ar 9:16`: Formato vertical perfecto para historias de Instagram, TikTok o fondos de celular.
+* `--ar 4:5`: Formato vertical óptimo para publicaciones de feed en Instagram.
+* `--ar 2:3` o `--ar 3:2`: Proporciones tradicionales de fotografía réflex y revistas impresas.
+
+### 2. Versión del modelo (`--v`)
+Le indica a Midjourney qué motor de renderizado utilizar.
+* `--v 6.1` (o la versión vigente más reciente): Ofrece la máxima precisión anatómica (manos perfectas, pupilas nítidas), excelente comprensión de textos escritos entre comillas y texturas hiperrealistas.
+* `--niji 6`: Una versión especializada entrenada exclusivamente en ilustración japonesa, anime y manga.
+
+### 3. Nivel de estilización (`--stylize` o `--s`)
+Controla cuánto criterio artístico propio aplica el sistema sobre tu prompt. Los valores van de 0 a 1000 (el valor por defecto es 100):
+* `--s 50`: Hace que el modelo sea muy literal y estricto con tus palabras, reduciendo adornos.
+* `--s 750` o `--s 1000`: Le da libertad artística total para embellecer los colores, el encuadre y los efectos visuales.
+
+### 4. Nivel de caos y variedad (`--chaos` o `--c`)
+Define qué tan distintas serán entre sí las cuatro imágenes preliminares. Los valores van de 0 a 100:
+* `--c 0` (por defecto): Las cuatro imágenes son composiciones muy similares y coherentes entre sí.
+* `--c 50` o `--c 80`: Genera cuatro propuestas radicalmente distintas, excelente para etapas iniciales de lluvia de ideas creativas.
+
+### 5. Estilo crudo o documental (`--style raw`)
+Reduce la interpretación estética automática de Midjourney, logrando imágenes fotográficas con aspecto más documental, menos procesadas digitalmente y más fieles a la luz natural del mundo real.
+
+---
+
+## 5 estilos populares con ejemplos de prompt
+
+Midjourney es un camaleón visual capaz de emular cualquier técnica gráfica si utilizas las palabras clave adecuadas:
+
+### 1. Fotorrealismo puro
+Busca capturar texturas creíbles, poros en la piel, imperfecciones naturales y luz auténtica.
+* **Prompt sugerido:**
+  > `Candid street photography of an elderly woman laughing at an outdoor market stall, natural morning light, shot on Kodak Portra 400 film, authentic documentary style, detailed skin texture --ar 3:2 --style raw --v 6.1`
+
+### 2. Anime y animación japonesa
+Utiliza el modelo `--niji` para conseguir una estética digna de las mejores producciones de animación.
+* **Prompt sugerido:**
+  > `Young girl standing on a train station platform at sunset, wind blowing her hair, distant clouds, vibrant saturated colors, Studio Ghibli inspired anime aesthetic --ar 16:9 --niji 6`
+
+### 3. Pintura al óleo clásica
+Emula el trazo grueso del pincel, el empaste de la pintura y la textura del lienzo.
+* **Prompt sugerido:**
+  > `Classic oil painting of a stormy ocean with a lonely wooden lighthouse on a rocky cliff, heavy impasto brushstrokes, dramatic chiaroscuro lighting, Rembrandt style --ar 4:3 --v 6.1`
+
+### 4. Render 3D moderno y diseño isométrico
+Ideal para interfaces, logotipos de aplicaciones o figuras de colección.
+* **Prompt sugerido:**
+  > `Cute 3D isometric diorama of a cozy coffee shop with miniature furniture, warm pastel lighting, smooth clay textures, octane render, clean ambient occlusion --ar 1:1 --v 6.1`
+
+### 5. Minimalismo gráfico
+Líneas limpias, amplios espacios vacíos y fuerte impacto visual publicitario.
+* **Prompt sugerido:**
+  > `Minimalist graphic design poster of a single origami crane in flight, geometric flat shapes, muted earthy tones, generous negative space, Swiss design aesthetic --ar 2:3 --v 6.1`
+
+---
+
+## Limitaciones y consideraciones éticas
+
+La potencia gráfica de Midjourney conlleva también responsabilidades éticas y limitaciones operativas:
+
+1. **Riesgo de desinformación (*Deepfakes*):** La creación de imágenes fotorrealistas de figuras públicas o sucesos catastróficos inventados plantea riesgos severos de engaño social. Por esta razón, Midjourney prohíbe activamente prompts sobre eventos bélicos sensibles o desnudez, aplicando suspensiones de cuenta a infractores.
+2. **Propiedad intelectual y derechos de autor:** Los modelos de difusión fueron entrenados con millones de imágenes públicas de internet, incluyendo obras de ilustradores vivos. La discusión jurídica sobre los derechos de autor del arte generado por IA sigue en evolución en diversos países. Como buena práctica, evita usar el nombre de artistas independientes contemporáneos en tus prompts para replicar su estilo personal.
+3. **Consistencia exacta de personajes:** Aunque las herramientas modernas han mejorado, lograr que un mismo personaje aparezca con la ropa idéntica y en cinco ángulos diferentes para un cómic o libro ilustrado sigue requiriendo técnicas avanzadas de referencias de imagen (`--cref`).
+
+---
+
+## Siguiente paso
+
+Ahora que comprendes el funcionamiento y las técnicas maestras de Midjourney, puedes continuar ampliando tu visión sobre la creación gráfica y multimedia con Inteligencia Artificial:
+
+* Si buscas una alternativa gratuita integrada en tu chat habitual, revisa cómo [ChatGPT utiliza DALL-E 3](/articulos/chatgpt-guia-completa/) para generar ilustraciones de forma conversacional.
+* Si prefieres el ecosistema de Google, explora cómo [Gemini incorpora Imagen 3](/articulos/gemini-guia-completa/) para renderizar imágenes de alta calidad con fuentes verificadas.
+* Para tener un panorama de todas las herramientas visuales disponibles (incluyendo Stable Diffusion, Ideogram y Flux), consulta nuestra [Guía Completa: Todos los Tipos de IA que Existen](/articulos/tipos-de-ia-guia/).

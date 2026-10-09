@@ -1,13 +1,14 @@
 export type CategoriaSlug =
   | 'fundamentos'
+  | 'tipos-de-ia'
+  | 'ia-texto'
+  | 'ia-imagenes'
+  | 'ia-video'
+  | 'ia-audio'
+  | 'ia-codigo'
+  | 'ia-productividad'
   | 'prompting'
-  | 'profesion'
-  | 'estudiar'
-  | 'vida-diaria'
-  | 'etica'
-  | 'herramientas'
-  | 'automatizacion'
-  | 'recursos';
+  | 'etica';
 
 export interface CategoriaClases {
   texto: string;
@@ -22,14 +23,16 @@ export interface Categoria {
   slug: CategoriaSlug;
   nombre: string;
   descripcion: string;
+  emoji?: string;
   clases: CategoriaClases;
 }
 
 export const CATEGORIAS: readonly Categoria[] = [
   {
     slug: 'fundamentos',
-    nombre: 'Fundamentos de la IA',
-    descripcion: 'Conceptos clave, arquitecturas y funcionamiento básico de los modelos de lenguaje.',
+    nombre: 'Fundamentos',
+    descripcion: 'Qué es la IA, cómo funciona y por qué importa',
+    emoji: '🧠',
     clases: {
       texto: 'text-indigo-700 dark:text-indigo-400',
       bordeLateral: 'border-l-indigo-600 dark:border-l-indigo-400',
@@ -40,9 +43,10 @@ export const CATEGORIAS: readonly Categoria[] = [
     },
   },
   {
-    slug: 'prompting',
-    nombre: 'Prompting',
-    descripcion: 'Técnicas, estructuras y patrones para formular instrucciones precisas y reproducibles.',
+    slug: 'tipos-de-ia',
+    nombre: 'Tipos de IA',
+    descripcion: 'Todas las IAs que existen y para qué sirve cada una',
+    emoji: '🗺️',
     clases: {
       texto: 'text-emerald-700 dark:text-emerald-400',
       bordeLateral: 'border-l-emerald-600 dark:border-l-emerald-400',
@@ -53,35 +57,24 @@ export const CATEGORIAS: readonly Categoria[] = [
     },
   },
   {
-    slug: 'profesion',
-    nombre: 'IA en tu profesión',
-    descripcion: 'Casos prácticos de aplicación en educación, programación, negocios, diseño y más.',
+    slug: 'ia-texto',
+    nombre: 'IAs de Texto',
+    descripcion: 'ChatGPT, Gemini, Claude, Copilot y más',
+    emoji: '💬',
     clases: {
-      texto: 'text-sky-700 dark:text-sky-400',
-      bordeLateral: 'border-l-sky-600 dark:border-l-sky-400',
-      subrayado: 'border-b-sky-600 dark:border-b-sky-400',
-      badge: 'text-sky-700 dark:text-sky-400',
-      borde: 'border-sky-600 dark:border-sky-400',
+      texto: 'text-blue-700 dark:text-blue-400',
+      bordeLateral: 'border-l-blue-600 dark:border-l-blue-400',
+      subrayado: 'border-b-blue-600 dark:border-b-blue-400',
+      badge: 'text-blue-700 dark:text-blue-400',
+      borde: 'border-blue-600 dark:border-blue-400',
       fondoSuave: 'bg-superficie',
     },
   },
   {
-    slug: 'estudiar',
-    nombre: 'IA para estudiar',
-    descripcion: 'Métodos de estudio activo, síntesis documental, práctica deliberada y preparación de exámenes.',
-    clases: {
-      texto: 'text-amber-700 dark:text-amber-400',
-      bordeLateral: 'border-l-amber-600 dark:border-l-amber-400',
-      subrayado: 'border-b-amber-600 dark:border-b-amber-400',
-      badge: 'text-amber-700 dark:text-amber-400',
-      borde: 'border-amber-600 dark:border-amber-400',
-      fondoSuave: 'bg-superficie',
-    },
-  },
-  {
-    slug: 'vida-diaria',
-    nombre: 'IA en la vida diaria',
-    descripcion: 'Organización doméstica, finanzas personales, planificación de viajes y tareas cotidianas.',
+    slug: 'ia-imagenes',
+    nombre: 'IAs de Imagen',
+    descripcion: 'Midjourney, DALL-E, Stable Diffusion y más',
+    emoji: '🎨',
     clases: {
       texto: 'text-rose-700 dark:text-rose-400',
       bordeLateral: 'border-l-rose-600 dark:border-l-rose-400',
@@ -92,35 +85,10 @@ export const CATEGORIAS: readonly Categoria[] = [
     },
   },
   {
-    slug: 'etica',
-    nombre: 'Ética y uso responsable',
-    descripcion: 'Privacidad de datos, sesgos algorítmicos, verificación de fuentes y derechos de autor.',
-    clases: {
-      texto: 'text-violet-700 dark:text-violet-400',
-      bordeLateral: 'border-l-violet-600 dark:border-l-violet-400',
-      subrayado: 'border-b-violet-600 dark:border-b-violet-400',
-      badge: 'text-violet-700 dark:text-violet-400',
-      borde: 'border-violet-600 dark:border-violet-400',
-      fondoSuave: 'bg-superficie',
-    },
-  },
-  {
-    slug: 'herramientas',
-    nombre: 'Herramientas',
-    descripcion: 'Comparativas, análisis de modelos, editores y software potenciado por inteligencia artificial.',
-    clases: {
-      texto: 'text-cyan-700 dark:text-cyan-400',
-      bordeLateral: 'border-l-cyan-600 dark:border-l-cyan-400',
-      subrayado: 'border-b-cyan-600 dark:border-b-cyan-400',
-      badge: 'text-cyan-700 dark:text-cyan-400',
-      borde: 'border-cyan-600 dark:border-cyan-400',
-      fondoSuave: 'bg-superficie',
-    },
-  },
-  {
-    slug: 'automatizacion',
-    nombre: 'Automatización y agentes',
-    descripcion: 'Flujos de trabajo conectados, integraciones con APIs y sistemas con toma de acción autónoma.',
+    slug: 'ia-video',
+    nombre: 'IAs de Video',
+    descripcion: 'Sora, Runway, Pika, Kling y más',
+    emoji: '🎬',
     clases: {
       texto: 'text-orange-700 dark:text-orange-400',
       bordeLateral: 'border-l-orange-600 dark:border-l-orange-400',
@@ -131,15 +99,72 @@ export const CATEGORIAS: readonly Categoria[] = [
     },
   },
   {
-    slug: 'recursos',
-    nombre: 'Recursos',
-    descripcion: 'Glosarios, plantillas descargables, guías de referencia rápida y bibliografía seleccionada.',
+    slug: 'ia-audio',
+    nombre: 'IAs de Audio',
+    descripcion: 'Suno, ElevenLabs, Whisper y más',
+    emoji: '🎵',
     clases: {
-      texto: 'text-slate-700 dark:text-slate-400',
-      bordeLateral: 'border-l-slate-600 dark:border-l-slate-400',
-      subrayado: 'border-b-slate-600 dark:border-b-slate-400',
-      badge: 'text-slate-700 dark:text-slate-400',
-      borde: 'border-slate-600 dark:border-slate-400',
+      texto: 'text-violet-700 dark:text-violet-400',
+      bordeLateral: 'border-l-violet-600 dark:border-l-violet-400',
+      subrayado: 'border-b-violet-600 dark:border-b-violet-400',
+      badge: 'text-violet-700 dark:text-violet-400',
+      borde: 'border-violet-600 dark:border-violet-400',
+      fondoSuave: 'bg-superficie',
+    },
+  },
+  {
+    slug: 'ia-codigo',
+    nombre: 'IAs para Código',
+    descripcion: 'GitHub Copilot, Cursor, Replit y más',
+    emoji: '💻',
+    clases: {
+      texto: 'text-green-700 dark:text-green-400',
+      bordeLateral: 'border-l-green-600 dark:border-l-green-400',
+      subrayado: 'border-b-green-600 dark:border-b-green-400',
+      badge: 'text-green-700 dark:text-green-400',
+      borde: 'border-green-600 dark:border-green-400',
+      fondoSuave: 'bg-superficie',
+    },
+  },
+  {
+    slug: 'ia-productividad',
+    nombre: 'Productividad',
+    descripcion: 'Gamma, Canva AI, Notion AI y más',
+    emoji: '⚡',
+    clases: {
+      texto: 'text-amber-700 dark:text-amber-400',
+      bordeLateral: 'border-l-amber-600 dark:border-l-amber-400',
+      subrayado: 'border-b-amber-600 dark:border-b-amber-400',
+      badge: 'text-amber-700 dark:text-amber-400',
+      borde: 'border-amber-600 dark:border-amber-400',
+      fondoSuave: 'bg-superficie',
+    },
+  },
+  {
+    slug: 'prompting',
+    nombre: 'Prompting',
+    descripcion: 'Cómo hablarle a cualquier IA para obtener mejores resultados',
+    emoji: '✍️',
+    clases: {
+      texto: 'text-cyan-700 dark:text-cyan-400',
+      bordeLateral: 'border-l-cyan-600 dark:border-l-cyan-400',
+      subrayado: 'border-b-cyan-600 dark:border-b-cyan-400',
+      badge: 'text-cyan-700 dark:text-cyan-400',
+      borde: 'border-cyan-600 dark:border-cyan-400',
+      fondoSuave: 'bg-superficie',
+    },
+  },
+  {
+    slug: 'etica',
+    nombre: 'Ética y Responsabilidad',
+    descripcion: 'Uso responsable, privacidad y derechos de autor',
+    emoji: '⚖️',
+    clases: {
+      texto: 'text-zinc-700 dark:text-zinc-400',
+      bordeLateral: 'border-l-zinc-600 dark:border-l-zinc-400',
+      subrayado: 'border-b-zinc-600 dark:border-b-zinc-400',
+      badge: 'text-zinc-700 dark:text-zinc-400',
+      borde: 'border-zinc-600 dark:border-zinc-400',
       fondoSuave: 'bg-superficie',
     },
   },
