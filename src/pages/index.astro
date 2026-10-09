@@ -18,7 +18,7 @@ for (const art of articulos) {
 const primerArticulo = articulosOrdenados[0];
 const otrosArticulos = articulosOrdenados.slice(1, 5);
 
-const formateadorFecha = new Intl.DateTimeFormat('es-PE', {
+const formateadorFecha = new Intl.DateTimeFormat('es', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
@@ -28,80 +28,6 @@ function calcularMinutos(body?: string): number {
   const palabras = body ? body.split(/\s+/).filter(Boolean).length : 0;
   return Math.max(1, Math.ceil(palabras / 200));
 }
-
-// 10 etapas de aprendizaje ordenadas progresivamente
-const ETAPAS = [
-  {
-    numero: 1,
-    slug: 'fundamentos',
-    titulo: 'Fundamentos',
-    descripcion: 'Qué es la IA, cómo funciona y por qué importa',
-    emoji: '🧠',
-  },
-  {
-    numero: 2,
-    slug: 'tipos-de-ia',
-    titulo: 'Panorama y Tipos',
-    descripcion: 'Mapa de todas las IAs y para qué sirve cada una',
-    emoji: '🗺️',
-  },
-  {
-    numero: 3,
-    slug: 'ia-texto',
-    titulo: 'IAs de Texto',
-    descripcion: 'ChatGPT, Gemini, Claude y asistentes conversacionales',
-    emoji: '💬',
-  },
-  {
-    numero: 4,
-    slug: 'ia-imagenes',
-    titulo: 'IAs de Imagen',
-    descripcion: 'Midjourney, DALL-E, Flux y generación visual',
-    emoji: '🎨',
-  },
-  {
-    numero: 5,
-    slug: 'ia-video',
-    titulo: 'IAs de Video',
-    descripcion: 'Sora, Runway, Kling y animación generativa',
-    emoji: '🎬',
-  },
-  {
-    numero: 6,
-    slug: 'ia-audio',
-    titulo: 'IAs de Audio',
-    descripcion: 'Suno, ElevenLabs y generación de música y voz',
-    emoji: '🎵',
-  },
-  {
-    numero: 7,
-    slug: 'ia-codigo',
-    titulo: 'IAs para Código',
-    descripcion: 'GitHub Copilot, Cursor y programación asistida',
-    emoji: '💻',
-  },
-  {
-    numero: 8,
-    slug: 'ia-productividad',
-    titulo: 'Productividad',
-    descripcion: 'Automatización, diapositivas y flujos de trabajo',
-    emoji: '⚡',
-  },
-  {
-    numero: 9,
-    slug: 'prompting',
-    titulo: 'Prompting',
-    descripcion: 'Técnicas avanzadas para instruir a cualquier IA',
-    emoji: '✍️',
-  },
-  {
-    numero: 10,
-    slug: 'etica',
-    titulo: 'Ética y Criterio',
-    descripcion: 'Uso responsable, privacidad, sesgos y verificación',
-    emoji: '⚖️',
-  },
-];
 ---
 
 <Layout
@@ -132,6 +58,24 @@ const ETAPAS = [
           >
             ¿Cuál IA necesito?
           </a>
+        </div>
+
+        <!-- Estadísticas rápidas -->
+        <div class="pt-3 flex items-center gap-4 text-xs text-tinta-suave border-t border-linea/60 max-w-lg">
+          <div class="flex items-center gap-1.5">
+            <span class="font-mono font-bold text-indigo">16+</span>
+            <span>Guías publicadas</span>
+          </div>
+          <span class="text-linea" aria-hidden="true">|</span>
+          <div class="flex items-center gap-1.5">
+            <span class="font-mono font-bold text-indigo">30+</span>
+            <span>Herramientas cubiertas</span>
+          </div>
+          <span class="text-linea" aria-hidden="true">|</span>
+          <div class="flex items-center gap-1.5">
+            <span class="font-mono font-bold text-indigo">100%</span>
+            <span>Gratuito</span>
+          </div>
         </div>
       </div>
 
@@ -215,7 +159,7 @@ const ETAPAS = [
       </div>
     </section>
 
-    <!-- 3. SECCIÓN "Etapas de aprendizaje" (línea de progreso visual) -->
+    <!-- 3. SECCIÓN "Etapas de aprendizaje" -->
     <section aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8">
       <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
@@ -231,59 +175,72 @@ const ETAPAS = [
         </span>
       </div>
 
-      <!-- Línea de progreso visual de 10 etapas -->
-      <div class="relative">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {ETAPAS.map((etapa) => {
-            const cantidad = conteoCategorias.get(etapa.slug) || 0;
+      <!-- Contenedor scroll horizontal con tarjetas de ancho fijo 200px en desktop -->
+      <div class="overflow-x-auto pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div class="flex gap-4 min-w-max">
+          {CATEGORIAS.map((cat, index) => {
+            const numeroEtapa = (index + 1).toString().padStart(2, '0');
+            const cantidad = conteoCategorias.get(cat.slug) || 0;
             const tieneArticulos = cantidad > 0;
-            const cat = getCategoria(etapa.slug);
 
-            return (
+            const CardContent = (
               <div
-                class={`p-5 border border-linea bg-superficie flex flex-col justify-between space-y-3 relative transition-all ${
-                  tieneArticulos ? 'hover:border-indigo/50' : 'opacity-80'
+                class={`w-[200px] shrink-0 p-5 border border-linea bg-superficie rounded-[6px] flex flex-col justify-between space-y-3 relative hover:-translate-y-1 hover:shadow-md transition-all ${
+                  tieneArticulos ? 'hover:border-indigo/60' : 'opacity-75'
                 }`}
               >
-                <!-- Indicador de etapa -->
-                <div class="flex items-center justify-between gap-2">
-                  <span class="font-mono text-xs font-bold px-2 py-0.5 rounded bg-papel border border-linea text-indigo">
-                    Etapa {etapa.numero.toString().padStart(2, '0')}
-                  </span>
-                  <span class="text-xl" aria-hidden="true">
-                    {etapa.emoji}
-                  </span>
+                <!-- Número de etapa y emoji grande -->
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-xs font-bold text-indigo">
+                      {numeroEtapa}
+                    </span>
+                    <span class="text-[11px] text-tinta-suave font-medium">
+                      {tieneArticulos ? `${cantidad} ${cantidad === 1 ? 'guía' : 'guías'}` : 'Próx.'}
+                    </span>
+                  </div>
+                  <div class="text-3xl" aria-hidden="true">
+                    {cat.emoji || '✨'}
+                  </div>
                 </div>
 
                 <!-- Título y descripción -->
                 <div class="space-y-1">
-                  <h3 class="text-base font-bold text-tinta tracking-tight">
-                    {etapa.titulo}
+                  <h3 class="text-sm font-bold text-tinta tracking-tight line-clamp-1">
+                    {cat.nombre}
                   </h3>
-                  <p class="text-xs text-tinta-suave leading-relaxed">
-                    {etapa.descripcion}
+                  <p class="text-xs text-tinta-suave leading-relaxed line-clamp-3">
+                    {cat.descripcion}
                   </p>
                 </div>
 
-                <!-- Enlace o estado -->
-                <div class="pt-2 border-t border-linea/60 flex items-center justify-between text-xs">
+                <!-- Pie de tarjeta -->
+                <div class="pt-2 border-t border-linea/60 text-xs">
                   {tieneArticulos ? (
-                    <a
-                      href={`/categoria/${etapa.slug}`}
-                      class="font-semibold text-indigo hover:underline flex items-center gap-1"
-                    >
+                    <span class="font-semibold text-indigo flex items-center justify-between">
                       <span>Ver guías</span>
                       <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    </span>
                   ) : (
                     <span class="text-tinta-suave text-[11px] italic">
-                      En preparación
+                      Próximamente
                     </span>
                   )}
-                  <span class="text-[11px] text-tinta-suave font-medium">
-                    {tieneArticulos ? `${cantidad} ${cantidad === 1 ? 'guía' : 'guías'}` : 'Próximamente'}
-                  </span>
                 </div>
+              </div>
+            );
+
+            if (tieneArticulos) {
+              return (
+                <a href={`/categoria/${cat.slug}`} class="block focus:outline-none focus:ring-2 focus:ring-indigo rounded-[6px]">
+                  {CardContent}
+                </a>
+              );
+            }
+
+            return (
+              <div class="block">
+                {CardContent}
               </div>
             );
           })}
@@ -368,7 +325,7 @@ const ETAPAS = [
       </div>
 
       <div class="space-y-6">
-        <!-- Artículo más reciente (más grande) -->
+        <!-- Artículo más reciente (con badge NUEVO) -->
         {primerArticulo && (() => {
           const catInfo = getCategoria(primerArticulo.data.categoria);
           const minutos = calcularMinutos(primerArticulo.body);
@@ -376,6 +333,10 @@ const ETAPAS = [
           return (
             <article class={`p-6 sm:p-8 border border-linea bg-superficie border-l-[3px] ${catInfo?.clases.bordeLateral || 'border-l-indigo'}`}>
               <div class="flex items-center gap-3 text-xs text-tinta-suave mb-3 flex-wrap">
+                <!-- Badge NUEVO en color índigo -->
+                <span class="px-2 py-0.5 rounded-[4px] font-mono text-[11px] font-bold bg-indigo/10 text-indigo dark:bg-indigo/20 border border-indigo/20">
+                  NUEVO
+                </span>
                 {catInfo && (
                   <a href={`/categoria/${catInfo.slug}`} class={`font-bold ${catInfo.clases.texto} hover:underline`}>
                     {catInfo.nombre}
@@ -504,7 +465,51 @@ const ETAPAS = [
       </div>
     </section>
 
-    <!-- 7. Cierre: buscador -->
+    <!-- 7. "¿Por qué aprender a usar IA?" (nueva sección antes del buscador) -->
+    <section aria-labelledby="seccion-por-que-aprender-ia" class="space-y-8">
+      <div class="border-b border-linea pb-4">
+        <h2 id="seccion-por-que-aprender-ia" class="text-2xl font-bold tracking-tight text-tinta">
+          ¿Por qué aprender a usar IA?
+        </h2>
+        <p class="text-sm text-tinta-suave mt-1">
+          Tres razones fundamentales para sumar herramientas inteligentes a tu día a día.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 border border-linea bg-superficie rounded-[6px] space-y-3 hover:border-linea-fuerte transition-colors">
+          <span class="text-3xl block" aria-hidden="true">🕐</span>
+          <h3 class="text-lg font-bold text-tinta">
+            Ahorra tiempo
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            Lo que hoy te toma horas, con IA lo haces en minutos.
+          </p>
+        </div>
+
+        <div class="p-6 border border-linea bg-superficie rounded-[6px] space-y-3 hover:border-linea-fuerte transition-colors">
+          <span class="text-3xl block" aria-hidden="true">🌍</span>
+          <h3 class="text-lg font-bold text-tinta">
+            Úsala para todo
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            Escribir, diseñar, programar, estudiar, crear música y mucho más.
+          </p>
+        </div>
+
+        <div class="p-6 border border-linea bg-superficie rounded-[6px] space-y-3 hover:border-linea-fuerte transition-colors">
+          <span class="text-3xl block" aria-hidden="true">🆓</span>
+          <h3 class="text-lg font-bold text-tinta">
+            Empieza gratis
+          </h3>
+          <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed">
+            La mayoría de herramientas tienen plan gratuito para comenzar hoy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Cierre: buscador -->
     <section aria-labelledby="seccion-cierre-buscador" class="p-6 sm:p-10 border border-linea bg-superficie space-y-4">
       <div class="space-y-1">
         <h2 id="seccion-cierre-buscador" class="text-xl sm:text-2xl font-bold tracking-tight text-tinta">

@@ -1,0 +1,127 @@
+---
+titulo: "Cursor: El Editor de Código con IA que Está Cambiando Todo"
+descripcion: "Cursor es un editor de código con IA integrada. Crea apps, corrige bugs y refactoriza sin salir del editor."
+categoria: "ia-codigo"
+fecha: 2026-10-08
+tags: ["Cursor", "editor", "programación", "IA", "tutorial"]
+nivel: "principiante"
+---
+
+Durante los últimos años, el estándar de la industria consistía en instalar extensiones de inteligencia artificial dentro de un editor tradicional. Sin embargo, ese enfoque presentaba barreras evidentes: la IA solo veía fragmentos aislados, desconocía la arquitectura completa del proyecto y requería copiar y pegar fragmentos entre ventanas auxiliares. **Cursor** llegó para replantear la experiencia desde cero, presentándose no como un complemento más, sino como un editor completo concebido nativamente alrededor de la inteligencia artificial.
+
+Al estar construido sobre la base técnica de Visual Studio Code pero con un motor neuronal integrado en cada interacción, Cursor permite programar dialogando directamente con todo tu repositorio, transformando la manera en que se crean, corrigen y mantienen las aplicaciones modernas.
+
+---
+
+## ¿Qué es Cursor y en qué se diferencia de GitHub Copilot?
+
+Cursor es un entorno de desarrollo integrado (IDE) creado por la startup **Anysphere**, fundada por un equipo de investigadores del MIT respaldados por fondos de innovación de OpenAI. Su propósito fundamental es eliminar la fricción entre lo que imaginas en lenguaje natural y los cambios reales en tus archivos.
+
+La gran diferencia entre GitHub Copilot y Cursor radica en la **profundidad del contexto**:
+
+1. **Copilot nació como un plugin:** Su función primaria es predecir la siguiente línea o función mientras escribes en el archivo activo.
+2. **Cursor nació como un entorno completo:** Indexa de forma continua la totalidad de tu repositorio mediante representaciones vectoriales locales. Esto le permite entender dependencias cruzadas, interfaces compartidas, modelos de datos y estilos globales sin que tengas que explicárselos en cada petición.
+
+Mientras que con extensiones tradicionales debes indicar manualmente qué archivo revisar, Cursor comprende de forma autónoma qué módulos se ven afectados cuando pides cambiar un componente en tu aplicación.
+
+---
+
+## Cómo instalarlo (es un fork de VSCode, configuración básica)
+
+Una de las mayores virtudes de Cursor es su curva de adopción casi nula para quienes ya utilizan Visual Studio Code:
+
+1. **Descarga la aplicación oficial:** Visita [cursor.com](https://www.cursor.com) y descarga el instalador correspondiente a tu sistema operativo (macOS, Windows o Linux).
+2. **Importa tu configuración actual en un clic:** Al abrir Cursor por primera vez, el asistente te preguntará si deseas importar tus configuraciones de VS Code. Con un solo clic se transfieren automáticamente todos tus atajos de teclado, temas visuales, extensiones favoritas y credenciales de Git. No tienes que reconfigurar nada desde cero.
+3. **Elige el modo de privacidad:** Puedes definir si permites que tus consultas ayuden a mejorar los modelos o activar el **Privacy Mode**, el cual garantiza que tu código nunca se almacene ni se utilice para entrenamiento.
+4. **Indexación automática del proyecto:** Al abrir cualquier carpeta de trabajo, Cursor creará un índice semántico de tu código. Verás un indicador en la esquina inferior que confirma que el proyecto ha sido indexado y está listo para consultas globales.
+
+---
+
+## Las funciones estrella de Cursor
+
+La potencia de Cursor se organiza alrededor de cuatro comandos fundamentales que cambian la dinámica cotidiana frente a la pantalla:
+
+### Cmd+K: editar código seleccionado con lenguaje natural
+Es el atajo más utilizado del editor (`Ctrl+K` en Windows y Linux, `Cmd+K` en macOS). Permite invocar a la IA en el lugar exacto del cursor o sobre un bloque previamente resaltado.
+
+En lugar de reescribir manualmente una función para hacerla asíncrona o adaptarla a TypeScript estricto, seleccionas el bloque, pulsas `Cmd+K` y escribes:
+
+> *"Convierte esta función para que use async/await, maneje errores con try/catch y tipifique los parámetros con la interfaz Usuario."*
+
+Cursor muestra una vista de diferencias (*diff*) interactiva en colores verde y rojo directamente sobre tu editor. Puedes revisar qué líneas cambian y presionar `Enter` para aceptar o `Esc` para descartar.
+
+### Cmd+L: chat con tu codebase completo
+Presionando `Cmd+L` se abre un panel lateral conversacional que no es un simple chat aislado, sino una consola inteligente conectada a tus archivos abiertos y a los registros de terminal.
+
+Puedes formular preguntas como:
+
+```text
+¿Dónde se gestiona la autenticación con tokens JWT en este proyecto
+y qué middleware debo aplicar para proteger la ruta /admin?
+```
+
+Cursor responderá citando los archivos exactos con números de línea y enlaces interactivos para navegar a cada declaración con un clic.
+
+### Composer: crear archivos y componentes desde cero
+Accesible mediante `Cmd+I` (o `Ctrl+I`), **Composer** representa el salto cualitativo más impresionante de la herramienta. A diferencia de las ediciones en un solo archivo, Composer es capaz de crear, modificar y coordinar múltiples archivos en paralelo dentro de una sola orden.
+
+Si escribes en Composer:
+
+> *"Crea una nueva página de perfil de usuario con Tailwind CSS, un componente de formulario para cambiar contraseña y la función de servicio en src/api/user.ts para enviar la petición."*
+
+Composer generará los tres archivos, creará las carpetas si no existen, agregará las importaciones necesarias y te mostrará el resumen de cambios agrupados para aplicarlos en conjunto.
+
+### @codebase: preguntarle a tu proyecto completo
+Dentro de cualquier instrucción o chat puedes utilizar el símbolo `@` para dirigir la atención del modelo hacia fuentes específicas.
+
+- `@codebase`: Obliga al modelo a buscar en todos los archivos del repositorio antes de contestar.
+- `@Files`: Adjunta un archivo específico como referencia de contexto.
+- `@Docs`: Permite consultar documentación oficial indexada de frameworks como Next.js, Astro, React, Tailwind o Supabase sin desactualizaciones.
+- `@Web`: Permite a Cursor buscar en internet soluciones para errores de compilación recientes.
+
+---
+
+## Para quién es ideal Cursor
+
+Cursor se adapta a dos perfiles muy claros con necesidades complementarias:
+
+### Principiantes que quieren crear aplicaciones reales
+Para quienes están aprendiendo a programar o personas con perfiles de producto que desean prototipar ideas, Cursor elimina la frustración de quedarse atascado por un punto y coma, una mala importación o una biblioteca desactualizada. Explicar en lenguaje natural lo que se desea construir y ver cómo el editor organiza la estructura permite aprender observando código bien formateado en tiempo real.
+
+### Desarrolladores experimentados que buscan velocidad pura
+Para programadores senior, la ventaja no es que la IA programe por ellos, sino la eliminación de tareas mecánicas: refactorizar nombres en diez archivos, crear interfaces de tipos a partir de esquemas JSON, escribir pruebas complejas o navegar repositorios de millones de líneas en cuestión de minutos.
+
+---
+
+## Plan gratuito vs Pro
+
+Cursor opera con un modelo freemium accesible que permite comprobar su potencial antes de contratar una suscripción:
+
+| Característica | Plan Hobby (Gratuito) | Plan Pro |
+| :--- | :--- | :--- |
+| **Precio** | $0 USD al mes | $20 USD al mes |
+| **Peticiones premium** | Periodo de prueba inicial de 14 días (peticiones Pro) | 500 peticiones rápidas al mes con modelos líderes |
+| **Modelos incluidos** | Claude 3.5 Sonnet, GPT-4o con velocidad estándar | Acceso prioritario de baja latencia a Claude 3.5 Sonnet y GPT-4o |
+| **Completado rápido** | Peticiones ilimitadas de autocompletado básico | Autocompletado predictivo ilimitado |
+| **Uso de Composer** | Limitado tras el periodo de prueba | Acceso completo para cambios multivariable |
+| **Para quién es** | Estudiantes, proyectos personales o uso ocasional | Desarrolladores profesionales a tiempo completo |
+
+---
+
+## Comparación rápida: Cursor vs GitHub Copilot vs Windsurf
+
+El ecosistema de asistentes de programación ha evolucionado hacia tres propuestas con enfoques distintos:
+
+| Criterio | Cursor | GitHub Copilot | Windsurf (Codeium) |
+| :--- | :--- | :--- | :--- |
+| **Naturaleza** | Editor completo (fork de VS Code) | Extensión para múltiples editores | Editor completo con agentes de flujo |
+| **Modelo fuerte** | Claude 3.5 Sonnet integrado a fondo | GPT-4o con soporte de Claude | Modelos propios + Claude / GPT-4 |
+| **Edición multarchivo** | Nativa y sobresaliente con Composer | En desarrollo progresivo | Flujos automáticos basados en agentes |
+| **Facilidad de inicio** | Requiere usar un nuevo editor | Se instala en tu editor de siempre | Requiere instalar nuevo editor |
+| **Mejor para** | Creación rápida y refactorización masiva | Equipos con políticas corporativas rígidas | Automatización secuencial de tareas |
+
+---
+
+## Siguiente paso
+
+Si ya cuentas con experiencia utilizando autocompletado en tu día a día, instalar Cursor y probar el atajo `Cmd+K` sobre una función real cambiará tu percepción sobre la programación asistida. Te recomendamos combinar esta práctica con nuestra guía sobre **[10 Técnicas de Prompting](/articulos/tecnicas-prompting/)** para aprender a formular instrucciones precisas y directas al interactuar con cualquier asistente de código.
