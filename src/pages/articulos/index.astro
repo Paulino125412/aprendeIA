@@ -1,63 +1,452 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import TarjetaArticulo from '../../components/TarjetaArticulo.astro';
-import { CATEGORIAS } from '../../data/categorias';
+import { CATEGORIAS, getCategoria } from '../../data/categorias';
 
 const articulos = await getCollection('articulos');
 const ordenados = articulos.sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
+
+// Mapeo enriquecido para renderizado y filtrado dinámico
+const articulosPreparados = ordenados.map((art) => {
+  const cat = getCategoria(art.data.categoria);
+  const fechaStr = new Intl.DateTimeFormat('es', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(art.data.fecha);
+
+  const palabras = art.body ? art.body.split(/\s+/).filter(Boolean).length : 0;
+  const minutos = Math.max(1, Math.ceil(palabras / 200));
+
+  // Normalizar nivel (principiante, intermedio, avanzado)
+  const nivelNormalizado = (art.data.nivel || 'principiante').toLowerCase();
+
+  return {
+    id: art.id,
+    titulo: art.data.titulo,
+    descripcion: art.data.descripcion,
+    categoriaSlug: art.data.categoria,
+    categoriaNombre: cat ? cat.nombre : art.data.categoria,
+    categoriaEmoji: cat ? (cat.emoji || '✨') : '✨',
+    categoriaBorde: cat ? cat.clases.bordeLateral : 'border-l-indigo-600',
+    categoriaTexto: cat ? cat.clases.texto : 'text-indigo-600',
+    fechaFormateada: fechaStr,
+    fechaIso: art.data.fecha.toISOString(),
+    minutos,
+    nivel: nivelNormalizado,
+  };
+});
 ---
 
 <Layout
   title="Artículos y Guías | AprendeIA"
   description="Explora nuestra biblioteca completa de artículos, talleres interactivos y guías prácticas sobre Inteligencia Artificial."
 >
-  <div class="space-y-10">
-    <header class="space-y-3 max-w-3xl border-b border-linea pb-8">
-      <p class="text-xs font-semibold text-tinta-suave">
-        Biblioteca formativa
-      </p>
-      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-tinta">
+  <div class="space-y-8 md:space-y-10">
+    <!-- Encabezado con Contador Animado -->
+    <header class="space-y-4 max-w-3xl border-b border-linea pb-8">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold uppercase tracking-wider text-indigo">
+          Biblioteca formativa
+        </span>
+        <span class="text-linea" aria-hidden="true">·</span>
+        <!-- 4. CONTADOR ANIMADO -->
+        <span class="text-xs font-mono font-bold text-tinta-suave flex items-center gap-1.5">
+          <span
+            id="contador-guias-numero"
+            data-total-guias={articulosPreparados.length}
+            class="text-indigo font-extrabold text-sm"
+          >0</span>
+          <span>guías disponibles</span>
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-tinta leading-tight">
         Artículos, talleres y guías de IA
       </h1>
+
       <p class="text-base sm:text-lg text-tinta-suave leading-relaxed">
-        Contenido estructurado para aprender a utilizar modelos de inteligencia artificial en el trabajo, los estudios y la vida cotidiana.
+        Aprende paso a paso cómo dominar modelos de lenguaje, generadores visuales, editores con IA y herramientas de productividad en español.
       </p>
     </header>
 
-    <!-- Filtro por categoría temática (sin emojis, radio 6px) -->
-    <section aria-labelledby="titulo-categorias" class="space-y-3">
-      <h2 id="titulo-categorias" class="text-xs font-bold text-tinta-suave">
-        Filtrar por categoría temática
-      </h2>
-      <div class="flex flex-wrap gap-2">
-        <a
-          href="/articulos"
-          class="inline-flex items-center px-3 py-1.5 rounded-[6px] text-xs font-bold bg-indigo text-sobre-acento"
-        >
-          Todos ({ordenados.length})
-        </a>
-        {CATEGORIAS.map((cat) => (
-          <a
-            href={`/categoria/${cat.slug}`}
-            class={`inline-flex items-center px-3 py-1.5 rounded-[6px] text-xs font-semibold border border-linea bg-superficie hover:bg-papel transition-colors ${cat.clases.texto}`}
+    <!-- 3. BARRA DE BÚSQUEDA Y TOGGLE DE GRID/LISTA -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <!-- Buscador en tiempo real -->
+      <div class="relative flex-1 max-w-md">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-tinta-suave">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </div>
+        <input
+          type="search"
+          id="buscador-articulos"
+          placeholder="Buscar guías por título o tema..."
+          autocomplete="off"
+          class="w-full pl-10 pr-4 py-2.5 text-sm bg-superficie border border-linea text-tinta rounded-[8px] focus:outline-none focus:ring-2 focus:ring-indigo transition-all placeholder:text-tinta-suave"
+        />
+      </div>
+
+      <!-- 5. TOGGLE DE VISTA (Grid vs Lista) -->
+      <div class="flex items-center gap-2 self-end sm:self-auto select-none">
+        <span class="text-xs font-semibold text-tinta-suave mr-1 hidden sm:inline">
+          Vista:
+        </span>
+        <div class="inline-flex p-1 bg-superficie border border-linea rounded-[8px] gap-1">
+          <button
+            type="button"
+            id="btn-vista-grid"
+            aria-label="Vista en cuadrícula"
+            class="px-2.5 py-1.5 rounded-[6px] text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 bg-indigo text-sobre-acento shadow-xs"
           >
-            {cat.nombre}
-          </a>
-        ))}
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            <span class="hidden md:inline">Cuadrícula</span>
+          </button>
+
+          <button
+            type="button"
+            id="btn-vista-lista"
+            aria-label="Vista en lista"
+            class="px-2.5 py-1.5 rounded-[6px] text-xs font-semibold text-tinta-suave hover:text-tinta transition-all cursor-pointer flex items-center gap-1.5"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>
+            <span class="hidden md:inline">Lista</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. FILTROS ANIMADOS POR CATEGORÍA (Pills con emojis) -->
+    <section aria-labelledby="titulo-filtros" class="space-y-2">
+      <h2 id="titulo-filtros" class="text-xs font-bold uppercase tracking-wider text-tinta-suave">
+        Filtrar por categoría
+      </h2>
+      <div id="contenedor-filtros" class="flex flex-wrap gap-2 pt-1">
+        <button
+          type="button"
+          data-categoria="todas"
+          class="btn-filtro-cat inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9999px] text-xs font-bold transition-all cursor-pointer select-none bg-indigo text-sobre-acento border border-indigo shadow-xs"
+        >
+          <span>✨</span>
+          <span>Todos</span>
+          <span class="text-[10px] opacity-80 font-mono font-normal">({articulosPreparados.length})</span>
+        </button>
+
+        {CATEGORIAS.map((cat) => {
+          const totalCat = articulosPreparados.filter((a) => a.categoriaSlug === cat.slug).length;
+          return (
+            <button
+              type="button"
+              data-categoria={cat.slug}
+              class="btn-filtro-cat inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9999px] text-xs font-semibold transition-all cursor-pointer select-none bg-superficie text-tinta-suave border border-linea hover:border-indigo/60 hover:text-tinta"
+            >
+              <span>{cat.emoji || '⚡'}</span>
+              <span>{cat.nombre}</span>
+              {totalCat > 0 && (
+                <span class="text-[10px] text-tinta-suave/80 font-mono font-normal">({totalCat})</span>
+              )}
+            </button>
+          );
+        })}
       </div>
     </section>
 
-    <!-- Listado de artículos -->
-    <section aria-labelledby="titulo-listado" class="space-y-6">
-      <h2 id="titulo-listado" class="sr-only">
-        Listado completo de publicaciones
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {ordenados.map((articulo) => (
-          <TarjetaArticulo articulo={articulo} />
-        ))}
+    <!-- CONTENEDOR DE ARTÍCULOS (Grid / Lista) -->
+    <section aria-label="Publicaciones disponibles" class="space-y-6 pt-2">
+      {/* Mensaje de no resultados */}
+      <div
+        id="mensaje-sin-resultados"
+        hidden
+        class="p-12 text-center border border-dashed border-linea rounded-[12px] bg-superficie space-y-3"
+      >
+        <span class="text-4xl block" aria-hidden="true">🔍</span>
+        <h3 class="text-base font-bold text-tinta">
+          No se encontraron guías
+        </h3>
+        <p id="texto-sin-resultados" class="text-sm text-tinta-suave max-w-md mx-auto">
+          No encontramos guías con ese término. Prueba con otra palabra clave o selecciona otra categoría.
+        </p>
+        <button
+          type="button"
+          id="btn-limpiar-busqueda"
+          class="px-4 py-2 mt-2 text-xs font-bold rounded-[6px] bg-indigo text-sobre-acento hover:opacity-90 transition-opacity cursor-pointer"
+        >
+          Ver todas las guías
+        </button>
+      </div>
+
+      {/* Cuadrícula o lista de tarjetas con animación de fade */}
+      <div
+        id="rejilla-articulos"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300"
+      >
+        {articulosPreparados.map((art) => {
+          const badgeNivel = art.nivel === 'intermedio'
+            ? { texto: 'Intermedio', clases: 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border-amber-300 dark:border-amber-800' }
+            : art.nivel === 'avanzado'
+            ? { texto: 'Avanzado', clases: 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border-rose-300 dark:border-rose-800' }
+            : { texto: 'Principiante', clases: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800' };
+
+          return (
+            <article
+              data-articulo-item
+              data-categoria={art.categoriaSlug}
+              data-titulo={art.titulo.toLowerCase()}
+              data-descripcion={art.descripcion.toLowerCase()}
+              class={`tarjeta-articulo-wrapper group flex flex-col justify-between border border-linea bg-superficie p-6 rounded-[8px] border-l-[4px] ${art.categoriaBorde} hover:-translate-y-1 hover:shadow-md hover:border-indigo/60 transition-all duration-200 opacity-100`}
+            >
+              <div class="space-y-3.5">
+                <!-- Cabecera de la tarjeta: Categoría + Emoji + Badge de Nivel -->
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <a
+                    href={`/categoria/${art.categoriaSlug}`}
+                    class={`inline-flex items-center gap-1.5 font-display text-xs font-bold ${art.categoriaTexto} hover:underline`}
+                  >
+                    <span aria-hidden="true">{art.categoriaEmoji}</span>
+                    <span>{art.categoriaNombre}</span>
+                  </a>
+
+                  <!-- 2. ETIQUETA DE NIVEL -->
+                  <span class={`text-[10px] font-bold px-2 py-0.5 rounded-[4px] border ${badgeNivel.clases}`}>
+                    {badgeNivel.texto}
+                  </span>
+                </div>
+
+                <!-- Título -->
+                <h3 class="text-lg font-bold tracking-tight text-tinta group-hover:text-indigo transition-colors line-clamp-2 leading-snug">
+                  <a href={`/articulos/${art.id}`} class="focus:outline-none focus:underline">
+                    {art.titulo}
+                  </a>
+                </h3>
+
+                <!-- Descripción -->
+                <p class="text-xs sm:text-sm text-tinta-suave leading-relaxed line-clamp-3">
+                  {art.descripcion}
+                </p>
+              </div>
+
+              <!-- Pie de la tarjeta: Tiempo de lectura + Enlace -->
+              <div class="mt-6 pt-4 border-t border-linea/70 flex items-center justify-between text-xs text-tinta-suave">
+                <span class="font-mono text-[11px]">
+                  {art.minutos} min de lectura
+                </span>
+                <a
+                  href={`/articulos/${art.id}`}
+                  class="font-semibold text-indigo group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1"
+                  aria-label={`Leer guía: ${art.titulo}`}
+                >
+                  <span>Leer guía</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   </div>
+
+  <style>
+    /* Estilos para vista de lista alternativa */
+    .vista-modo-lista {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+    }
+
+    .vista-modo-lista .tarjeta-articulo-wrapper {
+      padding: 1.25rem 1.5rem;
+    }
+
+    /* Animación suave de fade para tarjetas */
+    .tarjeta-oculta {
+      display: none !important;
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  </style>
+
+  <script is:inline>
+    (function() {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 4. CONTADOR ANIMADO ("X guías disponibles")
+      const contadorNumero = document.getElementById('contador-guias-numero');
+      if (contadorNumero) {
+        const totalGuias = parseInt(contadorNumero.getAttribute('data-total-guias') || '0', 10);
+        if (reduceMotion) {
+          contadorNumero.textContent = totalGuias.toString();
+        } else {
+          const duracion = 1000;
+          const inicio = performance.now();
+
+          function animar(ahora) {
+            const transcurrido = ahora - inicio;
+            const progreso = Math.min(transcurrido / duracion, 1);
+            const easing = 1 - Math.pow(1 - progreso, 3);
+            contadorNumero.textContent = Math.floor(easing * totalGuias).toString();
+
+            if (progreso < 1) {
+              requestAnimationFrame(animar);
+            } else {
+              contadorNumero.textContent = totalGuias.toString();
+            }
+          }
+
+          requestAnimationFrame(animar);
+        }
+      }
+
+      // Elementos del sistema de filtrado y búsqueda
+      const buscador = document.getElementById('buscador-articulos');
+      const botonesFiltro = document.querySelectorAll('.btn-filtro-cat');
+      const tarjetas = document.querySelectorAll('[data-articulo-item]');
+      const contenedorRejilla = document.getElementById('rejilla-articulos');
+      const mensajeSinResultados = document.getElementById('mensaje-sin-resultados');
+      const textoSinResultados = document.getElementById('texto-sin-resultados');
+      const btnLimpiar = document.getElementById('btn-limpiar-busqueda');
+
+      let categoriaActiva = 'todas';
+      let terminoBusqueda = '';
+
+      function aplicarFiltros() {
+        let visibles = 0;
+
+        tarjetas.forEach(function(tarjeta) {
+          const catTarjeta = tarjeta.getAttribute('data-categoria') || '';
+          const titulo = tarjeta.getAttribute('data-titulo') || '';
+          const descripcion = tarjeta.getAttribute('data-descripcion') || '';
+
+          const coincideCategoria = categoriaActiva === 'todas' || catTarjeta === categoriaActiva;
+          const coincideBusqueda = !terminoBusqueda ||
+            titulo.includes(terminoBusqueda) ||
+            descripcion.includes(terminoBusqueda);
+
+          if (coincideCategoria && coincideBusqueda) {
+            tarjeta.classList.remove('tarjeta-oculta');
+            tarjeta.style.opacity = '1';
+            visibles++;
+          } else {
+            tarjeta.classList.add('tarjeta-oculta');
+            tarjeta.style.opacity = '0';
+          }
+        });
+
+        // Mostrar u ocultar mensaje sin resultados
+        if (visibles === 0) {
+          if (mensajeSinResultados) {
+            mensajeSinResultados.removeAttribute('hidden');
+            if (textoSinResultados && terminoBusqueda) {
+              textoSinResultados.textContent = `No encontramos guías sobre "${terminoBusqueda}". Prueba con otro término.`;
+            } else if (textoSinResultados) {
+              textoSinResultados.textContent = 'No hay guías disponibles para esta categoría en este momento.';
+            }
+          }
+        } else {
+          mensajeSinResultados?.setAttribute('hidden', '');
+        }
+      }
+
+      // 1. FILTROS POR CATEGORÍA CON PÍLDORAS
+      botonesFiltro.forEach(function(boton) {
+        boton.addEventListener('click', function() {
+          const slug = boton.getAttribute('data-categoria') || 'todas';
+          categoriaActiva = slug;
+
+          // Actualizar estilos activos de botones
+          botonesFiltro.forEach(function(b) {
+            b.classList.remove('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold', 'shadow-xs');
+            b.classList.add('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
+          });
+
+          boton.classList.remove('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
+          boton.classList.add('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold', 'shadow-xs');
+
+          aplicarFiltros();
+        });
+      });
+
+      // 3. BARRA DE BÚSQUEDA EN TIEMPO REAL
+      buscador?.addEventListener('input', function(e) {
+        terminoBusqueda = e.target.value.trim().toLowerCase();
+        aplicarFiltros();
+      });
+
+      btnLimpiar?.addEventListener('click', function() {
+        if (buscador) buscador.value = '';
+        terminoBusqueda = '';
+        categoriaActiva = 'todas';
+
+        botonesFiltro.forEach(function(b) {
+          const esTodas = b.getAttribute('data-categoria') === 'todas';
+          if (esTodas) {
+            b.classList.add('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold');
+            b.classList.remove('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
+          } else {
+            b.classList.remove('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold');
+            b.classList.add('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
+          }
+        });
+
+        aplicarFiltros();
+      });
+
+      // 5. TOGGLE DE VISTA (Grid vs Lista) con persistencia en localStorage
+      const btnGrid = document.getElementById('btn-vista-grid');
+      const btnLista = document.getElementById('btn-vista-lista');
+      const keyStorageVista = 'aprendeia_articulos_vista';
+
+      function activarVista(modo) {
+        if (!contenedorRejilla) return;
+
+        if (modo === 'lista') {
+          contenedorRejilla.classList.add('vista-modo-lista');
+          contenedorRejilla.classList.remove('md:grid-cols-2', 'lg:grid-cols-3');
+
+          btnLista?.classList.add('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
+          btnLista?.classList.remove('text-tinta-suave', 'font-semibold');
+
+          btnGrid?.classList.remove('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
+          btnGrid?.classList.add('text-tinta-suave', 'font-semibold');
+        } else {
+          contenedorRejilla.classList.remove('vista-modo-lista');
+          contenedorRejilla.classList.add('md:grid-cols-2', 'lg:grid-cols-3');
+
+          btnGrid?.classList.add('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
+          btnGrid?.classList.remove('text-tinta-suave', 'font-semibold');
+
+          btnLista?.classList.remove('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
+          btnLista?.classList.add('text-tinta-suave', 'font-semibold');
+        }
+
+        try {
+          localStorage.setItem(keyStorageVista, modo);
+        } catch (_) {}
+      }
+
+      btnGrid?.addEventListener('click', function() { activarVista('grid'); });
+      btnLista?.addEventListener('click', function() { activarVista('lista'); });
+
+      // Restaurar preferencia guardada
+      try {
+        const vistaGuardada = localStorage.getItem(keyStorageVista);
+        if (vistaGuardada === 'lista') {
+          activarVista('lista');
+        }
+      } catch (_) {}
+    })();
+  </script>
 </Layout>

@@ -11,25 +11,46 @@ for (const art of articulos) {
 }
 
 const pathname = Astro.url.pathname;
+const esSeccionArticulos = pathname.startsWith('/articulos');
+const esSeccionSobreNosotros = pathname === '/sobre-nosotros';
 ---
 
 <header class="w-full">
-  <!-- Fila principal sticky sin blur -->
-  <div class="sticky top-0 z-40 w-full bg-papel border-b border-linea">
+  <!-- Fila principal sticky con transición suave para efecto scroll -->
+  <div
+    id="barra-cabecera-principal"
+    class="sticky top-0 z-40 w-full bg-papel/95 border-b border-transparent transition-all duration-300"
+  >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center gap-8">
-        <!-- Marca tipográfica: solo texto en font-display -->
-        <a href="/" class="font-display font-bold text-xl text-tinta tracking-tight hover:text-indigo transition-colors">
-          {SITIO.nombre}
+        <!-- Marca tipográfica con primer carácter estilizado y hover suave -->
+        <a
+          href="/"
+          class="group font-display font-bold text-xl text-tinta tracking-tight hover:text-indigo transition-colors flex items-center"
+        >
+          <span class="bg-gradient-to-r from-indigo via-indigo to-esmeralda bg-clip-text text-transparent group-hover:from-esmeralda group-hover:to-indigo transition-all duration-300">
+            A
+          </span>
+          <span class="group-hover:text-indigo transition-colors duration-300">
+            prendeIA
+          </span>
         </a>
 
         <!-- Navegación escritorio (desde lg) -->
         <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-6 text-sm font-semibold">
           <a
             href="/articulos"
-            class={`py-2 transition-colors ${pathname.startsWith('/articulos') ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'}`}
+            class={`relative py-2 transition-colors group ${
+              esSeccionArticulos ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'
+            }`}
           >
-            Artículos
+            <span>Artículos</span>
+            <!-- Indicador subrayado animado de sección activa -->
+            <span
+              class={`absolute bottom-0 left-0 right-0 h-[2px] bg-indigo rounded-full transition-transform duration-300 origin-left ${
+                esSeccionArticulos ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              }`}
+            ></span>
           </a>
 
           <!-- Desplegable Categorías -->
@@ -50,7 +71,7 @@ const pathname = Astro.url.pathname;
             <div
               id="panel-dropdown-cat"
               hidden
-              class="absolute left-0 top-full mt-2 w-96 border border-linea bg-superficie p-3 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto"
+              class="absolute left-0 top-full mt-2 w-96 border border-linea bg-superficie p-3 z-50 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-[6px] shadow-sm"
             >
               <div class="grid grid-cols-1 gap-1">
                 {CATEGORIAS.map((cat) => {
@@ -59,7 +80,7 @@ const pathname = Astro.url.pathname;
                   return (
                     <a
                       href={`/categoria/${cat.slug}`}
-                      class={`p-2.5 border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors block`}
+                      class={`p-2.5 border-l-[3px] ${cat.clases.bordeLateral} hover:bg-papel transition-colors block rounded-r-[4px]`}
                     >
                       <div class="flex items-center justify-between gap-2">
                         <span class={`text-xs font-bold ${cat.clases.texto}`}>
@@ -97,12 +118,12 @@ const pathname = Astro.url.pathname;
             <div
               id="panel-dropdown-herr"
               hidden
-              class="absolute left-0 top-full mt-2 w-72 border border-linea bg-superficie p-3 z-50"
+              class="absolute left-0 top-full mt-2 w-72 border border-linea bg-superficie p-3 z-50 rounded-[6px] shadow-sm"
             >
               <div class="space-y-1">
                 <a
                   href="/articulos/hablar-con-la-ia"
-                  class="p-2.5 hover:bg-papel transition-colors block"
+                  class="p-2.5 hover:bg-papel transition-colors block rounded-[4px]"
                 >
                   <span class="text-xs font-bold text-tinta block">
                     Constructor de prompts
@@ -113,7 +134,7 @@ const pathname = Astro.url.pathname;
                 </a>
                 <a
                   href="/articulos/beneficios-ia"
-                  class="p-2.5 hover:bg-papel transition-colors block"
+                  class="p-2.5 hover:bg-papel transition-colors block rounded-[4px]"
                 >
                   <span class="text-xs font-bold text-tinta block">
                     Explorador por profesión
@@ -128,9 +149,17 @@ const pathname = Astro.url.pathname;
 
           <a
             href="/sobre-nosotros"
-            class={`py-2 transition-colors ${pathname === '/sobre-nosotros' ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'}`}
+            class={`relative py-2 transition-colors group ${
+              esSeccionSobreNosotros ? 'text-tinta font-bold' : 'text-tinta-suave hover:text-tinta'
+            }`}
           >
-            Sobre nosotros
+            <span>Sobre nosotros</span>
+            <!-- Indicador subrayado animado de sección activa -->
+            <span
+              class={`absolute bottom-0 left-0 right-0 h-[2px] bg-indigo rounded-full transition-transform duration-300 origin-left ${
+                esSeccionSobreNosotros ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+              }`}
+            ></span>
           </a>
         </nav>
       </div>
@@ -191,9 +220,17 @@ const pathname = Astro.url.pathname;
         </button>
       </div>
     </div>
+
+    <!-- 2. INDICADOR DE PROGRESO DE LECTURA (2px de alto en el borde inferior) -->
+    <div
+      id="barra-progreso-lectura"
+      class="hidden absolute bottom-0 left-0 h-[2px] w-full origin-left bg-gradient-to-r from-indigo via-indigo to-esmeralda transition-transform duration-75 ease-out"
+      style="transform: scaleX(0);"
+      aria-hidden="true"
+    ></div>
   </div>
 
-  <!-- Franja secundaria (solo desde lg), no sticky: 9 categorías -->
+  <!-- Franja secundaria (solo desde lg), no sticky: 10 categorías -->
   <nav
     aria-label="Categorías temáticas"
     class="hidden lg:block border-b border-linea bg-papel"
@@ -219,16 +256,16 @@ const pathname = Astro.url.pathname;
     </div>
   </nav>
 
-  <!-- Panel de Menú Móvil a pantalla completa -->
+  <!-- 4. MENÚ MÓVIL MEJORADO: Overlay y animaciones con stagger -->
   <div
     id="panel-movil-menu"
     hidden
-    class="fixed inset-0 z-50 bg-papel overflow-y-auto p-6 flex flex-col justify-between"
+    class="fixed inset-0 z-50 bg-papel/98 backdrop-blur-md overflow-y-auto p-6 flex flex-col justify-between opacity-0 translate-y-4 transition-all duration-300 ease-out"
   >
     <div class="space-y-6">
-      <div class="flex items-center justify-between pb-4 border-b border-linea">
-        <a href="/" class="font-display font-bold text-xl text-tinta">
-          {SITIO.nombre}
+      <div class="flex items-center justify-between pb-4 border-b border-linea movil-stagger-item">
+        <a href="/" class="group font-display font-bold text-xl text-tinta flex items-center">
+          <span class="bg-gradient-to-r from-indigo to-esmeralda bg-clip-text text-transparent">A</span>prendeIA
         </a>
         <button
           type="button"
@@ -244,7 +281,7 @@ const pathname = Astro.url.pathname;
       </div>
 
       <!-- Buscador en móvil -->
-      <form action="/buscar" method="GET" class="space-y-1.5">
+      <form action="/buscar" method="GET" class="space-y-1.5 movil-stagger-item">
         <label for="busqueda-movil" class="block text-xs font-semibold text-tinta-suave">
           Buscar
         </label>
@@ -266,7 +303,7 @@ const pathname = Astro.url.pathname;
       </form>
 
       <!-- Navegación principal móvil -->
-      <nav aria-label="Menú principal móvil" class="space-y-2 border-t border-linea pt-4">
+      <nav aria-label="Menú principal móvil" class="space-y-2 border-t border-linea pt-4 movil-stagger-item">
         <a href="/" class="block py-2 text-base font-bold text-tinta hover:text-indigo">
           Inicio
         </a>
@@ -282,7 +319,7 @@ const pathname = Astro.url.pathname;
       </nav>
 
       <!-- Herramientas móvil -->
-      <div class="border-t border-linea pt-4 space-y-2">
+      <div class="border-t border-linea pt-4 space-y-2 movil-stagger-item">
         <span class="text-xs font-bold text-tinta-suave block">
           Herramientas
         </span>
@@ -295,7 +332,7 @@ const pathname = Astro.url.pathname;
       </div>
 
       <!-- Categorías móvil -->
-      <div class="border-t border-linea pt-4 space-y-2">
+      <div class="border-t border-linea pt-4 space-y-2 movil-stagger-item">
         <span class="text-xs font-bold text-tinta-suave block">
           Categorías
         </span>
@@ -303,7 +340,7 @@ const pathname = Astro.url.pathname;
           {CATEGORIAS.map((cat) => (
             <a
               href={`/categoria/${cat.slug}`}
-              class={`py-1.5 px-2 border-l-[3px] ${cat.clases.bordeLateral} text-xs font-semibold text-tinta hover:bg-superficie`}
+              class={`py-1.5 px-2 border-l-[3px] ${cat.clases.bordeLateral} text-xs font-semibold text-tinta hover:bg-superficie rounded-r-[4px]`}
             >
               {cat.nombre}
             </a>
@@ -313,7 +350,7 @@ const pathname = Astro.url.pathname;
     </div>
 
     <!-- Enlaces legales móvil -->
-    <div class="border-t border-linea pt-4 mt-8 flex items-center justify-between text-xs text-tinta-suave">
+    <div class="border-t border-linea pt-4 mt-8 flex items-center justify-between text-xs text-tinta-suave movil-stagger-item">
       <div class="flex gap-4">
         <a href="/privacidad" class="hover:underline">Privacidad</a>
         <a href="/terminos" class="hover:underline">Términos</a>
@@ -325,6 +362,64 @@ const pathname = Astro.url.pathname;
 
 <script is:inline>
   (function() {
+    // 1. EFECTO SCROLL: Cambio dinámico con requestAnimationFrame al superar 60px
+    const barraCabecera = document.getElementById('barra-cabecera-principal');
+    let scrollTicking = false;
+
+    function actualizarEstiloCabecera() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      if (barraCabecera) {
+        if (scrollY > 60) {
+          barraCabecera.classList.remove('bg-papel/95', 'border-transparent');
+          barraCabecera.classList.add('bg-papel/80', 'backdrop-blur-md', 'border-linea', 'shadow-sm');
+        } else {
+          barraCabecera.classList.remove('bg-papel/80', 'backdrop-blur-md', 'border-linea', 'shadow-sm');
+          barraCabecera.classList.add('bg-papel/95', 'border-transparent');
+        }
+      }
+
+      // 2. INDICADOR DE PROGRESO DE LECTURA (solo en páginas con article.prose h1)
+      actualizarProgresoLectura(scrollY);
+
+      scrollTicking = false;
+    }
+
+    const barraProgreso = document.getElementById('barra-progreso-lectura');
+    const articuloProse = document.querySelector('article.prose');
+    const tieneTituloArticulo = articuloProse && articuloProse.querySelector('h1');
+
+    if (barraProgreso && tieneTituloArticulo) {
+      barraProgreso.classList.remove('hidden');
+    }
+
+    function actualizarProgresoLectura(scrollY) {
+      if (!barraProgreso || !tieneTituloArticulo || !articuloProse) return;
+
+      const rectArticulo = articuloProse.getBoundingClientRect();
+      const puntoInicio = articuloProse.offsetTop;
+      const alturaArticulo = articuloProse.offsetHeight;
+      const ventanaAltura = window.innerHeight;
+
+      const distanciaRecorrida = scrollY - puntoInicio + 100;
+      const totalRecorrible = alturaArticulo - ventanaAltura + 200;
+
+      let porcentaje = 0;
+      if (totalRecorrible > 0) {
+        porcentaje = Math.min(Math.max(distanciaRecorrida / totalRecorrible, 0), 1);
+      }
+
+      barraProgreso.style.transform = `scaleX(${porcentaje})`;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!scrollTicking) {
+        window.requestAnimationFrame(actualizarEstiloCabecera);
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    actualizarEstiloCabecera();
+
     // Control Desplegable Categorías
     const btnCat = document.getElementById('btn-dropdown-cat');
     const panelCat = document.getElementById('panel-dropdown-cat');
@@ -390,27 +485,64 @@ const pathname = Astro.url.pathname;
       if (wrapperHerr && !wrapperHerr.contains(e.target)) cerrarDropdownHerr();
     });
 
-    // Control Menú Móvil Pantalla Completa
+    // 4. CONTROL MENÚ MÓVIL MEJORADO CON STAGGER ANIMATIONS
     const btnMovil = document.getElementById('btn-movil-menu');
     const btnCerrarMovil = document.getElementById('btn-cerrar-movil');
     const panelMovil = document.getElementById('panel-movil-menu');
+    const staggerItems = panelMovil ? panelMovil.querySelectorAll('.movil-stagger-item') : [];
 
     function abrirMenuMovil() {
       if (!panelMovil) return;
       panelMovil.removeAttribute('hidden');
       btnMovil?.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+
+      // Disparar animación de entrada del overlay
+      requestAnimationFrame(function() {
+        panelMovil.classList.remove('opacity-0', 'translate-y-4');
+        panelMovil.classList.add('opacity-100', 'translate-y-0');
+
+        // Animar ítems uno por uno con stagger de 50ms
+        staggerItems.forEach(function(item, idx) {
+          item.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+          item.style.transitionDelay = `${idx * 50}ms`;
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        });
+      });
+
       const inputBusqueda = document.getElementById('busqueda-movil');
-      inputBusqueda?.focus();
+      setTimeout(function() {
+        inputBusqueda?.focus();
+      }, 250);
     }
 
     function cerrarMenuMovil() {
       if (!panelMovil) return;
-      panelMovil.setAttribute('hidden', '');
       btnMovil?.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
-      btnMovil?.focus();
+
+      // Fade-out y slide-down
+      panelMovil.classList.remove('opacity-100', 'translate-y-0');
+      panelMovil.classList.add('opacity-0', 'translate-y-4');
+
+      staggerItems.forEach(function(item) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(12px)';
+        item.style.transitionDelay = '0ms';
+      });
+
+      setTimeout(function() {
+        panelMovil.setAttribute('hidden', '');
+        btnMovil?.focus();
+      }, 300);
     }
+
+    // Inicializar estado previo de los stagger items
+    staggerItems.forEach(function(item) {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(12px)';
+    });
 
     btnMovil?.addEventListener('click', function() {
       const abierto = btnMovil.getAttribute('aria-expanded') === 'true';

@@ -1,99 +1,246 @@
 ---
-// HeroDemo.astro - Pestañas interactivas y accesibles para comparar prompts
+// HeroDemo.astro - Terminal / Chat interactivo para comparar prompts con estética macOS, typing realista y marquee
 ---
 
-<div class="w-full hero-demo-root">
-  {/* Único elemento con radio de 12px en la portada */}
-  <div class="rounded-[12px] border border-linea bg-superficie p-5 sm:p-6 transition-colors">
-    {/* Pestañas accesibles */}
+<div class="w-full hero-demo-root space-y-3">
+  {/* Caja estilo terminal macOS con fondo oscuro constante y glow animado */}
+  <div
+    id="hero-demo-card"
+    class="relative rounded-[12px] border border-slate-700/80 bg-gradient-to-b from-slate-900 via-slate-900/98 to-slate-950 text-slate-100 overflow-hidden shadow-2xl transition-all duration-300 hero-terminal-glow"
+  >
+    {/* Flash sutil de fondo al generar respuesta */}
     <div
-      role="tablist"
-      aria-label="Comparación de prompts"
-      class="flex border-b border-linea gap-4 mb-4"
-    >
-      <button
-        type="button"
-        role="tab"
-        id="tab-prompt-vago"
-        aria-controls="panel-prompt-vago"
-        aria-selected="true"
+      id="hero-flash-overlay"
+      class="pointer-events-none absolute inset-0 bg-indigo-500/10 opacity-0 transition-opacity duration-150 z-20"
+      aria-hidden="true"
+    ></div>
+
+    {/* Barra superior estilo macOS con 3 puntos de colores */}
+    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-950/80 backdrop-blur-sm select-none">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]/60 inline-block shadow-sm" aria-hidden="true"></span>
+        <span class="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]/60 inline-block shadow-sm" aria-hidden="true"></span>
+        <span class="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]/60 inline-block shadow-sm" aria-hidden="true"></span>
+        <span class="ml-2 font-mono text-xs text-slate-400 font-medium tracking-wide">
+          AprendeIA · Asistente
+        </span>
+      </div>
+
+      {/* Indicador de estado "IA en Vivo" */}
+      <div class="flex items-center gap-2 text-xs font-medium text-emerald-400 font-mono">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span class="text-[11px] text-slate-300">En línea</span>
+      </div>
+    </div>
+
+    {/* Contenido interior del terminal */}
+    <div class="p-5 sm:p-6 space-y-4">
+      {/* Pestañas de control accesibles */}
+      <div
+        role="tablist"
+        aria-label="Comparación de prompts"
+        class="flex border-b border-slate-800 gap-4 pb-1"
+      >
+        <button
+          type="button"
+          role="tab"
+          id="tab-prompt-vago"
+          aria-controls="panel-prompt-vago"
+          aria-selected="true"
+          tabindex="0"
+          class="tab-btn pb-2 text-xs font-semibold cursor-pointer border-b-2 transition-all focus:outline-none focus:ring-1 focus:ring-indigo-400 border-rose-500 text-rose-400 font-bold"
+          data-tab="vago"
+        >
+          Prompt vago
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          id="tab-prompt-armado"
+          aria-controls="panel-prompt-armado"
+          aria-selected="false"
+          tabindex="-1"
+          class="tab-btn pb-2 text-xs font-semibold cursor-pointer border-b-2 transition-all focus:outline-none focus:ring-1 focus:ring-indigo-400 border-transparent text-slate-400 hover:text-slate-200"
+          data-tab="armado"
+        >
+          Prompt armado
+        </button>
+      </div>
+
+      {/* Panel 1: Prompt vago */}
+      <div
+        role="tabpanel"
+        id="panel-prompt-vago"
+        aria-labelledby="tab-prompt-vago"
         tabindex="0"
-        class="tab-btn pb-2.5 text-xs font-semibold cursor-pointer border-b-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo border-rosa text-rosa font-bold"
-        data-tab="vago"
+        class="tab-panel space-y-3 min-h-[160px] flex flex-col justify-between"
       >
-        Prompt vago
-      </button>
+        {/* Entrada del usuario */}
+        <div class="p-3 rounded-[6px] bg-slate-950/70 border border-slate-800 text-xs sm:text-sm font-mono text-slate-200 flex items-start gap-2 shadow-inner">
+          <span class="text-rose-400 select-none font-bold">❯</span>
+          <span class="prompt-text" data-texto='"Hazme un plan de ahorro."'>
+            "Hazme un plan de ahorro."
+          </span>
+          <span class="cursor-typing text-indigo-400 select-none animate-pulse font-bold" aria-hidden="true">|</span>
+        </div>
 
-      <button
-        type="button"
-        role="tab"
-        id="tab-prompt-armado"
-        aria-controls="panel-prompt-armado"
-        aria-selected="false"
-        tabindex="-1"
-        class="tab-btn pb-2.5 text-xs font-semibold cursor-pointer border-b-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo border-transparent text-tinta-suave hover:text-tinta"
-        data-tab="armado"
+        {/* Respuesta generada por IA */}
+        <div class="p-3.5 rounded-[6px] bg-slate-950/40 border border-slate-800/90 border-l-[3px] border-l-rose-500 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans shadow-sm">
+          <div class="flex items-center gap-1.5 mb-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-rose-400">
+            <span>Respuesta genérica</span>
+          </div>
+          <p class="respuesta-text" data-texto="Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.">
+            Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.
+          </p>
+        </div>
+      </div>
+
+      {/* Panel 2: Prompt armado */}
+      <div
+        role="tabpanel"
+        id="panel-prompt-armado"
+        aria-labelledby="tab-prompt-armado"
+        tabindex="0"
+        hidden
+        class="tab-panel space-y-3 min-h-[160px] flex flex-col justify-between"
       >
-        Prompt armado
-      </button>
-    </div>
-
-    {/* Panel 1: Prompt vago */}
-    <div
-      role="tabpanel"
-      id="panel-prompt-vago"
-      aria-labelledby="tab-prompt-vago"
-      tabindex="0"
-      class="tab-panel space-y-3 transition-opacity duration-150 motion-reduce:transition-none"
-    >
-      <div class="p-3 bg-papel border border-linea text-sm font-mono text-tinta">
-        "Hazme un plan de ahorro."
-      </div>
-
-      <div class="p-3 bg-papel border border-linea border-l-[3px] border-l-rosa text-xs sm:text-sm text-tinta leading-relaxed">
-        Claro. Algunas ideas generales: ahorra una parte de tus ingresos, reduce gastos innecesarios y abre una cuenta de ahorros.
-      </div>
-    </div>
-
-    {/* Panel 2: Prompt armado */}
-    <div
-      role="tabpanel"
-      id="panel-prompt-armado"
-      aria-labelledby="tab-prompt-armado"
-      tabindex="0"
-      hidden
-      class="tab-panel space-y-3 transition-opacity duration-150 motion-reduce:transition-none"
-    >
-      <div class="p-3 bg-papel border border-linea text-xs sm:text-sm space-y-2">
-        <div>
-          <span class="font-bold text-tinta">Rol: </span>
-          <span class="text-tinta-suave">Actúa como asesor de finanzas personales.</span>
+        {/* Entrada estructurada */}
+        <div class="p-3 rounded-[6px] bg-slate-950/70 border border-slate-800 text-xs sm:text-sm font-mono text-slate-200 space-y-1.5 shadow-inner">
+          <div class="flex items-start gap-2">
+            <span class="text-emerald-400 select-none font-bold">❯</span>
+            <div class="space-y-0.5 text-[11px] sm:text-xs">
+              <div>
+                <span class="text-emerald-400 font-bold">Rol: </span>
+                <span class="text-slate-300">Actúa como asesor de finanzas personales.</span>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-bold">Contexto: </span>
+                <span class="text-slate-300">Tengo una tienda de barrio y mis ingresos cambian cada mes.</span>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-bold">Tarea: </span>
+                <span class="text-slate-300">Hazme un plan de ahorro para 3 meses.</span>
+              </div>
+              <div>
+                <span class="text-emerald-400 font-bold">Tono: </span>
+                <span class="text-slate-300">Explícalo directo y sin tecnicismos.</span>
+              </div>
+            </div>
+            <span class="cursor-typing text-indigo-400 select-none animate-pulse font-bold" aria-hidden="true">|</span>
+          </div>
         </div>
-        <div>
-          <span class="font-bold text-tinta">Contexto: </span>
-          <span class="text-tinta-suave">Tengo una tienda de barrio y mis ingresos cambian cada mes.</span>
-        </div>
-        <div>
-          <span class="font-bold text-tinta">Tarea: </span>
-          <span class="text-tinta-suave">Hazme un plan de ahorro para 3 meses.</span>
-        </div>
-        <div>
-          <span class="font-bold text-tinta">Tono: </span>
-          <span class="text-tinta-suave">Explícalo directo y sin tecnicismos.</span>
-        </div>
-      </div>
 
-      <div class="p-3 bg-papel border border-linea border-l-[3px] border-l-esmeralda text-xs sm:text-sm text-tinta leading-relaxed">
-        Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.
+        {/* Respuesta estructurada */}
+        <div class="p-3.5 rounded-[6px] bg-slate-950/40 border border-slate-800/90 border-l-[3px] border-l-emerald-500 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans shadow-sm">
+          <div class="flex items-center gap-1.5 mb-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-emerald-400">
+            <span>Respuesta con criterio profesional</span>
+          </div>
+          <p class="respuesta-text" data-texto="Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.">
+            Plan para ingresos variables: 1. Separa primero lo fijo (alquiler, proveedores). 2. Define un ahorro mínimo por semana, no por mes. 3. Guarda más en las semanas buenas y no toques ese fondo en las malas.
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
-  {/* Aclaración bajo la tarjeta */}
-  <p class="text-[11px] text-tinta-suave mt-2 leading-normal">
-    Ejemplo ilustrativo de cómo cambia una respuesta. No es asesoría financiera.
+  {/* 5. CONTADOR DE HERRAMIENTAS: Marquee / Ticker infinito horizontal */}
+  <div class="overflow-hidden whitespace-nowrap py-1 border-y border-linea/40 relative select-none">
+    <div class="ticker-track flex items-center gap-8 text-[11px] font-mono text-tinta-suave">
+      <span class="ticker-content">
+        Aprende a usar ChatGPT · Gemini · Midjourney · Suno · Runway · Claude · Copilot · Ideogram · Flux · Gamma ·
+      </span>
+      <span class="ticker-content" aria-hidden="true">
+        Aprende a usar ChatGPT · Gemini · Midjourney · Suno · Runway · Claude · Copilot · Ideogram · Flux · Gamma ·
+      </span>
+    </div>
+  </div>
+
+  {/* Aclaración al pie */}
+  <p class="text-[11px] text-tinta-suave leading-normal text-left">
+    Ejemplo ilustrativo de cómo cambia una respuesta al estructurar un prompt con propósito.
   </p>
 </div>
+
+<style>
+  /* 4. EFECTO GLOW: Resplandor pulsante suave cada 3s */
+  .hero-terminal-glow {
+    box-shadow: 0 10px 30px -10px rgba(67, 56, 202, 0.25), 0 0 15px -3px rgba(4, 120, 87, 0.15);
+    animation: pulsoGlowTerminal 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulsoGlowTerminal {
+    0% {
+      box-shadow: 0 10px 30px -10px rgba(67, 56, 202, 0.2), 0 0 10px -2px rgba(4, 120, 87, 0.1);
+      border-color: rgba(51, 65, 85, 0.8);
+    }
+    100% {
+      box-shadow: 0 15px 40px -8px rgba(67, 56, 202, 0.4), 0 0 25px 2px rgba(4, 120, 87, 0.25);
+      border-color: rgba(99, 102, 241, 0.5);
+    }
+  }
+
+  :global(.dark) .hero-terminal-glow {
+    animation: pulsoGlowTerminalDark 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulsoGlowTerminalDark {
+    0% {
+      box-shadow: 0 12px 35px -8px rgba(139, 147, 255, 0.25), 0 0 15px 0px rgba(52, 211, 153, 0.15);
+      border-color: rgba(51, 65, 85, 0.9);
+    }
+    100% {
+      box-shadow: 0 20px 50px -6px rgba(139, 147, 255, 0.45), 0 0 30px 4px rgba(52, 211, 153, 0.3);
+      border-color: rgba(139, 147, 255, 0.6);
+    }
+  }
+
+  /* Cursor parpadeante cada 0.5s */
+  .cursor-typing {
+    animation: blinkCursor 0.5s step-start infinite alternate;
+  }
+
+  @keyframes blinkCursor {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* Marquee / Ticker infinito (30s) */
+  .ticker-track {
+    display: inline-flex;
+    width: max-content;
+    animation: tickerScroll 30s linear infinite;
+  }
+
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes tickerScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-terminal-glow {
+      animation: none !important;
+    }
+    .cursor-typing {
+      animation: none !important;
+    }
+    .ticker-track {
+      animation: none !important;
+    }
+  }
+</style>
 
 <script is:inline>
   (function () {
@@ -107,34 +254,94 @@
         const tabArmado = root.querySelector('#tab-prompt-armado');
         const panelVago = root.querySelector('#panel-prompt-vago');
         const panelArmado = root.querySelector('#panel-prompt-armado');
+        const flashOverlay = root.querySelector('#hero-flash-overlay');
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Disparar flash breve (0.15s) de fondo al responder
+        function triggerFlash() {
+          if (!flashOverlay || reduceMotion) return;
+          flashOverlay.style.opacity = '1';
+          setTimeout(function() {
+            flashOverlay.style.opacity = '0';
+          }, 150);
+        }
+
+        // Efecto realista de typing progresivo
+        function escribirTexto(elemento, textoCompleto, callback) {
+          if (!elemento) return;
+          if (reduceMotion) {
+            elemento.textContent = textoCompleto;
+            if (callback) callback();
+            return;
+          }
+
+          elemento.textContent = '';
+          let i = 0;
+
+          function tipeo() {
+            if (i < textoCompleto.length) {
+              elemento.textContent += textoCompleto.charAt(i);
+              i++;
+              // Velocidad natural de 40 a 60ms por carácter
+              const delay = Math.floor(Math.random() * 21) + 40;
+              setTimeout(tipeo, delay);
+            } else {
+              if (callback) {
+                setTimeout(callback, 300);
+              }
+            }
+          }
+
+          tipeo();
+        }
+
+        function animarPanel(panel) {
+          if (!panel) return;
+          const respuesta = panel.querySelector('.respuesta-text');
+          if (!respuesta) return;
+
+          const textoOriginal = respuesta.getAttribute('data-texto') || respuesta.textContent.trim();
+          respuesta.textContent = '';
+
+          triggerFlash();
+
+          setTimeout(function() {
+            escribirTexto(respuesta, textoOriginal, function() {
+              triggerFlash();
+            });
+          }, 100);
+        }
 
         function activar(tab) {
           if (tab === 'vago') {
             tabVago?.setAttribute('aria-selected', 'true');
             tabVago?.setAttribute('tabindex', '0');
-            tabVago?.classList.remove('border-transparent', 'text-tinta-suave');
-            tabVago?.classList.add('border-rosa', 'text-rosa', 'font-bold');
+            tabVago?.classList.remove('border-transparent', 'text-slate-400');
+            tabVago?.classList.add('border-rose-500', 'text-rose-400', 'font-bold');
 
             tabArmado?.setAttribute('aria-selected', 'false');
             tabArmado?.setAttribute('tabindex', '-1');
-            tabArmado?.classList.remove('border-esmeralda', 'text-esmeralda', 'font-bold');
-            tabArmado?.classList.add('border-transparent', 'text-tinta-suave');
+            tabArmado?.classList.remove('border-emerald-500', 'text-emerald-400', 'font-bold');
+            tabArmado?.classList.add('border-transparent', 'text-slate-400');
 
             panelVago?.removeAttribute('hidden');
             panelArmado?.setAttribute('hidden', '');
+            animarPanel(panelVago);
           } else {
             tabArmado?.setAttribute('aria-selected', 'true');
             tabArmado?.setAttribute('tabindex', '0');
-            tabArmado?.classList.remove('border-transparent', 'text-tinta-suave');
-            tabArmado?.classList.add('border-esmeralda', 'text-esmeralda', 'font-bold');
+            tabArmado?.classList.remove('border-transparent', 'text-slate-400');
+            tabArmado?.classList.add('border-emerald-500', 'text-emerald-400', 'font-bold');
 
             tabVago?.setAttribute('aria-selected', 'false');
             tabVago?.setAttribute('tabindex', '-1');
-            tabVago?.classList.remove('border-rosa', 'text-rosa', 'font-bold');
-            tabVago?.classList.add('border-transparent', 'text-tinta-suave');
+            tabVago?.classList.remove('border-rose-500', 'text-rose-400', 'font-bold');
+            tabVago?.classList.add('border-transparent', 'text-slate-400');
 
             panelArmado?.removeAttribute('hidden');
             panelVago?.setAttribute('hidden', '');
+            animarPanel(panelArmado);
           }
         }
 
@@ -159,6 +366,11 @@
             }
           });
         });
+
+        // Disparo inicial opcional al cargar
+        if (!reduceMotion) {
+          animarPanel(panelVago);
+        }
       });
     }
 

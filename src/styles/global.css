@@ -131,3 +131,249 @@
   --tw-prose-th-borders: var(--color-linea);
   --tw-prose-td-borders: var(--color-linea);
 }
+
+/* ==========================================================================
+   ANIMACIONES Y EFECTOS VISUALES MODERNOS
+   ========================================================================== */
+
+/* 1. ANIMACIÓN: Fade-in hacia arriba al entrar en viewport (.animar-entrada) */
+.animar-entrada-init {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+.animar-entrada {
+  animation: animacionFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes animacionFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. EFECTO: Gradiente animado en el H1 del Hero (.texto-gradiente) */
+.texto-gradiente {
+  background-image: linear-gradient(115deg, var(--color-indigo) 0%, var(--color-esmeralda) 50%, var(--color-indigo) 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animacionGradienteTexto 4s ease-in-out infinite alternate;
+}
+
+@keyframes animacionGradienteTexto {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 4. EFECTO: Pulso sutil de brillo cada 3 segundos (.etapa-activa-pulse) */
+.etapa-activa-pulse {
+  position: relative;
+  animation: pulsoBordeActivo 3s ease-in-out infinite;
+}
+
+@keyframes pulsoBordeActivo {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(67, 56, 202, 0);
+    border-color: var(--color-linea);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.18);
+    border-color: var(--color-indigo);
+  }
+}
+
+.dark .etapa-activa-pulse {
+  animation: pulsoBordeActivoDark 3s ease-in-out infinite;
+}
+
+@keyframes pulsoBordeActivoDark {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(139, 147, 255, 0);
+    border-color: var(--color-linea);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(139, 147, 255, 0.25);
+    border-color: var(--color-indigo);
+  }
+}
+
+/* 5. EFECTO: Cursor personalizado para la cabecera (punto 8px índigo con smooth lag) */
+#cursor-cabecera-punto {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-indigo);
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, left, top;
+}
+
+#cursor-cabecera-punto.activo {
+  opacity: 0.9;
+}
+
+/* 6. EFECTO: Fondo de partículas sutiles en el Hero (solo modo oscuro, CSS puro) */
+.particulas-hero {
+  display: none;
+}
+
+.dark .particulas-hero {
+  display: block;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .particula {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  opacity: 0.15;
+  background-color: var(--color-indigo);
+  animation: flotarParticula 12s ease-in-out infinite alternate;
+}
+
+.dark .particula:nth-child(2n) {
+  background-color: var(--color-esmeralda);
+}
+
+/* Variaciones orgánicas de desplazamiento para las partículas */
+.dark .particula:nth-child(1)  { top: 12%; left: 8%;  animation-duration: 9s;  animation-delay: 0s; }
+.dark .particula:nth-child(2)  { top: 22%; left: 84%; animation-duration: 13s; animation-delay: -2s; }
+.dark .particula:nth-child(3)  { top: 48%; left: 16%; animation-duration: 11s; animation-delay: -5s; }
+.dark .particula:nth-child(4)  { top: 68%; left: 92%; animation-duration: 15s; animation-delay: -1s; }
+.dark .particula:nth-child(5)  { top: 82%; left: 24%; animation-duration: 10s; animation-delay: -4s; }
+.dark .particula:nth-child(6)  { top: 15%; left: 45%; animation-duration: 14s; animation-delay: -7s; }
+.dark .particula:nth-child(7)  { top: 35%; left: 70%; animation-duration: 8s;  animation-delay: -3s; }
+.dark .particula:nth-child(8)  { top: 75%; left: 52%; animation-duration: 12s; animation-delay: -6s; }
+.dark .particula:nth-child(9)  { top: 90%; left: 80%; animation-duration: 16s; animation-delay: -2s; }
+.dark .particula:nth-child(10) { top: 28%; left: 32%; animation-duration: 11s; animation-delay: -8s; }
+.dark .particula:nth-child(11) { top: 58%; left: 62%; animation-duration: 13s; animation-delay: -1s; }
+.dark .particula:nth-child(12) { top: 42%; left: 88%; animation-duration: 9s;  animation-delay: -4s; }
+.dark .particula:nth-child(13) { top: 6%;  left: 64%; animation-duration: 14s; animation-delay: -9s; }
+.dark .particula:nth-child(14) { top: 85%; left: 10%; animation-duration: 10s; animation-delay: -5s; }
+.dark .particula:nth-child(15) { top: 52%; left: 38%; animation-duration: 12s; animation-delay: -3s; }
+.dark .particula:nth-child(16) { top: 18%; left: 22%; animation-duration: 15s; animation-delay: -6s; }
+.dark .particula:nth-child(17) { top: 62%; left: 78%; animation-duration: 8s;  animation-delay: -2s; }
+.dark .particula:nth-child(18) { top: 38%; left: 4%;  animation-duration: 13s; animation-delay: -7s; }
+.dark .particula:nth-child(19) { top: 78%; left: 36%; animation-duration: 11s; animation-delay: -4s; }
+.dark .particula:nth-child(20) { top: 26%; left: 56%; animation-duration: 10s; animation-delay: -1s; }
+.dark .particula:nth-child(21) { top: 94%; left: 60%; animation-duration: 14s; animation-delay: -5s; }
+.dark .particula:nth-child(22) { top: 4%;  left: 36%; animation-duration: 12s; animation-delay: -8s; }
+.dark .particula:nth-child(23) { top: 44%; left: 26%; animation-duration: 16s; animation-delay: -3s; }
+.dark .particula:nth-child(24) { top: 64%; left: 48%; animation-duration: 9s;  animation-delay: -6s; }
+
+@keyframes flotarParticula {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(16px, -18px);
+  }
+  100% {
+    transform: translate(-14px, 12px);
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido del usuario */
+@media (prefers-reduced-motion: reduce) {
+  .animar-entrada-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animar-entrada,
+  .texto-gradiente,
+  .etapa-activa-pulse,
+  .dark .particula {
+    animation: none !important;
+    transform: none !important;
+  }
+  #cursor-cabecera-punto {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   ANIMACIONES DE LECTURA Y FEEDBACK DE ARTÍCULOS
+   ========================================================================== */
+
+/* 4. Botón copiar bounce feedback */
+@keyframes bounceCopiado {
+  0%, 100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.15);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+}
+
+.anim-bounce-copiado {
+  animation: bounceCopiado 0.35s ease-out;
+}
+
+/* 5. Feedback scale animation */
+@keyframes scaleFeedback {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+.anim-scale-feedback {
+  animation: scaleFeedback 0.3s ease-out forwards;
+}
+
+/* 6. Animación de entrada de párrafos y encabezados de artículo */
+.articulo-elemento-animar {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.articulo-elemento-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-bounce-copiado,
+  .anim-scale-feedback {
+    animation: none !important;
+  }
+  .articulo-elemento-animar {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+

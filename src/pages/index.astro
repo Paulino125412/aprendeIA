@@ -36,11 +36,39 @@ function calcularMinutos(body?: string): number {
 >
   <div class="space-y-20 md:space-y-28">
     <!-- 1. HERO -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8">
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8 relative animar-entrada-init">
+      <!-- Partículas sutiles en modo oscuro (CSS puro) -->
+      <div class="particulas-hero" aria-hidden="true">
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+        <span class="particula"></span>
+      </div>
+
       <!-- Columna izquierda: titular y botones -->
-      <div class="lg:col-span-7 space-y-6 text-left">
-        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-tinta leading-[1.08]">
-          Aprende a usar CUALQUIER IA. Paso a paso.
+      <div class="lg:col-span-7 space-y-6 text-left relative z-10">
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08]">
+          <span class="texto-gradiente">Aprende a usar CUALQUIER IA. Paso a paso.</span>
         </h1>
         <p class="text-base sm:text-lg text-tinta-suave leading-relaxed max-w-xl">
           Guías prácticas de ChatGPT, Gemini, Midjourney, Suno y más de 30 herramientas de IA. Para todo el mundo, en español.
@@ -60,33 +88,45 @@ function calcularMinutos(body?: string): number {
           </a>
         </div>
 
-        <!-- Estadísticas rápidas -->
+        <!-- Estadísticas rápidas con contadores animados -->
         <div class="pt-3 flex items-center gap-4 text-xs text-tinta-suave border-t border-linea/60 max-w-lg">
           <div class="flex items-center gap-1.5">
-            <span class="font-mono font-bold text-indigo">16+</span>
+            <span
+              class="font-mono font-bold text-indigo"
+              data-contador-valor="16"
+              data-contador-sufijo="+"
+            >16+</span>
             <span>Guías publicadas</span>
           </div>
           <span class="text-linea" aria-hidden="true">|</span>
           <div class="flex items-center gap-1.5">
-            <span class="font-mono font-bold text-indigo">30+</span>
+            <span
+              class="font-mono font-bold text-indigo"
+              data-contador-valor="30"
+              data-contador-sufijo="+"
+            >30+</span>
             <span>Herramientas cubiertas</span>
           </div>
           <span class="text-linea" aria-hidden="true">|</span>
           <div class="flex items-center gap-1.5">
-            <span class="font-mono font-bold text-indigo">100%</span>
+            <span
+              class="font-mono font-bold text-indigo"
+              data-contador-valor="100"
+              data-contador-sufijo="%"
+            >100%</span>
             <span>Gratuito</span>
           </div>
         </div>
       </div>
 
       <!-- Columna derecha: demo del hero -->
-      <div class="lg:col-span-5 w-full">
+      <div class="lg:col-span-5 w-full relative z-10">
         <HeroDemo />
       </div>
     </section>
 
     <!-- 2. "Empieza por aquí" (10 categorías completas) -->
-    <section aria-labelledby="seccion-empieza-por-aqui" class="space-y-8">
+    <section aria-labelledby="seccion-empieza-por-aqui" class="space-y-8 animar-entrada-init">
       <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <h2 id="seccion-empieza-por-aqui" class="text-2xl font-bold tracking-tight text-tinta">
@@ -160,7 +200,7 @@ function calcularMinutos(body?: string): number {
     </section>
 
     <!-- 3. SECCIÓN "Etapas de aprendizaje" -->
-    <section aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8">
+    <section aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8 animar-entrada-init">
       <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <h2 id="seccion-etapas-aprendizaje" class="text-2xl font-bold tracking-tight text-tinta">
@@ -186,7 +226,7 @@ function calcularMinutos(body?: string): number {
             const CardContent = (
               <div
                 class={`w-[200px] shrink-0 p-5 border border-linea bg-superficie rounded-[6px] flex flex-col justify-between space-y-3 relative hover:-translate-y-1 hover:shadow-md transition-all ${
-                  tieneArticulos ? 'hover:border-indigo/60' : 'opacity-75'
+                  tieneArticulos ? 'hover:border-indigo/60 etapa-activa-pulse' : 'opacity-75'
                 }`}
               >
                 <!-- Número de etapa y emoji grande -->

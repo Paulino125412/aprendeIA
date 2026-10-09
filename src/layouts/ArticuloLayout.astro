@@ -112,11 +112,12 @@ const jsonLdBreadcrumb = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} />
   </Fragment>
 
-  <!-- a) Barra de progreso de lectura (3px fija arriba) -->
+  <!-- 1. BARRA DE PROGRESO DE LECTURA (3px fija superior con gradiente indigo→esmeralda) -->
   <div
-    id="barra-progreso-lectura"
+    id="barra-progreso-articulo-top"
     aria-hidden="true"
-    class="fixed top-0 left-0 h-[3px] bg-indigo z-50 w-0 motion-reduce:transition-none transition-[width] duration-75 pointer-events-none"
+    class="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-indigo via-indigo to-esmeralda z-50 w-full origin-left pointer-events-none transition-transform duration-75 ease-out"
+    style="transform: scaleX(0);"
   ></div>
 
   <div class="max-w-6xl mx-auto">
@@ -139,7 +140,7 @@ const jsonLdBreadcrumb = {
       </span>
     </nav>
 
-    <!-- Cabecera del Artículo -->
+    <!-- Cabecera del Artículo con Tiempo de Lectura Dinámico -->
     <header class="mb-8 space-y-4 border-b border-linea pb-8">
       {infoCategoria && (
         <a
@@ -158,7 +159,7 @@ const jsonLdBreadcrumb = {
         {descripcion}
       </p>
 
-      <!-- Metadatos limpios separados por espacio -->
+      <!-- Metadatos con tiempo de lectura restante dinámico -->
       <div class="flex items-center gap-4 text-xs text-tinta-suave flex-wrap pt-2">
         <time datetime={fecha.toISOString()}>Publicado el {fechaFormateada}</time>
         {actualizadoFormateado && (
@@ -166,7 +167,18 @@ const jsonLdBreadcrumb = {
             Actualizado el {actualizadoFormateado}
           </span>
         )}
-        <span>{tiempoLecturaMinutos} min de lectura</span>
+        <div class="flex items-center gap-1.5 font-medium">
+          <svg class="w-3.5 h-3.5 text-indigo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span
+            id="tiempo-lectura-dinamico"
+            data-tiempo-total={tiempoLecturaMinutos}
+          >
+            {tiempoLecturaMinutos} min restantes
+          </span>
+        </div>
       </div>
     </header>
 
@@ -185,6 +197,107 @@ const jsonLdBreadcrumb = {
         <article id="cuerpo-articulo" class="prose prose-lg max-w-none leading-relaxed [&_h2]:scroll-mt-24 [&_h3]:scroll-mt-24 [&_h4]:scroll-mt-24">
           <slot />
         </article>
+
+        <!-- 4. BOTONES DE COMPARTIR ANIMADOS -->
+        <div class="my-10 p-5 rounded-[8px] border border-linea bg-superficie space-y-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <span class="text-xs font-bold text-tinta uppercase tracking-wider">
+              Comparte este artículo
+            </span>
+            <span class="text-[11px] text-tinta-suave">
+              Ayuda a difundir conocimiento práctico sobre IA
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3 flex-wrap">
+            {/* Copiar enlace */}
+            <button
+              type="button"
+              id="btn-compartir-copiar"
+              class="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:border-indigo transition-all cursor-pointer select-none"
+            >
+              <svg id="icono-copiar-normal" class="w-4 h-4 text-tinta-suave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <span id="texto-compartir-copiar">Copiar enlace</span>
+            </button>
+
+            {/* Compartir en X / Twitter */}
+            <a
+              id="btn-compartir-twitter"
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(titulo)}&url=${encodeURIComponent(urlArticulo)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:text-[#1DA1F2] hover:border-[#1DA1F2]/60 transition-colors"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              <span>Twitter / X</span>
+            </a>
+
+            {/* Compartir en WhatsApp */}
+            <a
+              id="btn-compartir-whatsapp"
+              href={`https://api.whatsapp.com/send?text=${encodeURIComponent(`${titulo} - ${urlArticulo}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:text-[#25D366] hover:border-[#25D366]/60 transition-colors"
+            >
+              <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+              </svg>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        {/* 5. SECCIÓN "¿Te fue útil este artículo?" (Feedback con animaciones) */}
+        <div id="seccion-feedback-articulo" class="my-8 p-6 rounded-[8px] border border-linea bg-superficie text-center space-y-4">
+          <div id="feedback-bloque-pregunta" class="space-y-3">
+            <h3 class="text-sm font-bold text-tinta">
+              ¿Te fue útil este artículo?
+            </h3>
+            <div class="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
+              <button
+                type="button"
+                data-feedback="si"
+                class="btn-feedback inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:border-indigo hover:text-indigo transition-all cursor-pointer select-none"
+              >
+                <span class="text-base" aria-hidden="true">👍</span>
+                <span>Sí, mucho</span>
+              </button>
+
+              <button
+                type="button"
+                data-feedback="regular"
+                class="btn-feedback inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:border-indigo hover:text-indigo transition-all cursor-pointer select-none"
+              >
+                <span class="text-base" aria-hidden="true">😐</span>
+                <span>Más o menos</span>
+              </button>
+
+              <button
+                type="button"
+                data-feedback="no"
+                class="btn-feedback inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-[6px] border border-linea bg-papel text-tinta hover:border-indigo hover:text-indigo transition-all cursor-pointer select-none"
+              >
+                <span class="text-base" aria-hidden="true">👎</span>
+                <span>No me sirvió</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="feedback-bloque-gracias" class="hidden py-2 space-y-1">
+            <p class="text-sm font-bold text-esmeralda">
+              ¡Gracias por tu feedback!
+            </p>
+            <p class="text-xs text-tinta-suave">
+              Nos ayuda a seguir mejorando nuestras explicaciones y guías.
+            </p>
+          </div>
+        </div>
 
         <!-- Anuncio final después del contenido -->
         <Anuncio posicion="final" />
@@ -233,7 +346,7 @@ const jsonLdBreadcrumb = {
     </div>
   </div>
 
-  <!-- b) Botón "Volver arriba": aparece tras 800px de scroll, sin sombra, offset inferior seguro de 5rem -->
+  <!-- Botón "Volver arriba": aparece tras 800px de scroll -->
   <button
     id="btn-volver-arriba"
     type="button"
@@ -245,21 +358,44 @@ const jsonLdBreadcrumb = {
     </svg>
   </button>
 
-  <!-- Script para barra de progreso y botón volver arriba -->
+  <!-- Script interactivo integral de lectura para artículos -->
   <script is:inline>
     (function() {
-      const barraProgreso = document.getElementById('barra-progreso-lectura');
-      const articulo = document.getElementById('cuerpo-articulo');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 1. BARRA DE PROGRESO DE LECTURA (con cálculo global scrollY / (scrollHeight - innerHeight))
+      const barraProgreso = document.getElementById('barra-progreso-articulo-top');
       const btnVolverArriba = document.getElementById('btn-volver-arriba');
+      const tiempoLecturaEl = document.getElementById('tiempo-lectura-dinamico');
+      const tiempoTotalMinutos = tiempoLecturaEl ? parseInt(tiempoLecturaEl.getAttribute('data-tiempo-total') || '1', 10) : 1;
 
       let ticking = false;
 
-      function onScroll() {
-        const scrollActual = window.scrollY || window.pageYOffset;
+      function onScrollArticulo() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+        const winHeight = window.innerHeight;
+        const scrollMax = docHeight - winHeight;
 
-        // 1. Botón volver arriba tras 800px
+        let ratio = 0;
+        if (scrollMax > 0) {
+          ratio = Math.min(Math.max(scrollY / scrollMax, 0), 1);
+        }
+
+        // Actualizar barra de progreso
+        if (barraProgreso) {
+          barraProgreso.style.transform = `scaleX(${ratio})`;
+        }
+
+        // 3. TIEMPO DE LECTURA DINÁMICO (decrece conforme avanza)
+        if (tiempoLecturaEl) {
+          const restantes = Math.max(1, Math.ceil(tiempoTotalMinutos * (1 - ratio)));
+          tiempoLecturaEl.textContent = ratio >= 0.95 ? '¡Lectura completa!' : `${restantes} min restantes`;
+        }
+
+        // Botón volver arriba
         if (btnVolverArriba) {
-          if (scrollActual > 800) {
+          if (scrollY > 800) {
             btnVolverArriba.classList.remove('opacity-0', 'pointer-events-none');
             btnVolverArriba.classList.add('opacity-100');
           } else {
@@ -268,43 +404,124 @@ const jsonLdBreadcrumb = {
           }
         }
 
-        // 2. Progreso de lectura sobre el <article>
-        if (barraProgreso && articulo) {
-          const rect = articulo.getBoundingClientRect();
-          const alturaVentana = window.innerHeight;
-          const alturaArticulo = rect.height;
-
-          // Progreso desde que entra hasta que se termina de leer
-          const distanciaRecorrida = alturaVentana - rect.top;
-          const distanciaTotal = alturaArticulo + alturaVentana;
-
-          let porcentaje = (distanciaRecorrida / distanciaTotal) * 100;
-          if (porcentaje < 0) porcentaje = 0;
-          if (porcentaje > 100) porcentaje = 100;
-
-          barraProgreso.style.width = porcentaje + '%';
-        }
-
         ticking = false;
       }
 
-      window.addEventListener(
-        'scroll',
-        function() {
-          if (!ticking) {
-            window.requestAnimationFrame(onScroll);
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(onScrollArticulo);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      onScrollArticulo();
 
       btnVolverArriba?.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      // Ejecución inicial
-      onScroll();
+      // 4. BOTONES DE COMPARTIR ANIMADOS (Copiar con feedback)
+      const btnCopiar = document.getElementById('btn-compartir-copiar');
+      const textoCopiar = document.getElementById('texto-compartir-copiar');
+      if (btnCopiar && textoCopiar) {
+        btnCopiar.addEventListener('click', function() {
+          const urlActual = window.location.href;
+          navigator.clipboard.writeText(urlActual).then(function() {
+            const textoPrevio = textoCopiar.textContent;
+            textoCopiar.textContent = '¡Copiado! ✓';
+            btnCopiar.classList.remove('bg-papel', 'text-tinta', 'border-linea');
+            btnCopiar.classList.add('bg-emerald-600', 'text-white', 'border-emerald-600', 'anim-bounce-copiado');
+
+            setTimeout(function() {
+              textoCopiar.textContent = textoPrevio;
+              btnCopiar.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-600', 'anim-bounce-copiado');
+              btnCopiar.classList.add('bg-papel', 'text-tinta', 'border-linea');
+            }, 2000);
+          }).catch(function() {
+            textoCopiar.textContent = 'Enlace listo';
+          });
+        });
+      }
+
+      // 5. SECCIÓN "¿Te fue útil este artículo?" (con localStorage)
+      const idArticulo = window.location.pathname;
+      const keyFeedback = 'feedback_articulo_' + idArticulo;
+      const bloquePregunta = document.getElementById('feedback-bloque-pregunta');
+      const bloqueGracias = document.getElementById('feedback-bloque-gracias');
+      const botonesFeedback = document.querySelectorAll('.btn-feedback');
+
+      try {
+        if (localStorage.getItem(keyFeedback) && bloquePregunta && bloqueGracias) {
+          bloquePregunta.classList.add('hidden');
+          bloqueGracias.classList.remove('hidden');
+        }
+      } catch (_) {}
+
+      botonesFeedback.forEach(function(boton) {
+        boton.addEventListener('click', function() {
+          boton.classList.add('anim-scale-feedback', 'border-indigo', 'text-indigo');
+
+          botonesFeedback.forEach(function(otro) {
+            if (otro !== boton) {
+              otro.style.opacity = '0.3';
+              otro.disabled = true;
+            }
+          });
+
+          try {
+            localStorage.setItem(keyFeedback, boton.getAttribute('data-feedback') || 'si');
+          } catch (_) {}
+
+          setTimeout(function() {
+            if (bloquePregunta && bloqueGracias) {
+              bloquePregunta.classList.add('hidden');
+              bloqueGracias.classList.remove('hidden');
+            }
+          }, 600);
+        });
+      });
+
+      // 6. ANIMACIÓN DE ENTRADA: Párrafos y encabezados con Stagger de 100ms
+      const articuloCuerpo = document.getElementById('cuerpo-articulo');
+      if (articuloCuerpo && !reduceMotion && ('IntersectionObserver' in window)) {
+        const elementos = articuloCuerpo.querySelectorAll('p, h2, h3, ul, ol, blockquote, .anuncio-container');
+        elementos.forEach(function(el) {
+          el.classList.add('articulo-elemento-animar');
+        });
+
+        let colaVisibles = [];
+        let procesandoCola = false;
+
+        function procesarCola() {
+          if (colaVisibles.length === 0) {
+            procesandoCola = false;
+            return;
+          }
+          procesandoCola = true;
+          const siguienteEl = colaVisibles.shift();
+          siguienteEl.classList.add('articulo-elemento-visible');
+          setTimeout(procesarCola, 100); // Stagger de 100ms
+        }
+
+        const observerArticulo = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              colaVisibles.push(entry.target);
+              observer.unobserve(entry.target);
+              if (!procesandoCola) {
+                procesarCola();
+              }
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -30px 0px'
+        });
+
+        elementos.forEach(function(el) {
+          observerArticulo.observe(el);
+        });
+      }
     })();
   </script>
 </Layout>

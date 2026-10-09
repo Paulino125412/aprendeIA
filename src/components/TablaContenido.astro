@@ -16,7 +16,7 @@ const encabezados = headings.filter((h) => h.depth === 2 || h.depth === 3);
 {encabezados.length > 0 && (
   <nav aria-label="Tabla de contenidos" class="toc-componente">
     {/* Versión móvil colapsable */}
-    <details class="lg:hidden my-6 border border-linea bg-superficie p-4 text-sm">
+    <details class="lg:hidden my-6 border border-linea bg-superficie p-4 text-sm rounded-[6px]">
       <summary class="font-bold text-tinta cursor-pointer select-none focus:outline-none">
         En este artículo ({encabezados.length})
       </summary>
@@ -34,18 +34,18 @@ const encabezados = headings.filter((h) => h.depth === 2 || h.depth === 3);
       </ul>
     </details>
 
-    {/* Versión escritorio sticky */}
-    <div class="hidden lg:block sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto border border-linea bg-superficie p-5 text-sm">
-      <h2 class="text-xs font-bold text-tinta-suave mb-3">
+    {/* Versión escritorio sticky con transición e indicador activo */}
+    <div class="hidden lg:block sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto border border-linea bg-superficie p-5 text-sm rounded-[6px]">
+      <h2 class="text-xs font-bold text-tinta-suave uppercase tracking-wider mb-3">
         En este artículo
       </h2>
-      <ul class="space-y-2 text-xs">
+      <ul class="space-y-1 text-xs">
         {encabezados.map((h) => (
           <li class={h.depth === 3 ? 'ml-3' : 'ml-0'}>
             <a
               href={`#${h.slug}`}
               data-slug={h.slug}
-              class="toc-enlace block text-tinta-suave hover:text-indigo transition-colors py-0.5 border-l-2 border-transparent pl-2.5"
+              class="toc-enlace block text-tinta-suave hover:text-indigo transition-all duration-200 py-1 border-l-2 border-transparent pl-3 -ml-[1px]"
             >
               {h.text}
             </a>
@@ -72,25 +72,30 @@ const encabezados = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
         if (!encabezadosObservados.length) return;
 
+        let slugActivoActual = '';
+
         const observer = new IntersectionObserver(
           (entradas) => {
             entradas.forEach((entrada) => {
               if (entrada.isIntersecting) {
-                const id = entrada.target.id;
-                enlaces.forEach((enlace) => {
-                  const coincide = enlace.dataset.slug === id;
-                  if (coincide) {
-                    enlace.classList.add('text-indigo', 'font-bold', 'border-indigo');
-                    enlace.classList.remove('border-transparent');
-                  } else {
-                    enlace.classList.remove('text-indigo', 'font-bold', 'border-indigo');
-                    enlace.classList.add('border-transparent');
-                  }
-                });
+                slugActivoActual = entrada.target.id;
               }
             });
+
+            if (slugActivoActual) {
+              enlaces.forEach((enlace) => {
+                const coincide = enlace.dataset.slug === slugActivoActual;
+                if (coincide) {
+                  enlace.classList.add('text-indigo', 'font-bold', 'border-indigo');
+                  enlace.classList.remove('border-transparent', 'text-tinta-suave');
+                } else {
+                  enlace.classList.remove('text-indigo', 'font-bold', 'border-indigo');
+                  enlace.classList.add('border-transparent', 'text-tinta-suave');
+                }
+              });
+            }
           },
-          { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+          { rootMargin: '-10% 0px -70% 0px', threshold: 0 }
         );
 
         encabezadosObservados.forEach((h) => observer.observe(h));

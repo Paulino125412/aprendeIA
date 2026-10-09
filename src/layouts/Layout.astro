@@ -216,6 +216,9 @@ const anioActual = new Date().getFullYear();
     <!-- Componente de aviso de cookies -->
     <AvisoCookies />
 
+    <!-- Elemento del cursor personalizado para la cabecera (Desktop) -->
+    <div id="cursor-cabecera-punto" aria-hidden="true"></div>
+
     <!-- Script para control de tema claro/oscuro -->
     <script is:inline>
       (function() {
@@ -236,6 +239,155 @@ const anioActual = new Date().getFullYear();
               localStorage.setItem('tema', esOscuro ? 'oscuro' : 'claro');
             } catch (_) {}
             actualizarAriaLabel(esOscuro);
+          });
+        }
+      })();
+    </script>
+
+    <!-- Script de interactividad: Animaciones de entrada, contadores y cursor -->
+    <script is:inline>
+      (function() {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // 1. ANIMACIÓN: Fade-in hacia arriba (.animar-entrada) con IntersectionObserver
+        const elementosParaAnimar = document.querySelectorAll('.animar-entrada-init');
+        if (elementosParaAnimar.length > 0) {
+          if (reduceMotion || !('IntersectionObserver' in window)) {
+            elementosParaAnimar.forEach(function(el) {
+              el.classList.remove('animar-entrada-init');
+            });
+          } else {
+            const observerEntrada = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.remove('animar-entrada-init');
+                  entry.target.classList.add('animar-entrada');
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, {
+              threshold: 0.15,
+              rootMargin: '0px 0px -40px 0px'
+            });
+
+            elementosParaAnimar.forEach(function(el) {
+              observerEntrada.observe(el);
+            });
+          }
+        }
+
+        // 2. ANIMACIÓN: Contador numérico animado (16+, 30+, 100%)
+        const elementosContador = document.querySelectorAll('[data-contador-valor]');
+        if (elementosContador.length > 0) {
+          function animarContador(elemento) {
+            const valorFinal = parseInt(elemento.getAttribute('data-contador-valor'), 10);
+            const sufijo = elemento.getAttribute('data-contador-sufijo') || '';
+            if (isNaN(valorFinal)) return;
+
+            if (reduceMotion) {
+              elemento.textContent = valorFinal + sufijo;
+              return;
+            }
+
+            const duracion = 1200; // 1.2 segundos
+            const tiempoInicio = performance.now();
+
+            function actualizarNumero(tiempoActual) {
+              const transcurrido = tiempoActual - tiempoInicio;
+              const progreso = Math.min(transcurrido / duracion, 1);
+              // Easing easeOutExpo
+              const eased = progreso === 1 ? 1 : 1 - Math.pow(2, -10 * progreso);
+              const valorActual = Math.floor(eased * valorFinal);
+
+              elemento.textContent = valorActual + sufijo;
+
+              if (progreso < 1) {
+                requestAnimationFrame(actualizarNumero);
+              } else {
+                elemento.textContent = valorFinal + sufijo;
+              }
+            }
+
+            requestAnimationFrame(actualizarNumero);
+          }
+
+          if (reduceMotion || !('IntersectionObserver' in window)) {
+            elementosContador.forEach(function(el) {
+              const valor = el.getAttribute('data-contador-valor');
+              const sufijo = el.getAttribute('data-contador-sufijo') || '';
+              el.textContent = valor + sufijo;
+            });
+          } else {
+            const observerContadores = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                  animarContador(entry.target);
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.2 });
+
+            elementosContador.forEach(function(el) {
+              observerContadores.observe(el);
+            });
+          }
+        }
+
+        // 5. EFECTO: Cursor personalizado para la cabecera (Desktop y sin reduced-motion)
+        const cabecera = document.querySelector('header');
+        const puntoCursor = document.getElementById('cursor-cabecera-punto');
+        if (cabecera && puntoCursor && !reduceMotion) {
+          let mouseX = 0;
+          let mouseY = 0;
+          let posX = 0;
+          let posY = 0;
+          let dentroDeCabecera = false;
+          let rafId = null;
+
+          function loopCursor() {
+            if (!dentroDeCabecera) return;
+            // Interpolación lineal suave (smooth lag)
+            posX += (mouseX - posX) * 0.25;
+            posY += (mouseY - posY) * 0.25;
+
+            puntoCursor.style.left = posX + 'px';
+            puntoCursor.style.top = posY + 'px';
+
+            rafId = requestAnimationFrame(loopCursor);
+          }
+
+          function comprobarDesktop() {
+            return window.innerWidth > 768;
+          }
+
+          cabecera.addEventListener('mouseenter', function(e) {
+            if (!comprobarDesktop()) return;
+            dentroDeCabecera = true;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            posX = e.clientX;
+            posY = e.clientY;
+            puntoCursor.style.left = posX + 'px';
+            puntoCursor.style.top = posY + 'px';
+            puntoCursor.classList.add('activo');
+            if (!rafId) {
+              rafId = requestAnimationFrame(loopCursor);
+            }
+          });
+
+          cabecera.addEventListener('mousemove', function(e) {
+            if (!comprobarDesktop()) return;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+          });
+
+          cabecera.addEventListener('mouseleave', function() {
+            dentroDeCabecera = false;
+            puntoCursor.classList.remove('activo');
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
           });
         }
       })();
