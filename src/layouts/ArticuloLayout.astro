@@ -24,14 +24,14 @@ const { titulo, descripcion, categoria, fecha, actualizado } = entry.data;
 
 const infoCategoria = getCategoria(categoria);
 
-const fechaFormateada = new Intl.DateTimeFormat('es-PE', {
+const fechaFormateada = new Intl.DateTimeFormat('es', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 }).format(fecha);
 
 const actualizadoFormateado = actualizado
-  ? new Intl.DateTimeFormat('es-PE', {
+  ? new Intl.DateTimeFormat('es', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
