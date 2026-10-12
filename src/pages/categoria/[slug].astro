@@ -23,11 +23,12 @@ const articulosDeCategoria = todosLosArticulos
   .sort((a, b) => b.data.fecha.getTime() - a.data.fecha.getTime());
 
 const sinArticulos = articulosDeCategoria.length === 0;
+const metaDescripcion = `Guías y tutoriales de ${categoria.nombre} en AprendeIA: ${categoria.descripcion}.`;
 ---
 
 <Layout
   title={`${categoria.nombre} | Guías y Artículos de IA`}
-  description={categoria.descripcion}
+  description={metaDescripcion}
   noindex={sinArticulos}
 >
   <div class="space-y-10">

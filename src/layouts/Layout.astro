@@ -21,6 +21,9 @@ const {
   tipoOg = 'website',
 } = Astro.props;
 
+const tituloCompleto = `${title} | ${SITIO.nombre}`;
+const pageTitle = tituloCompleto.length > 60 ? title : tituloCompleto;
+
 const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 const adsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT || '';
 const anioActual = new Date().getFullYear();
@@ -31,13 +34,13 @@ const anioActual = new Date().getFullYear();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 
     <!-- Open Graph -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={tipoOg} />
     {canonicalURL && <meta property="og:url" content={canonicalURL} />}
@@ -193,9 +196,13 @@ const anioActual = new Date().getFullYear();
                 </a>
               </li>
               <li>
-                <a href="/aviso-legal" class="text-tinta-suave hover:text-indigo transition-colors">
-                  Aviso legal
-                </a>
+                <button
+                  type="button"
+                  id="btn-preferencias-cookies"
+                  class="text-tinta-suave hover:text-indigo transition-colors cursor-pointer text-left focus:outline-none"
+                >
+                  Preferencias de cookies
+                </button>
               </li>
             </ul>
           </div>

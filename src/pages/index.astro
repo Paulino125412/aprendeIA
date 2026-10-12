@@ -93,28 +93,19 @@ function calcularMinutos(body?: string): number {
           <div class="flex items-center gap-1.5">
             <span
               class="font-mono font-bold text-indigo"
-              data-contador-valor="16"
-              data-contador-sufijo="+"
-            >16+</span>
-            <span>Guías publicadas</span>
+              data-contador-valor={articulos.length}
+              data-contador-sufijo=""
+            >{articulos.length}</span>
+            <span>guías publicadas</span>
           </div>
           <span class="text-linea" aria-hidden="true">|</span>
           <div class="flex items-center gap-1.5">
             <span
               class="font-mono font-bold text-indigo"
-              data-contador-valor="30"
-              data-contador-sufijo="+"
-            >30+</span>
-            <span>Herramientas cubiertas</span>
-          </div>
-          <span class="text-linea" aria-hidden="true">|</span>
-          <div class="flex items-center gap-1.5">
-            <span
-              class="font-mono font-bold text-indigo"
-              data-contador-valor="100"
-              data-contador-sufijo="%"
-            >100%</span>
-            <span>Gratuito</span>
+              data-contador-valor={CATEGORIAS.length}
+              data-contador-sufijo=""
+            >{CATEGORIAS.length}</span>
+            <span>categorías</span>
           </div>
         </div>
       </div>
@@ -153,7 +144,7 @@ function calcularMinutos(body?: string): number {
                 href={`/categoria/${cat.slug}`}
                 class={`p-6 border border-linea bg-superficie border-l-[4px] ${cat.clases.bordeLateral} hover:bg-papel hover:border-linea-fuerte transition-all block group relative`}
               >
-                <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="flex items-start justify-between gap-2.5 flex-wrap mb-3">
                   <div class="flex items-center gap-2.5">
                     <span class="text-2xl shrink-0" aria-hidden="true">
                       {cat.emoji || '✨'}
@@ -175,9 +166,9 @@ function calcularMinutos(body?: string): number {
 
           return (
             <div
-              class="p-6 border border-linea bg-superficie/60 border-l-[4px] border-l-linea opacity-75 select-none relative"
+              class="p-6 border border-linea bg-superficie/60 border-l-[4px] border-l-linea text-tinta-suave select-none relative"
             >
-              <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="flex items-start justify-between gap-2.5 flex-wrap mb-3">
                 <div class="flex items-center gap-2.5">
                   <span class="text-2xl grayscale shrink-0" aria-hidden="true">
                     {cat.emoji || '✨'}

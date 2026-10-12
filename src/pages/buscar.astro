@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { CATEGORIAS } from '../data/categorias';
 ---
 
 <Layout
@@ -45,15 +46,11 @@ import Layout from '../layouts/Layout.astro';
           <a href="/articulos" class="font-bold text-indigo hover:underline mr-2">
             Ver todos los artículos
           </a>
-          <a href="/categoria/fundamentos" class="text-tinta-suave hover:text-indigo">Fundamentos</a>
-          <a href="/categoria/prompting" class="text-tinta-suave hover:text-indigo">Prompting</a>
-          <a href="/categoria/profesion" class="text-tinta-suave hover:text-indigo">Profesión</a>
-          <a href="/categoria/estudiar" class="text-tinta-suave hover:text-indigo">Estudiar</a>
-          <a href="/categoria/vida-diaria" class="text-tinta-suave hover:text-indigo">Vida diaria</a>
-          <a href="/categoria/etica" class="text-tinta-suave hover:text-indigo">Ética</a>
-          <a href="/categoria/herramientas" class="text-tinta-suave hover:text-indigo">Herramientas</a>
-          <a href="/categoria/automatizacion" class="text-tinta-suave hover:text-indigo">Automatización</a>
-          <a href="/categoria/recursos" class="text-tinta-suave hover:text-indigo">Recursos</a>
+          {CATEGORIAS.map((cat) => (
+            <a href={`/categoria/${cat.slug}`} class="text-tinta-suave hover:text-indigo">
+              {cat.nombre}
+            </a>
+          ))}
         </div>
       </div>
     </noscript>
@@ -62,11 +59,23 @@ import Layout from '../layouts/Layout.astro';
       Escribe al menos una palabra para comenzar la búsqueda.
     </div>
 
-    <div id="estado-vacio" class="hidden p-8 border border-linea bg-superficie text-center space-y-2">
-      <h2 class="text-sm font-semibold text-tinta">No se encontraron artículos</h2>
-      <p class="text-xs text-tinta-suave">
-        No hay resultados que coincidan con todas las palabras ingresadas. Prueba con sinónimos o términos más generales.
-      </p>
+    <div id="estado-vacio" class="hidden p-8 border border-linea bg-superficie text-center space-y-4">
+      <div class="space-y-2">
+        <h2 class="text-sm font-semibold text-tinta">No se encontraron artículos</h2>
+        <p class="text-xs text-tinta-suave">
+          No hay resultados que coincidan con todas las palabras ingresadas. Prueba con sinónimos o explora nuestras categorías temáticas:
+        </p>
+      </div>
+      <div class="pt-2 flex flex-wrap justify-center gap-2 text-xs">
+        {CATEGORIAS.map((cat) => (
+          <a
+            href={`/categoria/${cat.slug}`}
+            class="px-2.5 py-1 rounded-[4px] border border-linea bg-papel text-tinta-suave hover:text-indigo hover:border-indigo/50 transition-colors"
+          >
+            {cat.emoji} {cat.nombre}
+          </a>
+        ))}
+      </div>
     </div>
 
     <ul id="lista-resultados" class="divide-y divide-linea border-y border-linea bg-superficie hidden" role="list">

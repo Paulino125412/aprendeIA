@@ -11,18 +11,19 @@ interface Props {
 
 const { headings = [] } = Astro.props;
 const encabezados = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const encabezadosMovil = headings.filter((h) => h.depth === 2);
 ---
 
 {encabezados.length > 0 && (
   <nav aria-label="Tabla de contenidos" class="toc-componente">
-    {/* Versión móvil colapsable */}
+    {/* Versión móvil colapsable (solo H2) */}
     <details class="lg:hidden my-6 border border-linea bg-superficie p-4 text-sm rounded-[6px]">
       <summary class="font-bold text-tinta cursor-pointer select-none focus:outline-none">
-        En este artículo ({encabezados.length})
+        En este artículo ({encabezadosMovil.length})
       </summary>
       <ul class="mt-3 space-y-2 border-t border-linea pt-3 text-xs">
-        {encabezados.map((h) => (
-          <li class={h.depth === 3 ? 'ml-4' : 'ml-0 font-medium'}>
+        {encabezadosMovil.map((h) => (
+          <li class="font-medium">
             <a
               href={`#${h.slug}`}
               class="text-tinta-suave hover:text-indigo transition-colors block py-0.5"

@@ -1,0 +1,76 @@
+---
+import PaginaLegalLayout from '../layouts/PaginaLegalLayout.astro';
+import { SITIO } from '../config';
+
+const publicAdsenseClient = import.meta.env.PUBLIC_ADSENSE_CLIENT || '';
+---
+
+<PaginaLegalLayout
+  title="Política de Cookies"
+  description="Conoce qué son las cookies, cuáles utiliza AprendeIA, cómo cambiar tus preferencias y cómo gestionamos el almacenamiento local."
+>
+  <p>
+    En <strong>{SITIO.nombre}</strong> valoramos la transparencia y la privacidad de nuestros lectores. Esta Política de Cookies explica de forma clara qué son las cookies, qué tecnologías de almacenamiento local utilizamos en la plataforma, con qué finalidades y cómo puedes gestionar o revocar tu consentimiento en cualquier momento.
+  </p>
+
+  <h2>1. ¿Qué son las cookies y el almacenamiento local?</h2>
+  <p>
+    Una <strong>cookie</strong> es un pequeño fichero de texto que los sitios web descargan en tu navegador para registrar información sobre tu visita, facilitar la navegación técnica o recopilar datos estadísticos y publicitarios.
+  </p>
+  <p>
+    El <strong>almacenamiento local (localStorage)</strong> es una tecnología web estándar que permite guardar preferencias y parámetros de configuración directamente en tu dispositivo, sin enviarlos automáticamente al servidor en cada petición HTTP y sin fecha de caducidad automática salvo que decidas limpiar los datos de tu navegador.
+  </p>
+
+  <h2>2. ¿Qué cookies y datos de almacenamiento utiliza AprendeIA?</h2>
+  <p>
+    En {SITIO.nombre} mantenemos un enfoque de recolección mínima de información. Clasificamos nuestras tecnologías en:
+  </p>
+
+  <h3>A. Almacenamiento local técnico (propio y necesario)</h3>
+  <ul>
+    <li>
+      <strong><code>tema</code> (localStorage):</strong> Guarda tu preferencia de aspecto visual (modo claro u oscuro) para prevenir parpadeos al cargar las páginas. No almacena datos personales ni se comparte con terceros.
+    </li>
+    <li>
+      <strong><code>consentimiento-cookies</code> (localStorage):</strong> Registra tu decisión sobre el uso de cookies publicitarias (<code>aceptado</code> o <code>rechazado</code>) para respetar tu elección durante tu navegación.
+    </li>
+  </ul>
+
+  <h3>B. Cookies de terceros (Google AdSense)</h3>
+  <p>
+    Únicamente si existe un identificador publicitario configurado ({publicAdsenseClient ? 'actualmente activo' : 'cuando esté habilitado'}) y <strong>solo si has otorgado tu consentimiento explícito</strong>, se cargan scripts y cookies de <strong>Google AdSense</strong>. Google y sus socios utilizan cookies para publicar anuncios relevantes basados en tus visitas anteriores a este u otros sitios web. Si rechazas el consentimiento, no se inyectan cookies de personalización publicitaria ni se bloquea el acceso a nuestros contenidos educativos.
+  </p>
+
+  <h2>3. Cómo cambiar o retirar tu decisión</h2>
+  <p>
+    Tu elección nunca es definitiva. Puedes modificar o retirar tu consentimiento en cualquier instante utilizando el botón <strong>"Preferencias de cookies"</strong> disponible en el pie de página de todo el sitio web, lo que reabrirá el panel de configuración de forma inmediata.
+  </p>
+  <p>
+    Asimismo, puedes configurar o eliminar las cookies directamente desde las opciones de privacidad y seguridad de tu navegador web (Chrome, Firefox, Safari, Edge u otros).
+  </p>
+
+  <h2>4. Políticas y opciones de personalización de Google</h2>
+  <p>
+    Para conocer en detalle cómo Google gestiona los datos de los usuarios cuando navegan en sitios web asociados, te invitamos a consultar:
+  </p>
+  <ul>
+    <li>
+      <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">
+        Cómo utiliza Google la información de sitios web o aplicaciones que utilizan sus servicios
+      </a>
+    </li>
+    <li>
+      <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">
+        Configuración y personalización de anuncios de Google
+      </a>
+    </li>
+  </ul>
+
+  <h2>5. Contacto</h2>
+  <p>
+    Si tienes dudas sobre el funcionamiento de nuestras cookies o la protección de tus datos en {SITIO.nombre}, puedes escribirnos a nuestro correo de contacto: <a href={`mailto:${SITIO.emailContacto}`}>{SITIO.emailContacto}</a>.
+  </p>
+  <p class="text-xs text-tinta-suave">
+    Última actualización: {SITIO.ultimaActualizacionLegal}.
+  </p>
+</PaginaLegalLayout>
