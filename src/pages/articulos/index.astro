@@ -50,15 +50,15 @@ const articulosPreparados = ordenados.map((art) => {
           Biblioteca formativa
         </span>
         <span class="text-linea" aria-hidden="true">·</span>
-        <!-- 4. CONTADOR ANIMADO -->
-        <span class="text-xs font-mono font-bold text-tinta-suave flex items-center gap-1.5">
+        <!-- 4. CONTADOR ANIMADO (Con aria-live="polite") -->
+        <div aria-live="polite" class="text-xs font-mono font-bold text-tinta-suave flex items-center gap-1.5">
           <span
             id="contador-guias-numero"
             data-total-guias={articulosPreparados.length}
             class="text-indigo font-extrabold text-sm"
-          >0</span>
-          <span>guías disponibles</span>
-        </span>
+          >{articulosPreparados.length}</span>
+          <span id="texto-contador-estado">guías disponibles</span>
+        </div>
       </div>
 
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-tinta leading-tight">
@@ -89,16 +89,17 @@ const articulosPreparados = ordenados.map((art) => {
         />
       </div>
 
-      <!-- 5. TOGGLE DE VISTA (Grid vs Lista) -->
+      <!-- 5. TOGGLE DE VISTA (Grid vs Lista con aria-pressed) -->
       <div class="flex items-center gap-2 self-end sm:self-auto select-none">
         <span class="text-xs font-semibold text-tinta-suave mr-1 hidden sm:inline">
           Vista:
         </span>
-        <div class="inline-flex p-1 bg-superficie border border-linea rounded-[8px] gap-1">
+        <div class="inline-flex p-1 bg-superficie border border-linea rounded-[8px] gap-1" role="group" aria-label="Modo de visualización">
           <button
             type="button"
             id="btn-vista-grid"
             aria-label="Vista en cuadrícula"
+            aria-pressed="true"
             class="px-2.5 py-1.5 rounded-[6px] text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 bg-indigo text-sobre-acento shadow-xs"
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -114,6 +115,7 @@ const articulosPreparados = ordenados.map((art) => {
             type="button"
             id="btn-vista-lista"
             aria-label="Vista en lista"
+            aria-pressed="false"
             class="px-2.5 py-1.5 rounded-[6px] text-xs font-semibold text-tinta-suave hover:text-tinta transition-all cursor-pointer flex items-center gap-1.5"
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -130,15 +132,16 @@ const articulosPreparados = ordenados.map((art) => {
       </div>
     </div>
 
-    <!-- 1. FILTROS ANIMADOS POR CATEGORÍA (Pills con emojis) -->
+    <!-- 1. FILTROS ANIMADOS POR CATEGORÍA (Pills con aria-pressed) -->
     <section aria-labelledby="titulo-filtros" class="space-y-2">
       <h2 id="titulo-filtros" class="text-xs font-bold uppercase tracking-wider text-tinta-suave">
         Filtrar por categoría
       </h2>
-      <div id="contenedor-filtros" class="flex flex-wrap gap-2 pt-1">
+      <div id="contenedor-filtros" class="flex flex-wrap gap-2 pt-1" role="group" aria-label="Filtros por categoría">
         <button
           type="button"
           data-categoria="todas"
+          aria-pressed="true"
           class="btn-filtro-cat inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9999px] text-xs font-bold transition-all cursor-pointer select-none bg-indigo text-sobre-acento border border-indigo shadow-xs"
         >
           <span>✨</span>
@@ -152,6 +155,7 @@ const articulosPreparados = ordenados.map((art) => {
             <button
               type="button"
               data-categoria={cat.slug}
+              aria-pressed="false"
               class="btn-filtro-cat inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[9999px] text-xs font-semibold transition-all cursor-pointer select-none bg-superficie text-tinta-suave border border-linea hover:border-indigo/60 hover:text-tinta"
             >
               <span>{cat.emoji || '⚡'}</span>
@@ -167,10 +171,11 @@ const articulosPreparados = ordenados.map((art) => {
 
     <!-- CONTENEDOR DE ARTÍCULOS (Grid / Lista) -->
     <section aria-label="Publicaciones disponibles" class="space-y-6 pt-2">
-      {/* Mensaje de no resultados */}
+      {/* Mensaje de no resultados con aria-live */}
       <div
         id="mensaje-sin-resultados"
         hidden
+        aria-live="polite"
         class="p-12 text-center border border-dashed border-linea rounded-[12px] bg-superficie space-y-3"
       >
         <span class="text-4xl block" aria-hidden="true">🔍</span>
@@ -189,7 +194,7 @@ const articulosPreparados = ordenados.map((art) => {
         </button>
       </div>
 
-      {/* Cuadrícula o lista de tarjetas con animación de fade */}
+      {/* Cuadrícula o lista de tarjetas */}
       <div
         id="rejilla-articulos"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300"
@@ -271,7 +276,7 @@ const articulosPreparados = ordenados.map((art) => {
       padding: 1.25rem 1.5rem;
     }
 
-    /* Animación suave de fade para tarjetas */
+    /* Ocultar elementos filtrados sin romper layout */
     .tarjeta-oculta {
       display: none !important;
       opacity: 0;
@@ -285,12 +290,13 @@ const articulosPreparados = ordenados.map((art) => {
 
       // 4. CONTADOR ANIMADO ("X guías disponibles")
       const contadorNumero = document.getElementById('contador-guias-numero');
+      const textoEstado = document.getElementById('texto-contador-estado');
       if (contadorNumero) {
         const totalGuias = parseInt(contadorNumero.getAttribute('data-total-guias') || '0', 10);
         if (reduceMotion) {
           contadorNumero.textContent = totalGuias.toString();
         } else {
-          const duracion = 1000;
+          const duracion = 800;
           const inicio = performance.now();
 
           function animar(ahora) {
@@ -345,6 +351,14 @@ const articulosPreparados = ordenados.map((art) => {
           }
         });
 
+        // Actualizar contador con cantidad visible
+        if (contadorNumero) {
+          contadorNumero.textContent = visibles.toString();
+        }
+        if (textoEstado) {
+          textoEstado.textContent = visibles === 1 ? 'guía disponible' : 'guías disponibles';
+        }
+
         // Mostrar u ocultar mensaje sin resultados
         if (visibles === 0) {
           if (mensajeSinResultados) {
@@ -360,18 +374,20 @@ const articulosPreparados = ordenados.map((art) => {
         }
       }
 
-      // 1. FILTROS POR CATEGORÍA CON PÍLDORAS
+      // 1. FILTROS POR CATEGORÍA CON PÍLDORAS Y ARIA-PRESSED
       botonesFiltro.forEach(function(boton) {
         boton.addEventListener('click', function() {
           const slug = boton.getAttribute('data-categoria') || 'todas';
           categoriaActiva = slug;
 
-          // Actualizar estilos activos de botones
+          // Actualizar aria-pressed y estilos activos de botones
           botonesFiltro.forEach(function(b) {
+            b.setAttribute('aria-pressed', 'false');
             b.classList.remove('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold', 'shadow-xs');
             b.classList.add('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
           });
 
+          boton.setAttribute('aria-pressed', 'true');
           boton.classList.remove('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
           boton.classList.add('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold', 'shadow-xs');
 
@@ -392,6 +408,7 @@ const articulosPreparados = ordenados.map((art) => {
 
         botonesFiltro.forEach(function(b) {
           const esTodas = b.getAttribute('data-categoria') === 'todas';
+          b.setAttribute('aria-pressed', esTodas ? 'true' : 'false');
           if (esTodas) {
             b.classList.add('bg-indigo', 'text-sobre-acento', 'border-indigo', 'font-bold');
             b.classList.remove('bg-superficie', 'text-tinta-suave', 'border-linea', 'font-semibold');
@@ -404,7 +421,7 @@ const articulosPreparados = ordenados.map((art) => {
         aplicarFiltros();
       });
 
-      // 5. TOGGLE DE VISTA (Grid vs Lista) con persistencia en localStorage
+      // 5. TOGGLE DE VISTA (Grid vs Lista) con aria-pressed y persistencia
       const btnGrid = document.getElementById('btn-vista-grid');
       const btnLista = document.getElementById('btn-vista-lista');
       const keyStorageVista = 'aprendeia_articulos_vista';
@@ -416,18 +433,22 @@ const articulosPreparados = ordenados.map((art) => {
           contenedorRejilla.classList.add('vista-modo-lista');
           contenedorRejilla.classList.remove('md:grid-cols-2', 'lg:grid-cols-3');
 
+          btnLista?.setAttribute('aria-pressed', 'true');
           btnLista?.classList.add('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
           btnLista?.classList.remove('text-tinta-suave', 'font-semibold');
 
+          btnGrid?.setAttribute('aria-pressed', 'false');
           btnGrid?.classList.remove('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
           btnGrid?.classList.add('text-tinta-suave', 'font-semibold');
         } else {
           contenedorRejilla.classList.remove('vista-modo-lista');
           contenedorRejilla.classList.add('md:grid-cols-2', 'lg:grid-cols-3');
 
+          btnGrid?.setAttribute('aria-pressed', 'true');
           btnGrid?.classList.add('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
           btnGrid?.classList.remove('text-tinta-suave', 'font-semibold');
 
+          btnLista?.setAttribute('aria-pressed', 'false');
           btnLista?.classList.remove('bg-indigo', 'text-sobre-acento', 'shadow-xs', 'font-bold');
           btnLista?.classList.add('text-tinta-suave', 'font-semibold');
         }

@@ -36,7 +36,7 @@ function calcularMinutos(body?: string): number {
 >
   <div class="space-y-20 md:space-y-28">
     <!-- 1. HERO -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8 relative animar-entrada-init">
+    <section data-animar-portada class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start pt-4 sm:pt-8 relative">
       <!-- Partículas sutiles en modo oscuro (CSS puro) -->
       <div class="particulas-hero" aria-hidden="true">
         <span class="particula"></span>
@@ -126,7 +126,7 @@ function calcularMinutos(body?: string): number {
     </section>
 
     <!-- 2. "Empieza por aquí" (10 categorías completas) -->
-    <section aria-labelledby="seccion-empieza-por-aqui" class="space-y-8 animar-entrada-init">
+    <section data-animar-portada aria-labelledby="seccion-empieza-por-aqui" class="space-y-8">
       <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <h2 id="seccion-empieza-por-aqui" class="text-2xl font-bold tracking-tight text-tinta">
@@ -200,7 +200,7 @@ function calcularMinutos(body?: string): number {
     </section>
 
     <!-- 3. SECCIÓN "Etapas de aprendizaje" -->
-    <section aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8 animar-entrada-init">
+    <section data-animar-portada aria-labelledby="seccion-etapas-aprendizaje" class="space-y-8">
       <div class="border-b border-linea pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
         <div>
           <h2 id="seccion-etapas-aprendizaje" class="text-2xl font-bold tracking-tight text-tinta">

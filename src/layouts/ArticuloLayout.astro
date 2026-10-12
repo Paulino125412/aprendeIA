@@ -361,8 +361,6 @@ const jsonLdBreadcrumb = {
   <!-- Script interactivo integral de lectura para artículos -->
   <script is:inline>
     (function() {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
       // 1. BARRA DE PROGRESO DE LECTURA (con cálculo global scrollY / (scrollHeight - innerHeight))
       const barraProgreso = document.getElementById('barra-progreso-articulo-top');
       const btnVolverArriba = document.getElementById('btn-volver-arriba');
@@ -480,48 +478,6 @@ const jsonLdBreadcrumb = {
           }, 600);
         });
       });
-
-      // 6. ANIMACIÓN DE ENTRADA: Párrafos y encabezados con Stagger de 100ms
-      const articuloCuerpo = document.getElementById('cuerpo-articulo');
-      if (articuloCuerpo && !reduceMotion && ('IntersectionObserver' in window)) {
-        const elementos = articuloCuerpo.querySelectorAll('p, h2, h3, ul, ol, blockquote, .anuncio-container');
-        elementos.forEach(function(el) {
-          el.classList.add('articulo-elemento-animar');
-        });
-
-        let colaVisibles = [];
-        let procesandoCola = false;
-
-        function procesarCola() {
-          if (colaVisibles.length === 0) {
-            procesandoCola = false;
-            return;
-          }
-          procesandoCola = true;
-          const siguienteEl = colaVisibles.shift();
-          siguienteEl.classList.add('articulo-elemento-visible');
-          setTimeout(procesarCola, 100); // Stagger de 100ms
-        }
-
-        const observerArticulo = new IntersectionObserver(function(entries, observer) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              colaVisibles.push(entry.target);
-              observer.unobserve(entry.target);
-              if (!procesandoCola) {
-                procesarCola();
-              }
-            }
-          });
-        }, {
-          threshold: 0.1,
-          rootMargin: '0px 0px -30px 0px'
-        });
-
-        elementos.forEach(function(el) {
-          observerArticulo.observe(el);
-        });
-      }
     })();
   </script>
 </Layout>

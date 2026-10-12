@@ -48,6 +48,15 @@ const anioActual = new Date().getFullYear();
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <noscript>
+      <style>
+        .animar-entrada-init {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+
     <slot name="head" />
 
     <!-- Script en línea para prevenir parpadeo de modo oscuro -->
@@ -98,22 +107,57 @@ const anioActual = new Date().getFullYear();
             </p>
           </div>
 
-          <!-- Columna Sitio -->
+          <!-- Columna Secciones -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold text-tinta">
-              Sitio
-            </h3>
+            <p class="text-xs font-bold text-tinta uppercase tracking-wider">
+              Contenido
+            </p>
             <ul class="space-y-2 text-xs">
               <li>
-                <a href="/" class="text-tinta-suave hover:text-indigo transition-colors">
-                  Inicio
+                <a href="/articulos" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Artículos
                 </a>
               </li>
               <li>
-                <a href="/articulos" class="text-tinta-suave hover:text-indigo transition-colors">
-                  Artículos y guías
+                <a href="/buscar" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Buscar guías
                 </a>
               </li>
+              <li>
+                <a href="/articulos/hablar-con-la-ia" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Constructor de prompts
+                </a>
+              </li>
+              <li>
+                <a href="/articulos/beneficios-ia" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Explorador por profesión
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Columna Categorías Populares -->
+          <div class="space-y-3">
+            <p class="text-xs font-bold text-tinta uppercase tracking-wider">
+              Categorías
+            </p>
+            <ul class="space-y-2 text-xs">
+              {CATEGORIAS.slice(0, 5).map((cat) => (
+                <li>
+                  <a href={`/categoria/${cat.slug}`} class="text-tinta-suave hover:text-indigo transition-colors">
+                    {cat.nombre}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Columna Institucional -->
+          <div class="space-y-3">
+            <p class="text-xs font-bold text-tinta uppercase tracking-wider">
+              Proyecto
+            </p>
+            <ul class="space-y-2 text-xs">
               <li>
                 <a href="/sobre-nosotros" class="text-tinta-suave hover:text-indigo transition-colors">
                   Sobre nosotros
@@ -129,63 +173,47 @@ const anioActual = new Date().getFullYear();
 
           <!-- Columna Legal -->
           <div class="space-y-3">
-            <h3 class="text-xs font-bold text-tinta">
+            <p class="text-xs font-bold text-tinta uppercase tracking-wider">
               Legal
-            </h3>
+            </p>
             <ul class="space-y-2 text-xs">
               <li>
                 <a href="/privacidad" class="text-tinta-suave hover:text-indigo transition-colors">
-                  Política de Privacidad
+                  Privacidad
                 </a>
               </li>
               <li>
                 <a href="/terminos" class="text-tinta-suave hover:text-indigo transition-colors">
-                  Términos de Uso
+                  Términos
                 </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  id="btn-preferencias-cookies"
-                  class="text-tinta-suave hover:text-indigo transition-colors text-left cursor-pointer focus:outline-none focus:underline"
-                >
-                  Preferencias de cookies
-                </button>
+                <a href="/cookies" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Cookies
+                </a>
+              </li>
+              <li>
+                <a href="/aviso-legal" class="text-tinta-suave hover:text-indigo transition-colors">
+                  Aviso legal
+                </a>
               </li>
             </ul>
           </div>
-
-          <!-- Columna Categorías (9 categorías completas sin emojis) -->
-          <div class="sm:col-span-2 lg:col-span-2 space-y-3">
-            <h3 class="text-xs font-bold text-tinta">
-              Categorías
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
-              {CATEGORIAS.map((cat) => (
-                <a
-                  href={`/categoria/${cat.slug}`}
-                  class="text-tinta-suave hover:text-indigo transition-colors flex items-center gap-1.5 truncate min-w-0"
-                >
-                  <span class="truncate">{cat.nombre}</span>
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
 
-        <div class="mt-12 pt-6 border-t border-linea flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-tinta-suave">
-          <p>© {anioActual} {SITIO.nombre}. {SITIO.autor}. Todos los derechos reservados.</p>
-          <p>Educación abierta en español neutro.</p>
+        <div class="mt-8 pt-6 border-t border-linea text-xs text-tinta-suave flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p>© {anioActual} {SITIO.nombre}. Todos los derechos reservados.</p>
+          <p class="text-[11px]">
+            Diseñado para lectura clara, formación continua y accesibilidad digital.
+          </p>
         </div>
       </div>
     </footer>
 
-    <!-- Inyección condicional de AdSense por consentimiento -->
+    <!-- AdSense: Inyección condicional condicionada al consentimiento de cookies -->
     {adsenseClient && (
       <script is:inline define:vars={{ adsenseClient }}>
         (function() {
-          if (!adsenseClient) return;
-
           window.__iniciarAdSense = function(decision) {
             if (window.__adsenseInyectado) return;
             if (decision !== 'aceptado' && decision !== 'rechazado') return;
@@ -244,19 +272,29 @@ const anioActual = new Date().getFullYear();
       })();
     </script>
 
-    <!-- Script de interactividad: Animaciones de entrada, contadores y cursor -->
+    <!-- Script de interactividad: Animaciones de entrada en portada, contadores y cursor -->
     <script is:inline>
       (function() {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const esPortada = window.location.pathname === '/' || window.location.pathname === '';
+        const tieneHash = Boolean(window.location.hash);
 
-        // 1. ANIMACIÓN: Fade-in hacia arriba (.animar-entrada) con IntersectionObserver
-        const elementosParaAnimar = document.querySelectorAll('.animar-entrada-init');
-        if (elementosParaAnimar.length > 0) {
-          if (reduceMotion || !('IntersectionObserver' in window)) {
-            elementosParaAnimar.forEach(function(el) {
-              el.classList.remove('animar-entrada-init');
-            });
-          } else {
+        // 1. REVELADO SIN OCULTAR CONTENIDO (Solo en la portada, nunca si hay hash o ya visible)
+        if (esPortada && !tieneHash && !reduceMotion && ('IntersectionObserver' in window)) {
+          const seccionesPortada = document.querySelectorAll('main > div > section[data-animar-portada]');
+          const elementosAnimables = [];
+
+          seccionesPortada.forEach(function(sec) {
+            const rect = sec.getBoundingClientRect();
+            const yaVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            // Solo agregar .animar-entrada-init si NO está visible al cargar
+            if (!yaVisible) {
+              sec.classList.add('animar-entrada-init');
+              elementosAnimables.push(sec);
+            }
+          });
+
+          if (elementosAnimables.length > 0) {
             const observerEntrada = new IntersectionObserver(function(entries, observer) {
               entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
@@ -270,11 +308,19 @@ const anioActual = new Date().getFullYear();
               rootMargin: '0px 0px -40px 0px'
             });
 
-            elementosParaAnimar.forEach(function(el) {
+            elementosAnimables.forEach(function(el) {
               observerEntrada.observe(el);
             });
           }
         }
+
+        // Temporizador de seguridad de 1.5s: quitar .animar-entrada-init a cualquier elemento que siga oculto
+        setTimeout(function() {
+          const restantes = document.querySelectorAll('.animar-entrada-init');
+          restantes.forEach(function(el) {
+            el.classList.remove('animar-entrada-init');
+          });
+        }, 1500);
 
         // 2. ANIMACIÓN: Contador numérico animado (16+, 30+, 100%)
         const elementosContador = document.querySelectorAll('[data-contador-valor]');
