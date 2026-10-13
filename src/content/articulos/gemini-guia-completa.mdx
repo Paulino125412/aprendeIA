@@ -1,148 +1,157 @@
 ---
-titulo: "Google Gemini: Todo lo que Puede Hacer (Guía Completa)"
-descripcion: "Gemini es la IA de Google integrada en todo su ecosistema. Aprende a usarla de cero."
+titulo: "Google Gemini: qué puede hacer y cómo usarlo, guía completa"
+descripcion: "Descubre qué es Gemini, cómo acceder desde la web, el móvil y Google Workspace, qué incluyen los planes de Google AI y cómo sacarle partido."
 categoria: "ia-texto"
 fecha: 2026-10-08
-tags: ["Gemini", "Google", "guía", "tutorial", "Bard"]
+actualizado: 2026-10-13
+tags: ["Gemini", "Google", "guía", "tutorial"]
 nivel: "principiante"
 ---
 
 ## ¿Qué es Gemini y en qué se diferencia de ChatGPT?
 
-Gemini es el modelo de Inteligencia Artificial más avanzado desarrollado por **Google** (a través de sus equipos de Google DeepMind y Google Research). Presentado inicialmente a finales de 2023 para sustituir al experimento previo llamado Bard, Gemini fue concebido desde sus cimientos como un sistema **nativo multimodal**: esto significa que no fue diseñado únicamente para procesar texto y luego adaptado a otros formatos, sino que fue entrenado simultáneamente para comprender texto, imágenes, audio, video y código informático dentro de una misma arquitectura unificada.
+Gemini es la familia de modelos de Inteligencia Artificial de **Google**, desarrollada por Google DeepMind y Google Research. Se presentó a finales de 2023 y el asistente conversacional que antes se llamaba Bard pasó a llamarse Gemini. Fue diseñado desde el inicio como un sistema **multimodal**: puede trabajar con texto, imágenes, audio, video y código.
 
-Aunque tanto ChatGPT como Gemini son asistentes conversacionales de última generación, existen diferencias sustanciales en su enfoque práctico:
+Ambos, Gemini y ChatGPT, son asistentes conversacionales con capacidades parecidas. Las diferencias más útiles para ti son prácticas:
 
-* **Integración orgánica con el ecosistema de Google:** Mientras que ChatGPT opera como una plataforma independiente que requiere plugins o conectores externos, Gemini se conecta de forma directa con tu cuenta de Gmail, Google Drive, Google Docs, Google Maps, YouTube y Google Flights.
-* **Ventana de contexto masiva:** Una de las mayores ventajas técnicas de la familia Gemini (especialmente en sus variantes 1.5 Pro y posteriores) es su capacidad para procesar hasta uno o dos millones de *tokens* en una sola sesión. En términos cotidianos, esto equivale a cargar libros completos de mil páginas, horas de grabaciones de audio o videos extensos de conferencias para analizarlos de golpe sin perder el hilo.
-* **Acceso nativo a la web y grounding:** Gemini utiliza la infraestructura del motor de búsqueda de Google para contrastar datos en tiempo real, citar fuentes actualizadas y ofrecer un botón directo de verificación ("Double-check") que resalta en verde las afirmaciones respaldadas por páginas web públicas.
+* **Integración con servicios de Google:** Gemini puede conectarse con servicios como Gmail, Drive, Docs, Maps y YouTube cuando das tu permiso. ChatGPT también ofrece conexiones con otras aplicaciones, pero la relación de Gemini con el ecosistema de Google es especialmente estrecha.
+* **Contexto muy amplio:** los modelos más avanzados de la familia pueden procesar cantidades muy grandes de texto en una sola conversación, del orden de un millón de *tokens* según Google. En términos cotidianos, eso permite trabajar con documentos largos. Aun así, revisa los datos clave en el documento original.
+* **Apoyo en la búsqueda de Google:** puede consultar la web y mostrar fuentes, y ofrece una función de verificación de respuestas que contrasta afirmaciones con resultados de búsqueda.
 
----
+Si quieres entender cómo funcionan por dentro estos modelos, lee [qué es la IA y cómo funciona un modelo de lenguaje](/articulos/que-es-la-ia/).
 
-## Cómo acceder a Gemini (web, app, integrado en Google)
+## Cómo acceder a Gemini (web, app e integrado en Google)
 
-Una de las grandes ventajas de Gemini es que probablemente ya tienes acceso a él sin haber tenido que instalar software adicional ni pagar suscripciones especiales.
+Probablemente ya tengas acceso sin instalar nada: basta con una cuenta de Google.
 
-### 1. Desde el navegador web
-La vía principal es ingresar en **gemini.google.com**. Si ya tienes iniciada una sesión en tu cuenta de Google (la misma que utilizas para Gmail o YouTube), el acceso es inmediato: solo debes aceptar los términos del servicio y comenzar a redactar.
+### 1. Desde el navegador
 
-### 2. Desde la aplicación móvil
-* **En teléfonos Android:** Puedes descargar la app oficial de Google Gemini desde Google Play Store. Al activarla, tienes la opción de reemplazar al Asistente de Google tradicional para que Gemini responda cuando digas *"Hey Google"* o mantengas presionado el botón de encendido.
-* **En iPhone (iOS):** Puedes utilizar la aplicación dedicada de Google Gemini disponible en la App Store, o bien acceder a través de la pestaña de Gemini dentro de la aplicación principal de Google.
+Entra en **gemini.google.com** con la cuenta de Google que usas para Gmail o YouTube, acepta los términos y empieza a escribir.
 
-### 3. Integrado en las herramientas de Google Workspace
-Si utilizas Google Workspace (Gmail, Google Docs, Google Sheets o Google Slides), Gemini aparece como un panel lateral interactivo o un botón flotante con forma de estrella brillante (*Help me write*), permitiéndote redactar borradores de correos o resumir hilos de mensajes sin abandonar la pantalla de tu trabajo.
+### 2. Desde el móvil
 
----
+* **En Android:** puedes usar la app de Gemini desde Google Play y, si lo deseas, configurarla como asistente del teléfono en lugar del Asistente de Google tradicional.
+* **En iPhone:** puedes usar la app de Gemini disponible en la App Store o acceder desde la app de Google.
+
+Las funciones disponibles varían según el país, el idioma y el dispositivo.
+
+### 3. Integrado en Google Workspace
+
+Si usas Gmail, Docs, Sheets o Slides, Gemini puede aparecer como un panel lateral o un botón de ayuda para redactar borradores, resumir hilos de correos o crear tablas, según el plan y la configuración de tu cuenta.
 
 ## Qué puede hacer Gemini (con ejemplos de prompts)
 
-Gemini combina razonamiento lingüístico con la enorme base de datos de Google. A continuación, revisamos sus capacidades principales acompañadas de ejemplos prácticos que puedes copiar y personalizar.
+Gemini combina razonamiento con acceso a la información de la web. Estas son sus capacidades principales, con ejemplos que puedes copiar y personalizar.
 
-### 1. Buscar con fuentes verificadas y en tiempo real
-A diferencia de modelos aislados del internet reciente, Gemini consulta la web y respalda sus respuestas con enlaces directos.
-
-* **Ejemplo de prompt:**
-  > *"¿Cuáles son los requisitos migratorios actualizados para viajar como turista desde Colombia a la Unión Europea durante este año? Resume los puntos principales y cita las fuentes oficiales correspondientes."*
-
-### 2. Analizar imágenes y resolver problemas visuales
-Al ser nativamente multimodal, Gemini no solo describe lo que hay en una imagen, sino que interpreta diagramas, deduce causas y extrae datos tabulares.
+### 1. Buscar con fuentes y datos recientes
 
 * **Ejemplo de prompt:**
-  > *(Adjuntando la fotografía del menú de un restaurante extranjero)* *"Traduce estos platillos al español, señala cuáles no contienen frutos secos ni mariscos debido a una alergia severa y calcula el costo aproximado en dólares para una cena de dos personas."*
+  > *"¿Cuáles son los requisitos actuales para viajar como turista desde Colombia a la Unión Europea? Resume los puntos principales y cita las fuentes oficiales."*
 
-### 3. Conectarse a tu Google Workspace
-Mediante sus extensiones integradas, puedes pedirle a Gemini que busque y organice información que vive en tus propias carpetas de Drive o en tus correos.
+Los requisitos de viaje cambian: abre siempre las fuentes oficiales antes de decidir.
 
-* **Ejemplo de prompt:**
-  > *"Busca en mis correos de Gmail los presupuestos enviados por proveedores de pintura el mes pasado y compendia en una tabla comparativa el nombre de la empresa, el valor total y el tiempo estimado de entrega."*
-
-### 4. Generar imágenes con Imagen 3
-Google ha incorporado su motor de generación visual de alta fidelidad, **Imagen 3**, dentro de la interfaz de Gemini, permitiendo crear ilustraciones realistas o conceptuales con excelente renderizado de textos y texturas.
+### 2. Analizar imágenes
 
 * **Ejemplo de prompt:**
-  > *"Genera una fotografía realista de un puesto tradicional de frutas en un mercado andino, con canastas de mimbre llenas de mangos y maracuyás, iluminado por una suave luz dorada de atardecer."*
+  > *(Adjuntando la foto del menú de un restaurante)* *"Traduce estos platos al español y dime cuáles no parecen contener frutos secos ni mariscos. Si no estás seguro de un ingrediente, indícalo."*
+
+Para alergias graves, confirma siempre con el restaurante: la IA puede equivocarse.
+
+### 3. Conectarse a tus aplicaciones de Google
+
+Con los permisos adecuados, puede buscar información en tu Gmail o Drive.
+
+* **Ejemplo de prompt:**
+  > *"Busca en mi Gmail los presupuestos de proveedores de pintura del mes pasado y arma una tabla con empresa, valor total y plazo de entrega."*
+
+### 4. Crear imágenes
+
+Google incluye herramientas de generación de imágenes dentro de la app. Su disponibilidad y sus límites dependen de tu plan, tu país y la versión.
+
+* **Ejemplo de prompt:**
+  > *"Genera una fotografía realista de un puesto de frutas en un mercado andino, con canastas de mimbre llenas de mangos y maracuyás, con luz dorada de atardecer."*
 
 ### 5. Programar y depurar código
-Gemini tiene un rendimiento sobresaliente en lenguajes como Python, JavaScript, TypeScript, HTML y SQL, explicando el paso a paso para personas que están aprendiendo a programar.
 
 * **Ejemplo de prompt:**
-  > *"Escribe una función en Python que reciba una lista de fechas en formato texto 'DD/MM/AAAA' y devuelva únicamente aquellas que correspondan a fines de semana. Explica cada línea de código de forma pedagógica."*
+  > *"Escribe una función en Python que reciba una lista de fechas en texto 'DD/MM/AAAA' y devuelva solo las que caen en fin de semana. Explica cada línea de forma sencilla."*
 
-### 6. Resumir PDFs extensos y videos de YouTube
-Gracias a su ventana de contexto y a la integración con YouTube, no necesitas mirar un video de dos horas ni leer un manual de 80 páginas para conocer sus conclusiones.
+### 6. Resumir PDFs y videos
 
-* **Ejemplo de prompt para video:**
-  > *"Mira este enlace de YouTube [pegar enlace de conferencia] y dime cuáles fueron los tres argumentos principales expuestos por el ponente, indicando el minuto exacto donde habla de cada uno."*
+* **Ejemplo para un video:**
+  > *"Mira este enlace de YouTube [pegar enlace] y dime los tres argumentos principales del ponente, con el minuto aproximado de cada uno."*
 
-* **Ejemplo de prompt para documento:**
-  > *(Subiendo un archivo PDF de un contrato de arrendamiento)* *"Lee este contrato y resalta en viñetas las cláusulas de penalización económica por entrega anticipada del inmueble y los plazos de notificación previa exigidos."*
+* **Ejemplo para un documento:**
+  > *(Subiendo un contrato de arrendamiento)* *"Resalta en viñetas las cláusulas de penalización por entrega anticipada y los plazos de aviso previo."*
 
----
+En contratos y documentos legales, usa la respuesta como guía de lectura y consulta a un profesional antes de decidir.
 
-## Plan gratuito vs Gemini Advanced
+## Planes y precios de Google AI
 
-Google ofrece dos niveles principales para interactuar con su Inteligencia Artificial:
+Google vende sus planes de IA bajo el nombre **Google AI**. Lo que antes se llamaba *Gemini Advanced* (dentro de Google One AI Premium) hoy corresponde a **Google AI Pro**. Los precios siguientes son mensuales, en dólares estadounidenses (EE. UU.), y fueron contrastados el **13 de octubre de 2026**. Varían por país e impuestos y Google los cambia con frecuencia. Confirma siempre en la [página oficial de suscripciones](https://gemini.google/subscriptions/).
 
-| Característica | Gemini Estándar (Gratis) | Gemini Advanced (Plan Google One AI Premium) |
+| Plan | Precio mensual (EE. UU.) | Qué incluye en general |
 | :--- | :--- | :--- |
-| **Modelo base** | Gemini 1.5 Flash (rápido y eficiente) | Gemini 1.5 Pro y modelos experimentales superiores |
-| **Precio mensual** | Gratuito con cualquier cuenta de Google | Aproximadamente 19.99 USD al mes |
-| **Ventana de contexto** | Amplia para tareas comunes (~32k a 128k tokens) | Masiva (hasta 1 millón de tokens de análisis) |
-| **Integración Workspace** | Básica en web y móvil | Integración directa dentro de Gmail, Docs y Sheets |
-| **Almacenamiento en nube** | Tus 15 GB habituales de Google Drive | Incluye 2 TB de almacenamiento compartido en Google One |
-| **Ejecución de código** | Respuestas con sintaxis de código | Entorno Python interactivo para calcular datos al vuelo |
-| **Creación de Gems** | No disponible | Creación ilimitada de asistentes especializados (Gems) |
-| **Recomendado para** | Tareas diarias, redacción de correos y consultas rápidas | Profesionales, analistas de datos e investigadores |
+| **Gratis** | 0 USD | La app de Gemini con modelos rápidos y límites diarios de uso. Almacenamiento habitual de tu cuenta de Google |
+| **Google AI Plus** | 4,99 USD | Más uso que el plan gratuito (aproximadamente el doble, según Google), más almacenamiento y algunas herramientas creativas |
+| **Google AI Pro** | 19,99 USD | Más uso todavía (aproximadamente 4 veces el gratuito), acceso ampliado a los modelos más avanzados, funciones de IA dentro de las apps de Google y 5 TB de almacenamiento |
+| **Google AI Ultra** | 99,99 USD o 199,99 USD | Para uso muy intensivo: límites de entre 5 y 20 veces los de Pro, modos de razonamiento avanzado y funciones experimentales |
 
-**¿Cuál deberías elegir?** La versión gratuita es sorprendentemente veloz y suficiente para la gran mayoría de usuarios. Gemini Advanced resulta especialmente rentable si ya pagas o necesitas espacio de almacenamiento en Google Drive, ya que los 2 TB de Google One vienen incluidos dentro del mismo paquete de 20 dólares mensuales.
+Los modelos y los límites de cada plan cambian con frecuencia, por lo que esta guía no los enumera. En la app, el selector de modelos muestra los que corresponden a tu cuenta.
 
----
+**¿Cuál elegir?** El plan gratuito es suficiente para empezar y para uso ocasional. Google AI Pro puede convenir si ya necesitas más almacenamiento en Google o usas Gemini todos los días con Gmail y Docs. Prueba primero el gratuito y paga solo si te topas con los límites.
 
 ## 5 trucos que casi nadie conoce
 
-Si utilizas Gemini únicamente como un chat para hacer preguntas sencillas, te estás perdiendo gran parte de su verdadero potencial:
+### 1. Invoca aplicaciones con "@"
 
-### 1. Invoca extensiones escribiendo "@"
-En la caja de texto puedes escribir el símbolo de arroba (`@`) para activar módulos especializados sin salir de la conversación:
-* Escribe `@YouTube` para pedir análisis de tutoriales o conferencias.
-* Escribe `@Google Drive` para pedirle que localice un archivo específico entre tus carpetas personales.
-* Escribe `@Google Maps` para trazar itinerarios indicando distancias reales y tiempos de viaje.
-* Escribe `@Google Flights` o `@Hotels` para cotizar opciones de viaje en tiempo real.
+En muchos casos puedes escribir `@` en la caja de texto para mencionar una aplicación y usarla dentro de la conversación:
 
-### 2. Crea tus propios "Gems" personalizados
-Si cuentas con Gemini Advanced, puedes crear asistentes con instrucciones permanentes llamados **Gems**. Por ejemplo, puedes crear un Gem llamado *"Revisor de estilo periodístico"* o *"Tutor de inglés conversacional"*. Una vez configurado, mantendrá ese tono, metodología y reglas en todas las sesiones futuras sin que tengas que recordárselo.
+* `@YouTube` para pedir análisis de videos.
+* `@Google Drive` para localizar un archivo entre tus carpetas.
+* `@Google Maps` para planificar rutas con distancias y tiempos.
 
-### 3. Analiza hojas de cálculo de Google sin salir de la pantalla
-Sube una hoja de cálculo con cientos de filas de gastos o ventas y pídele:
-* *"Calcula cuál fue el cliente con mayor volumen de compra en el segundo trimestre y redacta una breve conclusión de tres líneas sobre el producto menos vendido"*. Gemini interpretará la estructura tabular y procesará los cálculos matemáticos de inmediato.
+Las aplicaciones disponibles dependen de tu cuenta y de tu región.
 
-### 4. Aprovecha el modo de contexto largo con libros o manuales
-Puedes arrastrar un libro técnico en PDF o un informe anual de 300 páginas y preguntarle detalles microscópicos:
-* *"En qué página del documento se menciona la garantía sobre piezas mecánicas y qué excepciones contempla exactamente el fabricante"*. Localizará la información exacta en segundos sin que tengas que leer todo el documento.
+### 2. Crea tus propios Gems
 
-### 5. Utiliza el botón de doble verificación de Google
-Bajo cada respuesta generada por Gemini aparece el icono de la letra "G" de Google. Al hacer clic sobre él, el motor de búsqueda evalúa cada afirmación:
-* Si el texto se resalta en **color verde**, significa que el buscador encontró páginas web que confirman la información.
-* Si se resalta en **color naranja**, indica que existen discrepancias o que no se encontraron fuentes que respalden esa afirmación con certeza.
+Los **Gems** son asistentes personalizados con instrucciones permanentes, como un *"Revisor de estilo periodístico"* o un *"Tutor de inglés conversacional"*. Una vez configurado, mantiene ese tono y esas reglas sin que debas repetirlas. Su disponibilidad y sus límites dependen de tu plan.
 
----
+### 3. Analiza hojas de cálculo
 
-## Limitaciones honestas
+Sube una hoja con cientos de filas y pídele:
 
-A pesar de la sofisticación de Google, Gemini presenta limitaciones claras que conviene tener en el radar:
+* *"Dime qué cliente tuvo mayor volumen de compras en el segundo trimestre y redacta una conclusión de tres líneas sobre el producto menos vendido."*
 
-1. **Respuestas a veces excesivamente cautelosas:** Debido a las políticas de seguridad de Google, en ocasiones Gemini puede negarse a responder sobre temas polémicos o noticias sensibles donde otros modelos son más flexibles.
-2. **Posibles sesgos en resúmenes complejos:** Cuando procesa textos de cientos de páginas, puede omitir matices sutiles o destacar aspectos secundarios si no se le formulan preguntas con suficiente precisión.
-3. **Privacidad en cuentas corporativas vs personales:** En cuentas personales gratuitas, fragmentos anónimos de conversaciones pueden ser revisados por evaluadores humanos para entrenar los sistemas de Google. No compartas secretos confidenciales ni datos bancarios en chats abiertos.
-4. **Alucinaciones residuales:** Aunque el botón de verificación ayuda enormemente, ningún modelo de lenguaje es infalible; siempre corrobora citas legales, dosis médicas o cifras financieras antes de tomar decisiones importantes.
+Verifica los cálculos importantes con la propia hoja.
 
----
+### 4. Aprovecha el contexto largo con manuales o informes
+
+Puedes subir un manual o un informe extenso y preguntar por un dato concreto:
+
+* *"¿En qué parte del documento se menciona la garantía de las piezas y qué excepciones contempla?"*
+
+Comprueba la cita en el documento original antes de usarla.
+
+### 5. Usa la función de verificación de respuestas
+
+Debajo de las respuestas suele aparecer una opción para verificarlas con la búsqueda de Google. Al usarla, resalta qué partes tienen respaldo en la web y cuáles no encontraron coincidencias o muestran diferencias. Es una ayuda, no una garantía: abre las fuentes y lee tú mismo.
+
+## Limitaciones que debes recordar
+
+1. **Respuestas cautelosas:** por sus políticas de seguridad, a veces rechaza o suaviza temas sensibles.
+2. **Resúmenes con omisiones:** al resumir textos largos puede omitir matices. Haz preguntas concretas y contrasta con el original.
+3. **Privacidad:** según tu configuración de actividad, parte de las conversaciones puede ser revisada por personas para mejorar el servicio. Revisa los ajustes de privacidad y no compartas contraseñas, datos bancarios ni información confidencial.
+4. **Errores y datos inventados:** ningún modelo es infalible. Verifica citas legales, dosis médicas y cifras financieras antes de decidir.
 
 ## Siguiente paso
 
-Ahora que conoces el alcance de Google Gemini, te invitamos a dar el siguiente paso en tu aprendizaje comparándolo con las otras dos grandes herramientas del mercado:
+Prueba la misma tarea en distintos asistentes y compara los resultados:
 
-* Lee nuestra guía sobre [ChatGPT: Guía Completa de Uso de Cero a Avanzado](/articulos/chatgpt-guia-completa/) para entender cómo optimizar tus prompts en el asistente pionero de OpenAI.
-* Explora [Claude](/articulos/tipos-de-ia-guia/), el modelo de Anthropic reconocido por su redacción reflexiva, estilo literario y rigurosa precisión ética.
-* Consulta nuestra [Tabla de Decisión Rápida: ¿Cuál IA Usar para Qué?](/articulos/cual-ia-para-que/) para saber con exactitud cuál de estos tres gigantes elegir según la tarea específica que necesites resolver hoy.
+* **[ChatGPT: guía completa](/articulos/chatgpt-guia-completa/):** el asistente de OpenAI, con ejemplos de prompts y planes.
+* **[Claude](/articulos/claude-guia-completa/):** el asistente de Anthropic, que muchos valoran para textos largos y documentos.
+* **[Tabla de decisión: ¿cuál IA usar para qué?](/articulos/cual-ia-para-que/):** para elegir según la tarea.
+
+## Verificación de los datos
+
+Los planes y precios de esta guía se contrastaron el **13 de octubre de 2026** con varias fuentes públicas especializadas que coinciden entre sí. Los precios están en dólares estadounidenses y cambian con frecuencia. La referencia definitiva es la [página oficial de suscripciones de Gemini](https://gemini.google/subscriptions/) y el centro de ayuda de Google.
